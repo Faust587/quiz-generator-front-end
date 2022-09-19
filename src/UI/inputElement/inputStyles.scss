@@ -1,0 +1,117 @@
+.authorization-input-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.authorization-input {
+  outline: none;
+  border: none;
+  font-family: "JetBrainsMono", sans-serif;
+
+  border-bottom: 1px solid #b2b2b2;
+}
+
+.input-error-icon {
+  position: absolute;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .authorization-input-wrapper {
+    width: 100%;
+  }
+
+  .authorization-input {
+    width: 100%;
+    border-bottom: 1px solid #b2b2b2;
+    padding-bottom: 10px;
+    font-size: 16px;
+  }
+
+  .input-error-icon {
+    width: 30px;
+    height: 30px;
+    left: calc(100% - 30px);
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .authorization-input-wrapper {
+    width: 100%;
+  }
+
+  .authorization-input {
+    width: 100%;
+    border-bottom: 1px solid #b2b2b2;
+    padding-bottom: 10px;
+    font-size: 20px;
+  }
+
+  .input-error-icon {
+    width: 32px;
+    height: 32px;
+    left: calc(100% - 32px);
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .authorization-input-wrapper {
+    width: 100%;
+  }
+
+  .authorization-input {
+    width: 100%;
+    border-bottom: 1px solid #b2b2b2;
+    padding-bottom: 10px;
+    font-size: 22px;
+  }
+
+  .input-error-icon {
+    width: 35px;
+    height: 35px;
+    left: calc(100% - 35px);
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .authorization-input-wrapper {
+    width: 100%;
+  }
+
+  .authorization-input {
+    width: 100%;
+    border-bottom: 1px solid #b2b2b2;
+    padding-bottom: 10px;
+    font-size: 20px;
+  }
+
+  .input-error-icon {
+    width: 32px;
+    height: 32px;
+    left: calc(100% - 32px);
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .authorization-input-wrapper {
+    width: 100%;
+  }
+
+  .authorization-input {
+    width: 100%;
+    border-bottom: 1px solid #b2b2b2;
+    padding-bottom: 10px;
+    font-size: 18px;
+  }
+
+  .input-error-icon {
+    width: 30px;
+    height: 30px;
+    left: calc(100% - 32px);
+  }
+}

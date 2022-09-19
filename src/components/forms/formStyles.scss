@@ -1,0 +1,72 @@
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .authorization-form {
+    width: 100vw;
+    padding: 0 30px;
+  }
+  .authorization-input-wrapper {
+    margin-bottom: 20px;
+  }
+  .authorization-button-wrapper {
+    margin-top: 50px;
+  }
+  .authorization-footer-wrapper {
+    margin-top: 50px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .authorization-form {
+    width: 100vw;
+    padding: 0 60px;
+  }
+  .authorization-input-wrapper {
+    margin-bottom: 20px;
+  }
+  .authorization-button-wrapper {
+    margin-top: 50px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .authorization-form {
+    width: 100vw;
+    padding: 0 90px;
+  }
+  .authorization-input-wrapper {
+    margin-bottom: 20px;
+  }
+  .authorization-button-wrapper {
+    margin-top: 50px;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .authorization-form {
+    width: 45vw;
+    padding: 0 40px;
+  }
+  .authorization-input-wrapper {
+    margin-bottom: 20px;
+  }
+  .authorization-button-wrapper {
+    margin-top: 50px;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .authorization-form {
+    width: 35vw;
+    padding: 0 80px;
+  }
+  .authorization-input-wrapper {
+    margin-bottom: 20px;
+  }
+  .authorization-button-wrapper {
+    margin-top: 50px;
+  }
+}
