@@ -17,14 +17,12 @@ export const SignInForm = () => {
 
   const signInSubmit = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
-    //const validation = dataValidation();
-    //if (!validation) return;
   };
 
   return (
     <form
       className="authorization-form"
-      onSubmit={ () => {} }
+      onSubmit={ signInSubmit }
     >
       <div className="authorization-input-wrapper">
         <AuthInput

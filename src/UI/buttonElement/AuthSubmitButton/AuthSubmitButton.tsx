@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 import "./AuthSubmitButtonStyles.scss";
 
 type propsType = {
@@ -12,9 +12,11 @@ export const AuthSubmitButton: FC<propsType> = (
 ) => {
 
   return (
-    <button className="authorization-submit-button"
-            type="submit">
-      {text}
+    <button
+      className="authorization-submit-button"
+      type="submit"
+    >
+      { text }
     </button>
   );
-}
+};

@@ -6,15 +6,19 @@ type propsType = {
   subtitle: string
 }
 
-export const AuthHeader: FC<propsType> = ({ title, subtitle }) => {
+export const AuthHeader: FC<propsType> = (
+  {
+    title,
+    subtitle
+  }) => {
 
   return (
     <header className="authorization-header">
       <h1 className="authorization-header__title">
-        {title}
+        { title }
       </h1>
       <h2 className="authorization-header__subtitle">
-        {subtitle}
+        { subtitle }
       </h2>
     </header>
   );

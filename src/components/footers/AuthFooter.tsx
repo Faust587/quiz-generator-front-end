@@ -1,5 +1,5 @@
 import "./footerStyle.scss";
-import {FC} from "react";
+import { FC } from "react";
 
 type propTypes = {
   text: string,
@@ -17,9 +17,9 @@ export const AuthFooter: FC<propTypes> = (
 
   return (
     <footer className="authorization-footer">
-      {text}
+      { text }
       &nbsp;
-      <a href={url}>{urlText}</a>
+      <a href={ url }>{ urlText }</a>
     </footer>
   );
-}
+};

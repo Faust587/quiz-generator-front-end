@@ -7,7 +7,7 @@ import { SignInPage } from "./pages/AuthPages/SignInPage";
 function App() {
 
   useEffect(() => {
-    
+
   }, []);
 
   return (
