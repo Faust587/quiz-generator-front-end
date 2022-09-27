@@ -15,5 +15,8 @@ export const authSlice = createSlice({
   }
 });
 
-export const {setOffline, setOnline} = authSlice.caseReducers;
+export const {
+  setOffline,
+  setOnline
+} = authSlice.caseReducers;
 export default authSlice.reducer;

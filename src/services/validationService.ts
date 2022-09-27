@@ -1,4 +1,4 @@
-import {validationErrors} from "../types/validationError";
+import { validationErrors } from "../types/validationError";
 
 export interface IValidationMethods {
   usernameValidation: (username: string) => validationErrors[],
@@ -7,7 +7,7 @@ export interface IValidationMethods {
   emailValidation: (email: string) => validationErrors[],
 }
 
-class ValidationService implements IValidationMethods{
+class ValidationService implements IValidationMethods {
 
   usernameValidation = (username: string) => {
     const errors: validationErrors[] = [];
@@ -18,7 +18,7 @@ class ValidationService implements IValidationMethods{
       errors.push(validationErrors.USERNAME_MUST_HAVE_MORE);
     }
     return errors;
-  }
+  };
 
   passwordValidation = (password: string) => {
     const errors: validationErrors[] = [];
@@ -29,27 +29,27 @@ class ValidationService implements IValidationMethods{
       errors.push(validationErrors.PASSWORD_MUST_HAVE_MORE);
     }
 
-/*    const checkDigit = new RegExp(/(?=.*\d)/);
-    const checkLowerCase = new RegExp(/(?=.*[a-z])/);
-    const checkUpperCase = new RegExp(/(?=.*[A-Z])/);
+    /*    const checkDigit = new RegExp(/(?=.*\d)/);
+        const checkLowerCase = new RegExp(/(?=.*[a-z])/);
+        const checkUpperCase = new RegExp(/(?=.*[A-Z])/);
 
-    const isDigit = checkDigit.test(password);
-    if (!isDigit) {
-      errors.push(validationErrors.PASSWORD_MUST_HAVE_DIGIT);
-    }
+        const isDigit = checkDigit.test(password);
+        if (!isDigit) {
+          errors.push(validationErrors.PASSWORD_MUST_HAVE_DIGIT);
+        }
 
-    const isLowerCase = checkLowerCase.test(password);
-    if (!isLowerCase) {
-      errors.push(validationErrors.PASSWORD_MUST_HAVE_LOWER_CASE);
-    }
+        const isLowerCase = checkLowerCase.test(password);
+        if (!isLowerCase) {
+          errors.push(validationErrors.PASSWORD_MUST_HAVE_LOWER_CASE);
+        }
 
-    const isUpperCase = checkUpperCase.test(password);
-    if (!isUpperCase) {
-      errors.push(validationErrors.PASSWORD_MUST_HAVE_UPPER_CASE);
-    }*/
+        const isUpperCase = checkUpperCase.test(password);
+        if (!isUpperCase) {
+          errors.push(validationErrors.PASSWORD_MUST_HAVE_UPPER_CASE);
+        }*/
 
     return errors;
-  }
+  };
 
   repeatedPasswordValidation = (repeatedPassword: string, password: string) => {
     const errors: validationErrors[] = [];
@@ -57,7 +57,7 @@ class ValidationService implements IValidationMethods{
       errors.push(validationErrors.PASSWORDS_ARE_NOT_THE_SAME);
     }
     return errors;
-  }
+  };
 
   emailValidation = (email: string) => {
     const errors: validationErrors[] = [];
@@ -66,7 +66,7 @@ class ValidationService implements IValidationMethods{
       errors.push(validationErrors.EMAIL_IS_NOT_VALID);
     }
     return errors;
-  }
+  };
 }
 
 

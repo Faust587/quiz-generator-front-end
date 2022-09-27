@@ -1,6 +1,6 @@
-import {FC} from "react";
+import { FC } from "react";
 import "./errorBlockStyles.scss";
-import {validationErrors} from "../../types/validationError";
+import { validationErrors } from "../../types/validationError";
 
 type propsType = {
   errors: validationErrors[]
@@ -16,9 +16,9 @@ export const AuthErrorContainer: FC<propsType> = (
     <div className="authorization-error-container">
       {
         errors.map(error => {
-          return <p key={error}>{error}</p>;
+          return <p key={ error }>{ error }</p>;
         })
       }
     </div>
   );
-}
+};
