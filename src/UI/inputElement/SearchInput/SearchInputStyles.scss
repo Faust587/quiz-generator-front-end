@@ -1,0 +1,72 @@
+.input-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.search-title {
+  padding-left: 20px;
+  font-family: "JetBrainsMono", sans-serif;
+  font-size: 24px;
+
+  &.disabled {
+    display: none;
+  }
+}
+
+.search-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  box-shadow: 0 0 6px #bfc4e7;
+  transition: 0.25s;
+
+  &:hover {
+    transition: 0.5s;
+    box-shadow: 0 0 10px #7b95c4;
+  }
+
+  &.extended {
+    width: 100%;
+    transition: 0.5s;
+  }
+}
+
+.search-icon {
+  width: 40px;
+  height: 40px;
+
+  &.disabled {
+    display: none;
+  }
+}
+
+.search-input {
+  padding-left: 10px;
+  width: 95%;
+  font-size: 20px;
+  font-family: "JetBrainsMono", sans-serif;
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 744px) {
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+}

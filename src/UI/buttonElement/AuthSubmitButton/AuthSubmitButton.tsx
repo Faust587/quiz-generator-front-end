@@ -1,9 +1,8 @@
 import React, {FC} from "react";
-import "./buttonStyles.scss";
+import "./AuthSubmitButtonStyles.scss";
 
 type propsType = {
   text: string
-  submit: (event: React.FormEvent<EventTarget>) => void
 }
 
 export const AuthSubmitButton: FC<propsType> = (
