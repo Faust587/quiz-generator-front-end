@@ -1,55 +1,9 @@
-.generator-header {
-  &-container {
-    width: 100%;
-  }
-  &-top-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  &-navbar {
-    width: 100%;
-    display: flex;
-  }
-}
-
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-  .generator-header {
-    &-container {
-      min-height: 100px;
-      background-color: gray;
-    }
-    &-top-section {
-      padding: 10px 20px 0;
-      &__quiz-name {
-        font-size: 22px;
-        background-color: transparent;
-        &:focus {
-          background-color: #b2b2b2;
-        }
-      }
-      &__home-button {
-        background-color: transparent;
-        height: 70px;
-        width: 70px;
-      }
-    }
-    &-navbar {
-      width: 100%;
-      &__question {
 
-      }
-    }
-  }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 600px) {
-
-}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
 
 }
