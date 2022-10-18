@@ -14,7 +14,7 @@ const GeneratorNavBarComponent: FC<propTypes> = (
 ) => {
   const setQuestionPage = () => setPage(true);
 
-  const setSecondPage = () => setPage(false);
+  const setSettingsPage = () => setPage(false);
 
   return (
     <nav className="generator-page-navbar">
@@ -27,7 +27,7 @@ const GeneratorNavBarComponent: FC<propTypes> = (
         </div>
         <div
           className="generator-page-navbar-item-container__item"
-          onClick={ setSecondPage }
+          onClick={ setSettingsPage }
         >
           Settings
         </div>
