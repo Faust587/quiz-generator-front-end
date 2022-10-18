@@ -1,53 +1,37 @@
 import "./GeneratorHeaderStyles.scss";
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, FC, memo, SetStateAction } from "react";
 import userLogo from "../../../assets/icons/user-icon.svg";
 
-type propTypes = {
-  page: boolean,
-  setPage: Dispatch<SetStateAction<boolean>>
+type propsType = {
+  quizName: string,
+  setQuizName: Dispatch<SetStateAction<string>>
 }
 
-export const GeneratorHeader: FC<propTypes> = (
+const GeneratorHeaderComponent: FC<propsType> = (
   {
-    page,
-    setPage
+    quizName,
+    setQuizName
   }
 ) => {
-  const [ quizName, setQuizName ] = useState("Quiz name");
 
   return (
-    <div className="generator-header-container">
-      <section className="generator-header-top-section">
-        <input
-          className="generator-header-top-section__quiz-name"
-          value={ quizName }
-          size={ quizName.length - 3 } // perfect for input size
-          maxLength={ 20 }
-          minLength={ 1 }
-          onChange={ e => setQuizName(e.target.value) }
-          type="text"
+    <header className="generator-header">
+      <input
+        value={ quizName }
+        onChange={ event => setQuizName(event.target.value) }
+        type="text"
+        placeholder="Type your quiz name"
+        className="generator-header__quiz-name"
+      />
+      <button className="generator-header__home-page-button">
+        <img
+          src={ userLogo }
+          alt="home page"
+          className="generator-header__home-page-icon"
         />
-        <button className="generator-header-top-section__home-button">
-          <img
-            src={ userLogo }
-            alt="Home page"
-          />
-        </button>
-      </section>
-      <nav className="generator-header-navbar">
-        <div
-          className={ `generator-header-navbar__question ${ page ? "active" : "inactive" }` }
-          onClick={ () => setPage(!page) }
-        >
-          Questions
-        </div>
-        <div
-          className={ `generator-header-navbar__settings ${ page ? "inactive" : "active" }` }
-          onClick={ () => setPage(!page) }
-        >
-          Settings
-        </div>
-      </nav>
-    </div>
+      </button>
+    </header>
   );
 };
+
+export const GeneratorHeader = memo(GeneratorHeaderComponent);
