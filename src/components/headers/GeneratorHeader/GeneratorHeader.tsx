@@ -1,23 +1,37 @@
 import "./GeneratorHeaderStyles.scss";
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, FC, memo, SetStateAction } from "react";
 import userLogo from "../../../assets/icons/user-icon.svg";
 
-type propTypes = {
-  page: boolean,
-  setPage: Dispatch<SetStateAction<boolean>>
+type propsType = {
+  quizName: string,
+  setQuizName: Dispatch<SetStateAction<string>>
 }
 
-export const GeneratorHeader: FC<propTypes> = (
+const GeneratorHeaderComponent: FC<propsType> = (
   {
-    page,
-    setPage
+    quizName,
+    setQuizName
   }
 ) => {
-  const [ quizName, setQuizName ] = useState("Quiz name");
 
   return (
-    <div className="generator-header-container">
-
-    </div>
+    <header className="generator-header">
+      <input
+        value={ quizName }
+        onChange={ event => setQuizName(event.target.value) }
+        type="text"
+        placeholder="Type your quiz name"
+        className="generator-header__quiz-name"
+      />
+      <button className="generator-header__home-page-button">
+        <img
+          src={ userLogo }
+          alt="home page"
+          className="generator-header__home-page-icon"
+        />
+      </button>
+    </header>
   );
 };
+
+export const GeneratorHeader = memo(GeneratorHeaderComponent);
