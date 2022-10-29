@@ -1,9 +1,10 @@
 import "./AuthFormsStyles.scss";
-import { AuthInput } from "../../../UI/inputElement/AuthInput/AuthInput";
+import { AuthInput } from "../../../UI/inputElement/authInput/AuthInput";
 import React, { useState } from "react";
 import { validationErrors } from "../../../types/validationError";
 import { AuthErrorContainer } from "../../errorBlock/AuthErrorContainer";
 import { AuthSubmitButton } from "../../../UI/buttonElement/AuthSubmitButton/AuthSubmitButton";
+import ValidationService from "../../../services/validationService";
 
 export const SignInForm = () => {
 
@@ -15,8 +16,40 @@ export const SignInForm = () => {
   const [ usernameError, setUsernameError ] = useState(false);
   const [ passwordError, setPasswordError ] = useState(false);
 
+  const dataValidation = () => {
+    const usernameValidation = ValidationService.usernameValidation(username);
+    const passwordValidation = ValidationService.passwordValidation(password);
+
+    const err: validationErrors[] = [];
+
+    if (usernameValidation.length) {
+      err.push(...usernameValidation);
+      setUsernameError(true);
+    } else {
+      setUsernameError(false);
+    }
+
+    if (passwordValidation.length) {
+      err.push(...passwordValidation);
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
+    }
+
+    if (!err.length) return true;
+
+    setErrors(err);
+    return false;
+  }
+
   const signInSubmit = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
+    const validationResult = dataValidation();
+    if (!validationResult) {
+      //fetch data
+    } else {
+      //show error
+    }
   };
 
   return (

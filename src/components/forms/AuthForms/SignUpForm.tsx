@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import "./AuthFormsStyles.scss";
-import { AuthInput } from "../../../UI/inputElement/AuthInput/AuthInput";
+import { AuthInput } from "../../../UI/inputElement/authInput/AuthInput";
 import { AuthSubmitButton } from "../../../UI/buttonElement/AuthSubmitButton/AuthSubmitButton";
 import { validationErrors } from "../../../types/validationError";
 import { AuthErrorContainer } from "../../errorBlock/AuthErrorContainer";
@@ -53,12 +53,10 @@ export const SignUpForm: FC = (): JSX.Element => {
       setEmailError(false);
     }
 
-    if (err.length) {
-      setErrors(err);
-      return false;
-    } else {
-      return true;
-    }
+    if (!err.length) return true;
+
+    setErrors(err);
+    return false;
   };
 
   const signUpSubmit = (e: React.FormEvent<EventTarget>) => {
