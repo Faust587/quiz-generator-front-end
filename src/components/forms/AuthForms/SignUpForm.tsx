@@ -1,24 +1,23 @@
-import React, { FC, useState } from "react";
+import React, {FC, useState} from "react";
 import "./AuthFormsStyles.scss";
-import { AuthInput } from "../../../UI/inputElement/AuthInput/AuthInput";
-import { AuthSubmitButton } from "../../../UI/buttonElement/AuthSubmitButton/AuthSubmitButton";
-import { validationErrors } from "../../../types/validationError";
-import { AuthErrorContainer } from "../../errorBlock/AuthErrorContainer";
+import {AuthInput} from "../../../UI/inputElement/authInput/AuthInput";
+import {AuthSubmitButton} from "../../../UI/buttonElement/AuthSubmitButton/AuthSubmitButton";
+import {AuthErrorContainer} from "../../errorBlock/AuthErrorContainer";
 import ValidationService from "../../../services/validationService";
 
 export const SignUpForm: FC = (): JSX.Element => {
 
-  const [ errors, setErrors ] = useState<validationErrors[]>([]);
+  const [errors, setErrors] = useState<string[]>([]);
 
-  const [ username, setUsername ] = useState("");
-  const [ email, setEmail ] = useState("");
-  const [ password, setPassword ] = useState("");
-  const [ repeatedPassword, setRepeatedPassword ] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [repeatedPassword, setRepeatedPassword] = useState("");
 
-  const [ usernameError, setUsernameError ] = useState(false);
-  const [ emailError, setEmailError ] = useState(false);
-  const [ passwordError, setPasswordError ] = useState(false);
-  const [ repeatedPasswordError, setRepeatedPasswordError ] = useState(false);
+  const [usernameError, setUsernameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [repeatedPasswordError, setRepeatedPasswordError] = useState(false);
 
   const dataValidation = () => {
     const usernameValidation = ValidationService.usernameValidation(username);
@@ -26,7 +25,7 @@ export const SignUpForm: FC = (): JSX.Element => {
     const repeatedPasswordValidation = ValidationService.repeatedPasswordValidation(repeatedPassword, password);
     const emailValidation = ValidationService.emailValidation(email);
 
-    const err: validationErrors[] = [];
+    const err: string[] = [];
 
     if (usernameValidation.length !== 0) {
       err.push(...usernameValidation);
@@ -53,12 +52,10 @@ export const SignUpForm: FC = (): JSX.Element => {
       setEmailError(false);
     }
 
-    if (err.length) {
-      setErrors(err);
-      return false;
-    } else {
-      return true;
-    }
+    if (!err.length) return true;
+
+    setErrors(err);
+    return false;
   };
 
   const signUpSubmit = (e: React.FormEvent<EventTarget>) => {
@@ -70,15 +67,15 @@ export const SignUpForm: FC = (): JSX.Element => {
   return (
     <form
       className="authorization-form"
-      onSubmit={ signUpSubmit }
+      onSubmit={signUpSubmit}
     >
       <div className="authorization-input-wrapper">
         <AuthInput
           name="username"
           type="text"
-          value={ username }
-          setValue={ setUsername }
-          isError={ usernameError }
+          value={username}
+          setValue={setUsername}
+          isError={usernameError}
           placeholder="Username"
         />
       </div>
@@ -86,9 +83,9 @@ export const SignUpForm: FC = (): JSX.Element => {
         <AuthInput
           name="email"
           type="text"
-          value={ email }
-          setValue={ setEmail }
-          isError={ emailError }
+          value={email}
+          setValue={setEmail}
+          isError={emailError}
           placeholder="Email"
         />
       </div>
@@ -96,9 +93,9 @@ export const SignUpForm: FC = (): JSX.Element => {
         <AuthInput
           name="password"
           type="password"
-          value={ password }
-          setValue={ setPassword }
-          isError={ passwordError }
+          value={password}
+          setValue={setPassword}
+          isError={passwordError}
           placeholder="Password"
         />
       </div>
@@ -106,15 +103,15 @@ export const SignUpForm: FC = (): JSX.Element => {
         <AuthInput
           name="repeated password"
           type="password"
-          value={ repeatedPassword }
-          setValue={ setRepeatedPassword }
-          isError={ repeatedPasswordError }
+          value={repeatedPassword}
+          setValue={setRepeatedPassword}
+          isError={repeatedPasswordError}
           placeholder="Repeat password"
         />
       </div>
       {
         errors.length !== 0 ? (
-          <AuthErrorContainer errors={ errors } />
+          <AuthErrorContainer errors={errors}/>
         ) : null
       }
       <div className="authorization-button-wrapper">

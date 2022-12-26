@@ -17,4 +17,3 @@ export enum validationErrors {
   EMAIL_IS_NOT_VALID = "Email is not valid",
   EMAIL_IS_BUSY = "Email is busy"
 }
-

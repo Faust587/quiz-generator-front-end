@@ -1,58 +1,101 @@
 import "./AuthFormsStyles.scss";
-import { AuthInput } from "../../../UI/inputElement/AuthInput/AuthInput";
-import React, { useState } from "react";
-import { validationErrors } from "../../../types/validationError";
-import { AuthErrorContainer } from "../../errorBlock/AuthErrorContainer";
-import { AuthSubmitButton } from "../../../UI/buttonElement/AuthSubmitButton/AuthSubmitButton";
+import {AuthInput} from "../../../UI/inputElement/authInput/AuthInput";
+import React, {useState} from "react";
+import {AuthErrorContainer} from "../../errorBlock/AuthErrorContainer";
+import ValidationService from "../../../services/validationService";
+import {FailResponse, login} from "../../../services/authService";
+import axios, {AxiosError} from "axios";
+import {useNavigate} from "react-router-dom";
 
 export const SignInForm = () => {
 
-  const [ errors, setErrors ] = useState<validationErrors[]>([]);
+  const navigate = useNavigate();
 
-  const [ username, setUsername ] = useState("");
-  const [ password, setPassword ] = useState("");
+  const [errors, setErrors] = useState<string[]>([]);
 
-  const [ usernameError, setUsernameError ] = useState(false);
-  const [ passwordError, setPasswordError ] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const signInSubmit = (e: React.FormEvent<EventTarget>) => {
+  const [usernameError, setUsernameError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+
+  const dataValidation = () => {
+    const usernameValidation = ValidationService.usernameValidation(username);
+    const passwordValidation = ValidationService.passwordValidation(password);
+
+    const err: string[] = [];
+
+    if (usernameValidation.length) {
+      err.push(...usernameValidation);
+      setUsernameError(true);
+    } else {
+      setUsernameError(false);
+    }
+
+    if (passwordValidation.length) {
+      err.push(...passwordValidation);
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
+    }
+
+    if (!err.length) {
+      setErrors([])
+      return true;
+    }
+    setErrors(err);
+    return false;
+  }
+
+  const signInSubmit = async (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
+    const validationResult = dataValidation();
+    if (!validationResult) return;
+    const loginResponse = await login(username, password);
+    if (axios.isAxiosError(loginResponse)) {
+      const errorResponse = loginResponse as AxiosError<FailResponse>;
+      const errorMessage = (errorResponse?.response?.data?.message) ? [errorResponse.response.data.message] : ["Unknown error"];
+      setErrors(errorMessage);
+    } else {
+      localStorage.setItem("accessToken", loginResponse.data.accessToken);
+      navigate("/main-page");
+    }
   };
 
   return (
     <form
       className="authorization-form"
-      onSubmit={ signInSubmit }
+      onSubmit={signInSubmit}
     >
       <div className="authorization-input-wrapper">
         <AuthInput
           name="username"
           placeholder="Username"
-          isError={ usernameError }
+          isError={usernameError}
           type="text"
-          value={ username }
-          setValue={ setUsername }
+          value={username}
+          setValue={setUsername}
         />
       </div>
       <div className="authorization-input-wrapper">
         <AuthInput
           name="password"
           placeholder="Password"
-          isError={ passwordError }
+          isError={passwordError}
           type="password"
-          value={ password }
-          setValue={ setPassword }
+          value={password}
+          setValue={setPassword}
         />
       </div>
       {
         errors.length !== 0 ? (
-          <AuthErrorContainer errors={ errors } />
+          <AuthErrorContainer errors={errors}/>
         ) : null
       }
       <div className="authorization-button-wrapper">
-        <AuthSubmitButton
-          text="Log In"
-        />
+        <button className="authorization-submit-button" type="submit">
+          Log In
+        </button>
       </div>
     </form>
   );

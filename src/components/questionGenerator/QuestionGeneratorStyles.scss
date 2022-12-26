@@ -1,0 +1,33 @@
+.question-generator {
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* For mobile screen */
+@media screen and (max-width: 600px) {
+  .question-generator {
+    &__inner {
+      width: 100vw;
+    }
+  }
+}
+
+/* For tablet screen */
+@media screen and (min-width: 600px) {
+  .question-generator {
+    &__inner {
+      width: 60vw;
+    }
+  }
+}
+
+/* For desktop screen */
+@media screen and (min-width: 1200px) {
+  .question-generator {
+    &__inner {
+      width: 40vw;
+    }
+  }
+}

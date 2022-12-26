@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 export const authSlice = createSlice({
   name: "authStatus",
   initialState: {
-    isAuth: false
+    isAuth: false,
+    username: ""
   },
   reducers: {
     setOffline: state => {
@@ -11,12 +12,16 @@ export const authSlice = createSlice({
     },
     setOnline: state => {
       state.isAuth = true;
+    },
+    setUsername: (state, data) => {
+      state.username = data.payload;
     }
   }
 });
 
 export const {
   setOffline,
-  setOnline
+  setOnline,
+  setUsername
 } = authSlice.caseReducers;
 export default authSlice.reducer;

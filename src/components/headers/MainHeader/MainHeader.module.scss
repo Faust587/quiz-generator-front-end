@@ -1,0 +1,70 @@
+.header {
+  min-height: 43vh;
+}
+
+.container {
+  height: 100%;
+}
+
+.title, .subtitle {
+  color: #ffffff;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 35px;
+  padding-bottom: 30px;
+}
+
+.formContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*
+  Phone
+*/
+@media only screen and (max-width: 600px) {
+  .userIcon {
+    width: 80px;
+    height: 80px;
+  }
+  .container {
+    background: linear-gradient(180deg, rgba(137,126,181,1) 65.65%, rgba(246,247,247,1) 65.65%);
+    padding: 0 30px;
+  }
+  .title {
+    font-size: 32px;
+  }
+  .subtitle {
+    padding-top: 20px;
+    font-size: 20px;
+  }
+}
+
+/*
+  Tablet & Desktop
+*/
+@media only screen and (min-width: 600px) {
+  .userIcon {
+    width: 105px;
+    height: 105px;
+  }
+  .header {
+    background: linear-gradient(180deg, rgba(137,126,181,1) 62.6%, rgba(246,247,247,1) 62.6%);
+  }
+  .container {
+    margin: 0 auto;
+    max-width: 1440px;
+    padding: 0 45px;
+  }
+  .title {
+    font-size: 50px;
+  }
+  .subtitle {
+    padding-top: 25px;
+    font-size: 20px;
+  }
+}

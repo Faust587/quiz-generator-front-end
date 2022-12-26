@@ -2,11 +2,12 @@ import axios from "axios";
 
 const api = axios.create({
   withCredentials: true,
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: "http://192.168.1.73:4000/",
 });
 
 api.interceptors.request.use((config) => {
-  const accessToken = `Bearer ${ localStorage.getItem("accessToken") }`;
+  if (!localStorage.getItem("accessToken")) return config;
+  const accessToken = `Bearer ${localStorage.getItem("accessToken")}`;
   config.headers = {
     ...config.headers,
     Authorization: accessToken
@@ -14,11 +15,25 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+type refreshTokenResponse = {
+  accessToken: string;
+}
+
 api.interceptors.response.use((config) => config,
   async (error) => {
-    if (error.response.status === 401) {
-      console.log(error);
+    const originalRequest = error.config;
+    if (error.response?.status === 401 && error.config && !error.config._isRetry) {
+      originalRequest.isRetry = true;
+      const tokensPair = await axios.get<refreshTokenResponse>(
+        "http://localhost:4000/auth/refresh",
+        {withCredentials: true}
+      ).catch((e) => e);
+      if (axios.isAxiosError(tokensPair)) return tokensPair;
+      const { accessToken } = tokensPair.data;
+      localStorage.setItem("accessToken", accessToken);
+      return api.request(originalRequest);
     }
+    return error;
   });
 
 export default api;

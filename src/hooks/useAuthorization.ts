@@ -1,7 +1,9 @@
 function useAuthorization() {
-  const token = localStorage.getItem("token");
-  if (!token) return false;
-  // TODO: Fetch data about user
+  const token = localStorage.getItem("accessToken");
+
+  return {
+    isAuth: !!token,
+  }
 }
 
 export default useAuthorization;
