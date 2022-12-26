@@ -1,24 +1,22 @@
-import "./SearchFormStyles.scss";
+import styles from "./SearchForm.module.scss";
 
 export const SearchForm = () => {
-
   return (
-    <div className="search-form-container">
-      <h1 className="search-form-title">
-        Enter your quiz code
-      </h1>
-      <h2 className="search-form-subtitle">
-        To start a new quiz
-      </h2>
-      <form className="search-form">
+    <div className={styles.container}>
+      <h1 className={styles.title}>Enter quiz code</h1>
+      <h2 className={styles.subtitle}>To start a quiz</h2>
+      <form
+        className={styles.form}
+        action=""
+      >
         <input
+          className={styles.input}
           type="text"
-          className="search-form-input"
           placeholder="Ex: cS09S"
         />
         <button
+          className={styles.submitButton}
           type="submit"
-          className="search-form-submit-button"
         >
           Enter
         </button>

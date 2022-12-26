@@ -1,16 +1,15 @@
 import { validationErrors } from "../types/validationError";
 
 export interface IValidationMethods {
-  usernameValidation: (username: string) => validationErrors[],
-  passwordValidation: (password: string) => validationErrors[],
+  usernameValidation: (username: string) => string[],
+  passwordValidation: (password: string) => string[],
   repeatedPasswordValidation: (repeatedPassword: string, password: string) => validationErrors[],
   emailValidation: (email: string) => validationErrors[],
 }
 
 class ValidationService implements IValidationMethods {
-
   usernameValidation = (username: string) => {
-    const errors: validationErrors[] = [];
+    const errors: string[] = [];
     if (username.length >= 15) {
       errors.push(validationErrors.USERNAME_MUST_HAVE_LESS);
     }
@@ -21,32 +20,13 @@ class ValidationService implements IValidationMethods {
   };
 
   passwordValidation = (password: string) => {
-    const errors: validationErrors[] = [];
+    const errors: string[] = [];
     if (password.length >= 15) {
       errors.push(validationErrors.PASSWORD_MUST_HAVE_LESS);
     }
     if (password.length <= 7) {
       errors.push(validationErrors.PASSWORD_MUST_HAVE_MORE);
     }
-
-    /*    const checkDigit = new RegExp(/(?=.*\d)/);
-        const checkLowerCase = new RegExp(/(?=.*[a-z])/);
-        const checkUpperCase = new RegExp(/(?=.*[A-Z])/);
-
-        const isDigit = checkDigit.test(password);
-        if (!isDigit) {
-          errors.push(validationErrors.PASSWORD_MUST_HAVE_DIGIT);
-        }
-
-        const isLowerCase = checkLowerCase.test(password);
-        if (!isLowerCase) {
-          errors.push(validationErrors.PASSWORD_MUST_HAVE_LOWER_CASE);
-        }
-
-        const isUpperCase = checkUpperCase.test(password);
-        if (!isUpperCase) {
-          errors.push(validationErrors.PASSWORD_MUST_HAVE_UPPER_CASE);
-        }*/
 
     return errors;
   };
@@ -69,5 +49,23 @@ class ValidationService implements IValidationMethods {
   };
 }
 
-
 export default new ValidationService();
+//TODO: DO SOMETHING
+/*    const checkDigit = new RegExp(/(?=.*\d)/);
+    const checkLowerCase = new RegExp(/(?=.*[a-z])/);
+    const checkUpperCase = new RegExp(/(?=.*[A-Z])/);
+
+    const isDigit = checkDigit.test(password);
+    if (!isDigit) {
+      errors.push(validationErrors.PASSWORD_MUST_HAVE_DIGIT);
+    }
+
+    const isLowerCase = checkLowerCase.test(password);
+    if (!isLowerCase) {
+      errors.push(validationErrors.PASSWORD_MUST_HAVE_LOWER_CASE);
+    }
+
+    const isUpperCase = checkUpperCase.test(password);
+    if (!isUpperCase) {
+      errors.push(validationErrors.PASSWORD_MUST_HAVE_UPPER_CASE);
+    }*/

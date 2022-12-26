@@ -3,7 +3,7 @@ import "./errorBlockStyles.scss";
 import { validationErrors } from "../../types/validationError";
 
 type propsType = {
-  errors: validationErrors[]
+  errors: string[]
 }
 
 export const AuthErrorContainer: FC<propsType> = (
