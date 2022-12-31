@@ -5,7 +5,7 @@ import {ModalWindow} from "../../components/modalWindow/ModalWindow";
 import {QuizPageContext} from "../../context/quizPageContext";
 import {useState} from "react";
 import {CreateQuizForm} from "../../components/forms/CreateQuizForm/CreateQuizForm";
-import {TQuiz} from "../../services/quizService";
+import {TQuiz} from "../../store/reducer/quizSlice";
 
 export const MainPage = () => {
   const [activeModal, setActiveModal] = useState(false);

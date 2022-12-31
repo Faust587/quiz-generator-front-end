@@ -1,5 +1,5 @@
 import {createContext, Dispatch, SetStateAction, useState} from "react";
-import {TQuiz} from "../services/quizService";
+import {TQuiz} from "../store/reducer/quizSlice";
 
 type quizPageContextValue = {
   activeModal: boolean;
