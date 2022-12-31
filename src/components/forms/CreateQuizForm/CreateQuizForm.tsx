@@ -5,6 +5,9 @@ import {createNewQuiz} from "../../../services/quizService";
 import axios, {AxiosError} from "axios";
 import {FailResponse} from "../../../services/authService";
 import {QuizPageContext} from "../../../context/quizPageContext";
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {addQuiz} from "../../../store/reducer/quizSlice";
 
 export const CreateQuizForm = () => {
 
@@ -15,6 +18,9 @@ export const CreateQuizForm = () => {
   const [onlyAuthUsers, setOnlyAuthUsers] = useState(false);
 
   const {setActiveModal, setQuizList} = useContext(QuizPageContext);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = async (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
@@ -27,8 +33,10 @@ export const CreateQuizForm = () => {
         setErrors(errorMessage);
       }
     } else {
-      setQuizList(prevState => [...prevState, reqResult.data])
+      setQuizList(prevState => [...prevState, reqResult.data]);
       setActiveModal(false);
+      dispatch(addQuiz(reqResult.data));
+      navigate("../quiz-generator");
     }
   }
 

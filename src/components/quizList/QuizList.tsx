@@ -1,5 +1,5 @@
 import styles from "./QuizList.module.scss";
-import {getQuizList, TQuiz} from "../../services/quizService";
+import {getQuizList} from "../../services/quizService";
 import {useContext, useLayoutEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
@@ -91,7 +91,7 @@ export const QuizList = () => {
               if (!quiz.closed) return null;
             }
             return (
-              <div key={quiz._id} className={styles.itemWrapper}>
+              <div key={quiz.id} className={styles.itemWrapper}>
                 <QuizItem
                   title={quiz.name}
                   iconURL={quizIcon1}
