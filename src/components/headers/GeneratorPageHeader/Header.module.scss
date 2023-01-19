@@ -1,6 +1,6 @@
 .wrapper {
   width: 100%;
-  height: 27vh;
+  padding-bottom: 20px;
   background-color: #897EB5FF;
 }
 
@@ -25,22 +25,192 @@
   height: 100%;
 }
 
+.formWindow {
+  background-color: #ffffff;
+  border-radius: 5px;
+}
+
+.quizNameContainer {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.updateForm {
+  position: relative;
+}
+
+.formHeader {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 30px 0;
+  text-align: center;
+  font-size: 30px;
+  color: #ffffff;
+  background-color: #8b80b6;
+}
+
+.quizNameText {
+  font-size: 20px;
+}
+
+.quizNameInput {
+  margin-top: 10px;
+  padding: 0 20px;
+  width: 80%;
+  height: 40px;
+  font-size: 16px;
+  background-color: #f3f3f3;
+  border-radius: 10px;
+  &::placeholder {
+    color: #C3C7CF;
+  }
+}
+
+.checkbox {
+  width: 15px;
+  height: 15px;
+  appearance: auto;
+  accent-color: #8b80b6;
+}
+
+.topSection {
+  display: flex;
+  align-items: end;
+  margin-bottom: 20px;
+}
+
+.formContent {
+  padding: 10px 20px;
+}
+
+.closeUpdateForm {
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  background-color: #e44061;
+  color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 2px 3px #000000;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.codeContainer {
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+.codeText {
+  margin-right: 10px;
+  padding: 0 15px;
+  height: 100%;
+  color: #897EB5;
+  font-size: 24px;
+  border-radius: 5px;
+  background-color: #f3f3f3;
+  transition: 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #8b80b6;
+    color: #ffffff;
+    transition: 0.3s;
+  }
+}
+
+.refreshCode {
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  background-color: #9ECA8F;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.middleSection {
+  margin: 20px 0;
+}
+
+.bottomSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.deleteButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.formButton {
+  margin: 0 5px;
+  padding: 5px 15px;
+  border-radius: 3px;
+  font-size: 18px;
+}
+
+.formButtonsContainer {
+  width: 45%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.green {
+  background-color: #9ECA8F;
+  color: #ffffff;
+}
+
+.red {
+  background-color: #e44061;
+  color: #ffffff;
+}
+
+.horizontalLine {
+  width: 100%;
+  height: 2px;
+  background-color: #c4c1c1;
+}
+
+.checkboxContainer {
+  margin-top: 10px;
+}
+
+.checkboxDescription {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #C3C7CF;
+}
+
 /*  Phone  */
 @media only screen and (max-width: 600px) {
-  .phoneContainer {
+  .tabletContainer {
     display: block;
+  }
+
+  .formWindow {
+    width: 100vw;
   }
 }
 
 /*  Table  */
-@media only screen and (min-width: 601px) and (max-width: 1000px) {
+@media only screen and (min-width: 601px) and (max-width: 1140px) {
   .tabletContainer {
     display: block;
+  }
+
+  .formWindow {
+    width: 70vw;
   }
 }
 
 /*  Desktop  */
-@media only screen and (min-width: 1001px) {
+@media only screen and (min-width: 1141px) {
   .desktopContainer {
     display: block;
   }

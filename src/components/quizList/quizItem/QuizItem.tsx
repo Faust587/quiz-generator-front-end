@@ -1,14 +1,8 @@
-import styles from "./QuizItem.module.scss";
 import { FC, useState } from "react";
-import authOnlyIcon from "../../../assets/icons/auth-only.svg";
-import closedIcon from "../../../assets/icons/closed.svg";
-import successIcon from "../../../assets/icons/success_icon.svg";
-import copyIcon from "../../../assets/icons/copy-icon.svg";
-import { addQuiz, TQuiz } from "../../../store/reducer/quizSlice";
-import { getQuizByCode } from "../../../services/quizService";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import styles from "./QuizItem.module.scss";
+import { closedIcon, successIcon, copyIcon, authOnlyIcon } from "../../../assets"
+import { TQuiz } from "../../../store/reducer/quizSlice";
 
 type propsType = {
   iconURL: string,

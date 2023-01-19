@@ -15,7 +15,7 @@ export const MainPage = () => {
     <div className="main-page-container">
       <QuizPageContext.Provider value={{activeModal, setActiveModal, quizList, setQuizList}}>
         {
-          activeModal ? <ModalWindow>
+          activeModal ? <ModalWindow setIsOpen={setActiveModal}>
             <CreateQuizForm />
           </ModalWindow> : null
         }

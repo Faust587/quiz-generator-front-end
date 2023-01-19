@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.wrapper {
+  width: 600px;
+}
+
+.addQuestionButton {
+  font-size: 20px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #e3ddff;
+  color: #8b80b6;
+  box-sizing: border-box;
+  transition: 0.2s;
+  box-shadow: 5px 5px 0 #ADA9BB;
+  &:hover {
+    transition: 0.4s;
+    background-color: #8b80b6;
+    color: #e3ddff;
+  }
+  &:active {
+    transition: 0.1s;
+    box-shadow: none;
+  }
+  &Container {
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+  }
+}

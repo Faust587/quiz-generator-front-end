@@ -1,5 +1,5 @@
 import styles from "./MainHeader.module.scss";
-import userIcon from "../../../assets/icons/user-icon.svg";
+import { mainIcon } from "../../../assets";
 import {SearchForm} from "../../forms/SearchForm/SearchForm";
 
 export const MainHeader = () => {
@@ -13,7 +13,7 @@ export const MainHeader = () => {
           </div>
           <img
             className={styles.userIcon}
-            src={userIcon}
+            src={mainIcon}
             alt="profile icon"
           />
         </div>

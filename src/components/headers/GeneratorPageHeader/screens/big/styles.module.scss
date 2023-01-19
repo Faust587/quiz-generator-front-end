@@ -41,6 +41,10 @@
   color: #393C54;
   padding: 0 20px;
   font-size: 20px;
+  border: none;
+  &:focus {
+    outline: none;
+  }
 }
 
 .buttonContainer {

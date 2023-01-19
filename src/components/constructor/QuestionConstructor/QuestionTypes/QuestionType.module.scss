@@ -1,0 +1,46 @@
+.textInput {
+  width: 100%;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+  background-color: #ffffff;
+}
+
+.radioButton {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background-color: #8b80b6;
+  border: 5px solid #ffffff;
+  &Container {
+    margin-right: 10px;
+  }
+}
+
+.descriptionInput {
+  width: 70%;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px;
+  background-color: #ffffff;
+}
+
+.removeItemButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: #393C54;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  &Container {
+    margin-left: 5px;
+  }
+}
+
+.radioButtonItem {
+  display: flex;
+  align-items: center;
+}

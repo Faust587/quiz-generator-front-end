@@ -1,0 +1,158 @@
+.block {
+  width: 100%;
+  background-color: #e3ddff;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 20px 0;
+  box-shadow: 5px 5px 0 #ADA9BB;
+  transition: 0.2s;
+
+  &Focused {
+    transition: 0.2s;
+    box-shadow: 7px 7px 5px #ADA9BB;
+  }
+}
+
+.addVariantButton {
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #9ECA8F;
+  color: #ffffff;
+  &Container {
+    margin-top: 10px;
+  }
+  &:hover {
+    background-color: #baeeaa;
+    color: #000000;
+  }
+}
+
+.isRequiredLabel {
+  margin-right: 20px;
+  font-size: 14px;
+  color: #ff1746;
+  display: flex;
+  align-items: center;
+}
+
+.optionContainer {
+  margin: 10px 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selectType {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+.nameInput {
+  border: none;
+  &:focus {
+    outline: none;
+  }
+}
+
+.name {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.iconButton {
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  border-radius: 5px;
+  &Red {
+    background-color: rgba(255, 40, 57, 0.33);
+    transition: 0.5s;
+    &:hover {
+      transition: 0.5s;
+      background-color: #e44061;
+    }
+  }
+  &Gray {
+    background-color: #ffffff;
+    transition: 0.5s;
+    &:hover {
+      transition: 0.5s;
+      background-color: #f9f871;
+    }
+  }
+}
+
+.questionValue {
+  padding: 20px 0;
+}
+
+.parameters {
+  display: flex;
+  justify-content: space-between;
+}
+
+.parameterContainer {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  outline: none;
+  width: 18px;
+  height: 18px;
+  appearance: auto;
+  accent-color: #ff1746;
+}
+
+.title {
+  font-size: 14px;
+  &Red {
+    color: #ff1746;
+  }
+}
+
+.description {
+  font-size: 14px;
+  color: #393C54;
+  padding-left: 10px;
+}
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .nameInput {
+
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 600px) and (max-width: 1199px) {
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .nameInput {
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 20px;
+    background-color: #ffffff;
+  }
+}
+
