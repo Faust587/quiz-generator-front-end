@@ -1,70 +1,47 @@
 import styles from "./styles.module.scss";
-import profileIcon from "../../../../../assets/icons/user-icon.svg";
-import refreshIcon from "../../../../../assets/icons/reload-icon.svg";
-import React, { useContext, useEffect, useState } from "react";
+import { mainIcon, reloadIcon } from "../../../../../assets"
+import React, {Dispatch, FC, SetStateAction} from "react";
 import Swal from "sweetalert2";
-import { refreshQuizCode, updateQuizParameters } from "../../../../../services/quizService";
-import { GeneratorPageContext } from "../../../../../context/generatorPageContext";
-import axios, { AxiosError } from "axios";
-import { FailResponse } from "../../../../../services/authService";
+import {useNavigate} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../../../../hooks/redux";
+import {updateQuizParametersById, refreshQuizCode, deleteQuizByCode} from "../../../../../store/reducer/quizSlice";
 
-export const DesktopHeader = () => {
+type propTypes = {
+  id: string,
+  name: string,
+  code: string,
+  closed: boolean,
+  onlyAuthUsers: boolean,
+  questionsAmount: number,
+  isChanged: boolean,
+  setIsChanged: Dispatch<SetStateAction<boolean>>,
+  setName: Dispatch<SetStateAction<string>>,
+  setClosed: Dispatch<SetStateAction<boolean>>,
+  setOnlyAuthUsers: Dispatch<SetStateAction<boolean>>
+}
 
-  const { quiz, setQuiz } = useContext(GeneratorPageContext);
+export const BigScreenHeader: FC<propTypes> = (
+  {
+    id,
+    name,
+    setName,
+    code,
+    closed,
+    setClosed,
+    onlyAuthUsers,
+    setOnlyAuthUsers,
+    questionsAmount,
+    isChanged,
+    setIsChanged
+  }
+) => {
+  const navigate = useNavigate();
+  const quiz = useAppSelector(state => state.quizzes.currentQuiz);
+  const dispatch = useAppDispatch();
 
-  const [isChanged, setIsChanged] = useState<boolean>(false);
-
-  const [name, setName] = useState<string>();
-  const [code, setCode] = useState<string>();
-  const [isClosed, setIsClosed] = useState<boolean>();
-  const [isOnlyAuth, setIsOnlyAuth] = useState<boolean>();
-
-  useEffect(() => {
-    const { id, name, code, closed, onlyAuthUsers, questions, author } = quiz;
-    setName(name);
-    setCode(code);
-    setIsClosed(closed);
-    setIsOnlyAuth(onlyAuthUsers);
-  }, [quiz]);
-
-  const refreshCode = (e: React.FormEvent<EventTarget>) => {
+  const refreshCodeAction = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "The old quiz code will be invalid!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#E44061',
-      confirmButtonText: 'Yes, refresh it!'
-    }).then(async (result) => {
-      if (!result.isConfirmed) return;
-
-      if (!code) {
-        Swal.fire(
-          'Error!',
-          'We can\'t update quiz code :(\nPlease, try again.',
-          'error'
-        );
-        return;
-      }
-      const refreshResult = await refreshQuizCode(code);
-      if (axios.isAxiosError(refreshResult) || !refreshResult.data) {
-        const error = refreshResult as unknown as AxiosError<FailResponse>; //TODO very bad
-        Swal.fire(
-          'Error!',
-          error.message,
-          'error'
-        );
-        return;
-      }
-      setQuiz(refreshResult.data);
-      Swal.fire(
-        'Success!',
-        'Your quiz code has been updated.',
-        'success'
-      );
-    });
+    dispatch(refreshQuizCode(code))
   }
 
   const deleteQuiz = (e: React.FormEvent<EventTarget>) => {
@@ -79,44 +56,23 @@ export const DesktopHeader = () => {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (!result.isConfirmed) return;
-      Swal.fire(
-        'Deleted!',
-        'Your quiz has been deleted.',
-        'success'
-      );
+      dispatch(deleteQuizByCode(code));
     });
   }
 
   const updateParameters = async (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
-    if (isClosed === undefined || isOnlyAuth === undefined || !name || !code) {
-      Swal.fire(
-        'Error!',
-        'We can\'t update quiz code :(\nPlease, try again.',
-        'error'
-      );
-    } else {
-      const updateResult = await updateQuizParameters(code, isClosed, isOnlyAuth, name);
-      if (axios.isAxiosError(updateResult)) {
-
-      } else {
-        setIsChanged(false);
-        Swal.fire(
-          'Updated!',
-          'Your quiz has been updated.',
-          'success'
-        );
-      }
-      console.log(updateResult.data);
-    }
+    dispatch(updateQuizParametersById({parameters: {name, closed, onlyAuthUsers}, quizId: id}));
   }
+
+  if (!quiz) return <h1>Loading...</h1>;
 
   return (
     <div className={styles.container}>
       <div className={styles.formWrapper}>
         <form
           className={styles.form}
-          action=""
+          action="src/components/headers/GeneratorPageHeader/devices/desktop"
         >
           <section className={styles.formSection}>
             <div>
@@ -129,14 +85,15 @@ export const DesktopHeader = () => {
               onChange={e => {
                 setName(e.target.value);
                 (e.target.value === quiz.name
-                  && isClosed === quiz.closed
-                  && isOnlyAuth === quiz.onlyAuthUsers) ? setIsChanged(false) : setIsChanged(true);
+                  && closed === quiz.closed
+                  && onlyAuthUsers === quiz.onlyAuthUsers) ? setIsChanged(false) : setIsChanged(true);
               }}
             />
             <div className={`${styles.buttonContainer}`}>
               <button
                 className={`${styles.formButton} ${isChanged ? "" : styles.hidden}`}
                 onClick={updateParameters}
+                disabled={!isChanged}
               >
                 save
               </button>
@@ -151,11 +108,11 @@ export const DesktopHeader = () => {
               &nbsp;
               <button
                 className={styles.refreshCodeButton}
-                onClick={refreshCode}
+                onClick={refreshCodeAction}
               >
                 <img
                   className={styles.refreshCodeIcon}
-                  src={refreshIcon}
+                  src={reloadIcon}
                   alt="refresh icon"
                 />
               </button>
@@ -164,10 +121,10 @@ export const DesktopHeader = () => {
               <input
                 className={styles.checkbox}
                 type="checkbox"
-                checked={isOnlyAuth}
+                checked={onlyAuthUsers}
                 onChange={() => {
-                  setIsOnlyAuth(prevState => {
-                    if (!prevState === quiz.onlyAuthUsers && isClosed === quiz.closed && name === quiz.name) {
+                  setOnlyAuthUsers(prevState => {
+                    if (!prevState === quiz.onlyAuthUsers && closed === quiz.closed && name === quiz.name) {
                       setIsChanged(false)
                     } else {
                       setIsChanged(true);
@@ -182,10 +139,10 @@ export const DesktopHeader = () => {
               <input
                 className={styles.checkbox}
                 type="checkbox"
-                checked={isClosed}
+                checked={closed}
                 onChange={() => {
-                  setIsClosed(prevState => {
-                    if (!prevState === quiz.closed && isOnlyAuth === quiz.onlyAuthUsers && name === quiz.name) {
+                  setClosed(prevState => {
+                    if (!prevState === quiz.closed && onlyAuthUsers === quiz.onlyAuthUsers && name === quiz.name) {
                       setIsChanged(false)
                     } else {
                       setIsChanged(true);
@@ -210,7 +167,7 @@ export const DesktopHeader = () => {
       <div className={styles.infoContainer}>
         Info
         <div className={styles.infoBlock}>
-          Total questions: {quiz.questions.length}
+          Total questions: {questionsAmount}
         </div>
         <div className={styles.infoBlock}>
           Total answers: 32
@@ -219,10 +176,13 @@ export const DesktopHeader = () => {
           Created: 24.12.2022
         </div>
       </div>
-      <button className={styles.homeButton}>
+      <button
+        className={styles.homeButton}
+        onClick={() => navigate("../")}
+      >
         <img
           className={styles.homeIcon}
-          src={profileIcon}
+          src={mainIcon}
           alt="home icon"
         />
       </button>

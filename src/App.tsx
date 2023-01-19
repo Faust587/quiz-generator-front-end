@@ -40,10 +40,6 @@ function App() {
           path="/error"
           element={<ErrorPage/>}
         />
-        <Route
-          path="/test"
-          element={<></>}
-        />
       </Routes>
     </BrowserRouter>
   );
