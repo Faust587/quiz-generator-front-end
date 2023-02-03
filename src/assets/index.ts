@@ -9,6 +9,7 @@ import copyIcon from "./icons/copy-icon.svg";
 import authOnlyIcon from "./icons/auth-only.svg";
 import closedIcon from "./icons/closed.svg";
 import reloadIcon from "./icons/reload-icon.svg";
+import defaultQuizIcon from "./icons/quiz-icon-1.svg";
 
 export {
   mainIcon,
@@ -21,5 +22,6 @@ export {
   copyIcon,
   authOnlyIcon,
   closedIcon,
-  reloadIcon
+  reloadIcon,
+  defaultQuizIcon
 }

@@ -44,6 +44,18 @@ export const BigScreenHeader: FC<propTypes> = (
     dispatch(refreshQuizCode(code))
   }
 
+  const formatDate = () => {
+    if (!quiz) return;
+    const date = new Date(quiz.lastUpdated);
+    return (
+      ("00" + date.getDate()).slice(-2) + "." +
+      ("00" + (date.getMonth() + 1)).slice(-2) + "." +
+      date.getFullYear() + " " +
+      ("00" + date.getHours()).slice(-2) + ":" +
+      ("00" + date.getMinutes()).slice(-2)
+    );
+  }
+
   const deleteQuiz = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
     Swal.fire({
@@ -173,7 +185,7 @@ export const BigScreenHeader: FC<propTypes> = (
           Total answers: 32
         </div>
         <div className={styles.infoBlock}>
-          Created: 24.12.2022
+          Last updated: { formatDate() }
         </div>
       </div>
       <button

@@ -6,6 +6,7 @@ import {SignInPage} from "./pages/AuthPages/SignInPage";
 import {GeneratorPage} from "./pages/GeneratorPage/GeneratorPage";
 import {RootPage} from "./pages/RootPage/RootPage";
 import {ErrorPage} from "./pages/ErrorPage/ErrorPage";
+import {QuizPage} from "./pages/QuizPage/QuizPage";
 
 function App() {
 
@@ -35,6 +36,10 @@ function App() {
         <Route
           path="/quiz-generator/:id"
           element={<GeneratorPage/>}
+        />
+        <Route
+          path="/quiz/:code"
+          element={<QuizPage/>}
         />
         <Route
           path="/error"

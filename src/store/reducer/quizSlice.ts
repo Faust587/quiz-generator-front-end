@@ -10,6 +10,8 @@ export type TQuiz = {
   onlyAuthUsers: boolean,
   code: string,
   author: string,
+  iconURL: string,
+  lastUpdated: number,
   questions: TQuestion[]
 }
 
@@ -17,6 +19,7 @@ export type TQuestion = {
   id: string,
   type: QUESTION_TYPES,
   value: string[],
+  index: number,
   isRequired: boolean,
   name: string;
 }
@@ -27,12 +30,12 @@ type TParameters = {
   onlyAuthUsers: boolean,
 }
 
-type TDeleteResponse = {
+export type TDeleteResponse = {
   acknowledged: boolean;
   deletedCount: number;
 }
 
-type TError = {
+export type TError = {
   statusCode: number;
   message: string[] | string;
 }
@@ -40,6 +43,8 @@ type TError = {
 type TLoading = 'idle' | 'pending' | 'succeeded' | 'failed';
 
 type TInitialState = {
+  changeQuestionOrder: number | null;
+  isQuestionMoves: boolean;
   quizLoading: TLoading;
   parametersLoading: TLoading;
   questionLoading: TLoading;
@@ -47,6 +52,8 @@ type TInitialState = {
   quizDeletingLoading: TLoading;
   questionCreatingLoading: TLoading;
   questionEditingLoading: TLoading;
+  questionDeletingLoading: TLoading;
+  questionDeletingError: TError | null;
   questionEditingError: TError | null;
   questionCreatingError: TError | null;
   quizDeletingError: TError | null;
@@ -60,6 +67,8 @@ type TInitialState = {
 }
 
 const initialState: TInitialState = {
+  changeQuestionOrder: null,
+  isQuestionMoves: false,
   quizLoading: 'idle',
   parametersLoading: 'idle',
   questionLoading: 'idle',
@@ -67,6 +76,8 @@ const initialState: TInitialState = {
   quizDeletingLoading: 'idle',
   questionCreatingLoading: 'idle',
   questionEditingLoading: 'idle',
+  questionDeletingLoading: 'idle',
+  questionDeletingError: null,
   questionEditingError: null,
   questionCreatingError: null,
   quizDeletingError: null,
@@ -77,6 +88,16 @@ const initialState: TInitialState = {
   currentQuiz: null,
   focusedQuestion: null,
   unfocusedQuestion: null
+}
+
+function compare( a: TQuestion, b: TQuestion ) {
+  if ( a.index < b.index ){
+    return -1;
+  }
+  if ( a.index > b.index ){
+    return 1;
+  }
+  return 0;
 }
 
 export const fetchQuizById = createAsyncThunk<TQuiz, string, { rejectValue: TError }>(
@@ -146,7 +167,7 @@ export const deleteQuizByCode = createAsyncThunk<TDeleteResponse, string, { reje
   }
 );
 
-export const createQuestion = createAsyncThunk<TQuestion, Omit<TQuestion, 'id'> & {quizId: string}, { rejectValue: TError }>(
+export const createQuestion = createAsyncThunk<TQuestion, Omit<TQuestion, 'id' | "index"> & {quizId: string}, { rejectValue: TError }>(
   'quiz/createQuestion',
   async function (question, thunkAPI) {
     const response = await api.post<TQuestion>('/question', question);
@@ -165,6 +186,11 @@ export const createQuestion = createAsyncThunk<TQuestion, Omit<TQuestion, 'id'> 
 export const updateQuestion = createAsyncThunk<TQuestion, Omit<TQuestion, "id"> & {questionId: string, quizId: string}, { rejectValue: TError }>(
   'quiz/updateQuestion',
   async function (question, thunkAPI) {
+    if (question.type !== "TEXT" && !question.value.length) {
+      question.value = ["Variant"];
+    } else if (question.type === "TEXT") {
+      question.value = [];
+    }
     const response = await api.patch<TQuestion>('/question', question);
     if (!axios.isAxiosError(response)) return response.data;
     if (!response.response?.data) {
@@ -178,20 +204,53 @@ export const updateQuestion = createAsyncThunk<TQuestion, Omit<TQuestion, "id"> 
   }
 );
 
+export const deleteQuestion = createAsyncThunk<TDeleteResponse, {questionId: string, quizId: string}, { rejectValue: TError }>(
+  'quiz/deleteQuestion',
+  async function (data, thunkAPI) {
+    const response = await api.delete<TDeleteResponse>('/question', {data});
+    if (!axios.isAxiosError(response)) return response.data;
+    if (!response.response?.data) {
+      return thunkAPI.rejectWithValue({
+        statusCode: 0,
+        message: ["Unknown error, please write to out support"]
+      });
+    }
+    const errorData = response.response?.data as TError;
+    return thunkAPI.rejectWithValue(errorData);
+  }
+)
+
 const quizSlice = createSlice({
   name: "quiz",
   initialState,
   reducers: {
+    setQuestions: (state, action: PayloadAction<TQuestion[]>) => {
+      if (!state.currentQuiz) return;
+      action.payload.sort( compare );
+      state.currentQuiz.questions = action.payload;
+    },
+    setQuestionMoving: (state, action: PayloadAction<boolean>) => {
+      state.isQuestionMoves = action.payload;
+    },
+    setQuizForChangingOrder: (state, action: PayloadAction<number | null>) => {
+      state.changeQuestionOrder = action.payload;
+    },
     setCurrentQuiz: (state, action: PayloadAction<TQuiz | null>) => {
       state.currentQuiz = action.payload;
     },
-    setActiveQuestion: (state, action: PayloadAction<string>) => {
+    setActiveQuestion: (state, action: PayloadAction<string | null>) => {
       if (state.focusedQuestion === action.payload) {
         state.unfocusedQuestion = null;
         return;
       }
       state.unfocusedQuestion = state.focusedQuestion;
       state.focusedQuestion = action.payload;
+    },
+    removeQuestionFromState: (state, action: PayloadAction<string>) => {
+      if (!state.currentQuiz) return;
+      state.currentQuiz.questions = state.currentQuiz.questions.filter(question => {
+        return question.id !== action.payload;
+      });
     },
     updateParameters: (state, action: PayloadAction<TParameters>) => {
       if (!state.currentQuiz) return;
@@ -238,6 +297,12 @@ const quizSlice = createSlice({
     },
     clearQuestionEditingError: state => {
       state.questionEditingError = null;
+    },
+    clearQuestionDeletingLoading: state => {
+      state.questionDeletingLoading = 'idle';
+    },
+    clearQuestionDeletingError: state => {
+      state.questionDeletingError = null;
     }
   },
   extraReducers: builder => {
@@ -252,6 +317,7 @@ const quizSlice = createSlice({
       };
     });
     builder.addCase(fetchQuizById.fulfilled, (state, {payload}) => {
+      payload.questions.sort( compare );
       state.currentQuiz = payload;
       state.quizLoading = 'idle';
     });
@@ -308,6 +374,7 @@ const quizSlice = createSlice({
     builder.addCase(createQuestion.fulfilled, (state, {payload}) => {
       if (!state.currentQuiz) return;
       state.currentQuiz.questions.push(payload);
+      state.focusedQuestion = payload.id;
       state.questionCreatingLoading = 'succeeded';
     });
     builder.addCase(createQuestion.rejected, (state, action) => {
@@ -337,6 +404,27 @@ const quizSlice = createSlice({
         message: action.payload?.message || ["unknown error"],
       };
     });
+    builder.addCase(deleteQuestion.pending, state => {
+      state.questionDeletingLoading = 'pending';
+    });
+    builder.addCase(deleteQuestion.rejected, (state, action) => {
+      state.questionDeletingLoading = 'failed';
+      state.questionDeletingError = {
+        statusCode: action.payload?.statusCode || 0,
+        message: action.payload?.message || ["unknown error"],
+      };
+    });
+    builder.addCase(deleteQuestion.fulfilled, (state, {payload}) => {
+      if (payload.acknowledged) {
+        state.questionDeletingLoading = 'succeeded';
+      } else {
+        state.questionDeletingLoading = 'failed';
+        state.questionDeletingError = {
+          statusCode: 0,
+          message: "this question does not exist, reload page",
+        };
+      }
+    });
   }
 });
 
@@ -348,6 +436,8 @@ export const {
   setActiveQuestion,
   updateCode,
   updateParameters,
+  setQuestions,
+  setQuizForChangingOrder,
   setCurrentQuiz,
   clearCodeError,
   clearCodeLoading,
@@ -356,6 +446,10 @@ export const {
   clearQuestionCreatingLoading,
   clearQuestionCreatingError,
   clearQuestionEditingError,
-  clearQuestionEditingLoading
+  clearQuestionEditingLoading,
+  clearQuestionDeletingLoading,
+  clearQuestionDeletingError,
+  removeQuestionFromState,
+  setQuestionMoving
 } = quizSlice.actions;
 export default quizSlice.reducer;

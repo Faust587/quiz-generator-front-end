@@ -3,7 +3,6 @@
   background-color: #e3ddff;
   border-radius: 10px;
   padding: 10px;
-  margin: 20px 0;
   box-shadow: 5px 5px 0 #ADA9BB;
   transition: 0.2s;
 
@@ -11,6 +10,38 @@
     transition: 0.2s;
     box-shadow: 7px 7px 5px #ADA9BB;
   }
+}
+
+.movableContainer {
+  display: flex;
+  align-items: center;
+}
+
+.moveOrderButton {
+  top: 500px;
+  background-color: #8b80b6;
+  color: #e3ddff;
+  font-size: 16px;
+  padding: 5px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  transition: 0.2s;
+  &:hover {
+    transition: 0.2s;
+    background-color: #bdb3dc;
+    color: #393C54;
+  }
+}
+
+.changeOrderBlock {
+  background-color: #9ECA8F;
+}
+
+.changeOrderBlockHidden {
+  opacity: 0.8;
 }
 
 .addVariantButton {
@@ -47,6 +78,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.wrapper {
+  margin-top: 10px;
 }
 
 .selectType {

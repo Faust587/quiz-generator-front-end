@@ -1,0 +1,20 @@
+.container {
+  margin: 10px auto;
+  padding: 20px 0;
+  background-color: #e44061;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 12px;
+  width: 50%;
+  cursor: pointer;
+  transition: 0.4s;
+
+  &:hover {
+    transition: 0.4s;
+    background-color: rgba(#e44061, 0.4);
+    color: #393C54;
+  }
+}

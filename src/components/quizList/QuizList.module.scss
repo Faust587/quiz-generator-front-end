@@ -149,8 +149,8 @@
   }
   .quizList {
     display: grid;
+    justify-content: center;
     grid-template-columns: repeat(auto-fit, minmax(200px, 320px));
-    /*justify-content: center;*/
   }
 
   .filterButtonContainer {
@@ -172,6 +172,7 @@
   }
   .quizList {
     display: grid;
+    justify-content: center;
     grid-template-columns: repeat(auto-fill, 320px);
     grid-template-rows: repeat(auto-fill, 174px);
     justify-content: center;

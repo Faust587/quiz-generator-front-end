@@ -94,7 +94,7 @@ export const QuizList = () => {
               <div key={quiz.id} className={styles.itemWrapper}>
                 <QuizItem
                   title={quiz.name}
-                  iconURL={quizIcon1}
+                  iconURL={quiz.iconURL}
                   authOnly={quiz.onlyAuthUsers}
                   closed={quiz.closed}
                   data={quiz}

@@ -18,6 +18,29 @@
   }
 }
 
+.flagButton {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  box-sizing: border-box;
+  background-color: #8b80b6;
+  border: 5px solid #ffffff;
+  &Container {
+    margin-right: 10px;
+  }
+}
+
+.selectButton {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  box-sizing: border-box;
+  background-color: #8b80b6;
+  &Container {
+    margin-right: 10px;
+  }
+}
+
 .descriptionInput {
   width: 70%;
   border-radius: 5px;

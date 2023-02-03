@@ -10,8 +10,8 @@ export async function getQuizByCode(code: string): Promise<AxiosResponse<TQuiz>>
   return await api.get<TQuiz>('/quiz', { params: { code } });
 }
 
-export async function createNewQuiz(name: string, isOnlyAuth: boolean) {
-  return await api.post<TQuiz>('/quiz/create', { name, onlyAuthUsers: isOnlyAuth });
+export async function createNewQuiz(name: string, isOnlyAuth: boolean, icon: string) {
+  return await api.post<TQuiz>('/quiz/create', { name, onlyAuthUsers: isOnlyAuth, iconURL: icon });
 }
 
 export async function refreshQuizCode(code: string) {
