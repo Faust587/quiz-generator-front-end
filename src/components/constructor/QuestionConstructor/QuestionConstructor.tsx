@@ -1,4 +1,4 @@
-import {ChangeEvent, FC, MouseEvent, useCallback, useEffect, useRef, useState} from "react";
+import {ChangeEvent, FC, useCallback, useEffect, useRef, useState} from "react";
 import {QUESTION_TYPES} from "../../../types/questionTypes";
 import styles from "./QuestionConstructor.module.scss";
 import trashCanIcon from "../../../assets/icons/trash-can.svg";
@@ -21,7 +21,7 @@ import {
   setQuestionMoving
 } from "../../../store/reducer/quizSlice";
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
-import {isArray, isNumber} from "lodash";
+import {isArray} from "lodash";
 import Swal from "sweetalert2";
 import api from "../../../api";
 
@@ -49,7 +49,8 @@ export const QuestionConstructor: FC<propTypes> = (
     questionEditingLoading,
     questionEditingError,
     questionDeletingLoading,
-    changeQuestionOrder
+    changeQuestionOrder,
+    currentQuiz,
   } = useAppSelector(state => state.quizzes);
   const dispatch = useAppDispatch();
 
@@ -123,20 +124,21 @@ export const QuestionConstructor: FC<propTypes> = (
       isRequired,
       value: [...value, "Variant"],
       quizId: quiz.id,
-      index: data.index
+      index: data.index,
+      isFileUploaded: data.isFileUploaded
     }));
     setValue([...value, "Variant"]);
   }
 
   const updateQuestionAction = () => {
     if (!quiz) return;
-    dispatch(updateQuestion({questionId: data.id, type, name, isRequired, value, quizId: quiz.id, index: data.index}));
+    dispatch(updateQuestion({questionId: data.id, type, name, isRequired, value, quizId: quiz.id, index: data.index, isFileUploaded: !!fileName}));
   }
 
   const changeQuestionType = (event: ChangeEvent<HTMLSelectElement>) => {
     if (!quiz) return;
     const type = event.target.value as QUESTION_TYPES;
-    dispatch(updateQuestion({questionId: data.id, type, name, isRequired, value, quizId: quiz.id, index: data.index}));
+    dispatch(updateQuestion({questionId: data.id, type, name, isRequired, value, quizId: quiz.id, index: data.index, isFileUploaded: !!fileName}));
     setType(type);
   }
 
@@ -182,6 +184,7 @@ export const QuestionConstructor: FC<propTypes> = (
                   values={value}
                   setValue={setValue}
                   isFocused={isFocused}
+                  isFileUploaded={!!fileName}
                 />
               </div>
             ))}
@@ -217,15 +220,16 @@ export const QuestionConstructor: FC<propTypes> = (
   const [isFileUploading, setIsFileUploading] = useState(false);
 
   const onFileChanges = async () => {
-    if (!inputFile.current || !inputFile.current.files) return;
+    if (!inputFile.current || !inputFile.current.files || !currentQuiz) return;
     const file = inputFile?.current.files[0];
     if (file.name.length > 15) {
       setFileName(`${file.name.slice(0, 15)}...`);
     }
-    let formData = new FormData()
+    let formData = new FormData();
     formData.append('file', file);
+    console.log(formData.get('file'));
     setIsFileUploading(true);
-    const upload = await api.post(`question/upload/${data.id}`, formData);
+    const upload = await api.post(`question/upload/${currentQuiz.id}/${data.id}`, formData);
     setIsFileUploading(false);
   }
 
@@ -345,7 +349,8 @@ export const QuestionConstructor: FC<propTypes> = (
                         isRequired: !isRequired,
                         value,
                         quizId: quiz.id,
-                        index: data.index
+                        index: data.index,
+                        isFileUploaded: !!fileName
                       }));
                     }}
                     type="checkbox"
