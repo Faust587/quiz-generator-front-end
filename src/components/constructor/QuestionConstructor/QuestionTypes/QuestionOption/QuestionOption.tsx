@@ -13,6 +13,7 @@ type propTypes = {
   values: string[]
   index: number,
   setValue: Dispatch<SetStateAction<string[]>>
+  isFileUploaded: boolean,
 }
 
 export const QuestionOption: FC<propTypes> = (
@@ -25,6 +26,7 @@ export const QuestionOption: FC<propTypes> = (
     setValue,
     index,
     values,
+    isFileUploaded,
   }
 ) => {
 
@@ -34,14 +36,14 @@ export const QuestionOption: FC<propTypes> = (
   const onValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValues = [...values];
     newValues.splice(index, 1, e.target.value);
-    dispatch(updateQuestion({questionId: data.id, type: data.type, name: data.name, isRequired: data.isRequired, value: newValues, quizId, index: data.index}));
+    dispatch(updateQuestion({questionId: data.id, type: data.type, name: data.name, isRequired: data.isRequired, value: newValues, quizId, index: data.index, isFileUploaded}));
     setValue(newValues);
   }
 
   const deleteVariant = () => {
     const newValues = [...values];
     newValues.splice(index, 1);
-    dispatch(updateQuestion({questionId: data.id, type: data.type, name: data.name, isRequired: data.isRequired, value: newValues, quizId, index: data.index}));
+    dispatch(updateQuestion({questionId: data.id, type: data.type, name: data.name, isRequired: data.isRequired, value: newValues, quizId, index: data.index, isFileUploaded}));
     setValue(newValues);
   }
 

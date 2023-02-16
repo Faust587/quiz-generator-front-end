@@ -21,6 +21,7 @@ export type TQuestion = {
   value: string[],
   index: number,
   isRequired: boolean,
+  isFileUploaded: boolean,
   name: string;
 }
 

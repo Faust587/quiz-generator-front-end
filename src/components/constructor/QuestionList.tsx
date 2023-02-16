@@ -35,6 +35,7 @@ export const QuestionList = () => {
       value: [],
       type: "TEXT",
       isRequired: false,
+      isFileUploaded: false,
     }
     dispatch(createQuestion(sampleQuestion));
   }
