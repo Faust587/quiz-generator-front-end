@@ -105,6 +105,10 @@
   justify-content: space-between;
 }
 
+.wrapperLeft {
+  margin-left: 20px;
+}
+
 .iconButton {
   width: 40px;
   height: 40px;
@@ -158,6 +162,8 @@
 }
 
 .description {
+  display: flex;
+  align-items: center;
   font-size: 14px;
   color: #393C54;
   padding-left: 10px;

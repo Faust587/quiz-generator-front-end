@@ -3,7 +3,7 @@ import {FC} from "react";
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
 import {isNumber} from "lodash";
 import api from "../../../api";
-import {setQuestions, TQuestion} from "../../../store/reducer/quizSlice";
+import {setQuestions, TQuestion} from "../../../store/reducer/quiz/quizSlice";
 import axios from "axios";
 import Swal from "sweetalert2";
 

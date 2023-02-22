@@ -11,11 +11,12 @@ import {
   clearCodeLoading,
   clearParametersError,
   clearParametersLoading,
-  updateQuizParametersById,
-  refreshQuizCode, clearQuizDeleteLoading, clearQuizDeleteError, deleteQuizByCode
-} from "../../../store/reducer/quizSlice";
+  clearQuizDeleteLoading,
+  clearQuizDeleteError,
+} from "../../../store/reducer/quiz/quizSlice";
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
 import {isArray} from "lodash";
+import {deleteQuizByCode, refreshQuizCode, updateQuizParametersById} from '../../../store/reducer/quiz/quizThunks';
 
 
 export const Header = () => {

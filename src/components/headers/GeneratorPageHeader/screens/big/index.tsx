@@ -4,7 +4,7 @@ import React, {Dispatch, FC, SetStateAction} from "react";
 import Swal from "sweetalert2";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../../../hooks/redux";
-import {updateQuizParametersById, refreshQuizCode, deleteQuizByCode} from "../../../../../store/reducer/quizSlice";
+import {updateQuizParametersById, refreshQuizCode, deleteQuizByCode} from "../../../../../store/reducer/quiz/quizThunks";
 
 type propTypes = {
   id: string,

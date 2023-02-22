@@ -5,14 +5,14 @@ import {RootState} from "../../store";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {
   clearQuestionCreatingError,
-  clearQuestionCreatingLoading,
-  createQuestion, setActiveQuestion,
+  clearQuestionCreatingLoading, setActiveQuestion,
   TQuestion
-} from "../../store/reducer/quizSlice";
+} from "../../store/reducer/quiz/quizSlice";
 import {useEffect, useRef} from "react";
 import {isArray} from "lodash";
 import Swal from "sweetalert2";
 import {OrderZone} from "./OrderZone/OrderZone";
+import {createQuestion} from '../../store/reducer/quiz/quizThunks';
 
 export const QuestionList = () => {
 
@@ -36,6 +36,7 @@ export const QuestionList = () => {
       type: "TEXT",
       isRequired: false,
       isFileUploaded: false,
+      attachmentName: undefined,
     }
     dispatch(createQuestion(sampleQuestion));
   }
@@ -77,15 +78,14 @@ export const QuestionList = () => {
       <div className={styles.wrapper}>
         {
           currentQuiz.questions.map((question, index) => (
-            <>
+            <div key={question.id}>
               <OrderZone show={isQuestionMoves} index={index} />
               <QuestionConstructor
-                key={question.id}
                 data={question}
                 isFocused={focusedQuestion === question.id}
                 isUnfocused={unfocusedQuestion === question.id}
               />
-            </>
+            </div>
           ))
         }
         <OrderZone show={isQuestionMoves} index={currentQuiz.questions.length} />

@@ -1,9 +1,9 @@
 import styles from "./SearchForm.module.scss";
-import {FormEvent, FormEventHandler, useState} from "react";
+import {FormEvent, useState} from "react";
 import api from "../../../api";
 import Swal from "sweetalert2";
 import axios, {AxiosError} from "axios";
-import {TQuiz} from "../../../store/reducer/quizSlice";
+import {TQuiz} from "../../../store/reducer/quiz/quizSlice";
 
 export const SearchForm = () => {
 

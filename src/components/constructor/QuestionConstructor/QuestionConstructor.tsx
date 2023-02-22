@@ -1,17 +1,16 @@
-import {ChangeEvent, FC, useCallback, useEffect, useRef, useState} from "react";
+import {ChangeEvent, MouseEvent, FC, useCallback, useEffect, useRef, useState} from "react";
 import {QUESTION_TYPES} from "../../../types/questionTypes";
 import styles from "./QuestionConstructor.module.scss";
 import trashCanIcon from "../../../assets/icons/trash-can.svg";
 import uploadFileIcon from "../../../assets/icons/upload.svg";
+import downloadFileIcon from "../../../assets/icons/download_icon.svg";
 import {QuestionText} from "./QuestionTypes/QuestionText/QuestionText";
 import {QuestionOption} from "./QuestionTypes/QuestionOption/QuestionOption";
 import {
   setActiveQuestion,
-  updateQuestion,
   TQuestion,
   clearQuestionEditingLoading,
   clearQuestionEditingError,
-  deleteQuestion,
   clearQuestionDeletingLoading,
   clearQuestionDeletingError,
   TDeleteResponse,
@@ -19,11 +18,18 @@ import {
   removeQuestionFromState,
   setQuizForChangingOrder,
   setQuestionMoving
-} from "../../../store/reducer/quizSlice";
+} from "../../../store/reducer/quiz/quizSlice";
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
 import {isArray} from "lodash";
 import Swal from "sweetalert2";
-import api from "../../../api";
+import {
+  deleteQuestion,
+  deleteQuestionAttachment,
+  updateQuestion,
+  uploadQuestionAttachment
+} from '../../../store/reducer/quiz/quizThunks';
+import {cutQuestionAttachmentName} from '../../../utils/questionUtils';
+import api from '../../../api';
 
 const QUESTION_TYPES_ARR: QUESTION_TYPES[] = ["TEXT", "FLAG", "SELECT", "OPTION"];
 
@@ -42,7 +48,10 @@ export const QuestionConstructor: FC<propTypes> = (
   const [name, setName] = useState<string>(data.name);
   const [isRequired, setIsRequired] = useState<boolean>(data.isRequired);
   const [value, setValue] = useState<string[]>(data.value);
-  const [fileName, setFileName] = useState<string>();
+  const [attachmentName, setAttachmentName] = useState<string | undefined>(
+    cutQuestionAttachmentName(data.attachmentName)
+  );
+  const [isFileUploading, setIsFileUploading] = useState(false);
   const quiz = useAppSelector(state => state.quizzes.currentQuiz);
 
   const {
@@ -62,6 +71,7 @@ export const QuestionConstructor: FC<propTypes> = (
       setName(data.name);
       setIsRequired(data.isRequired);
       setValue(data.value);
+      setAttachmentName(cutQuestionAttachmentName(data.attachmentName));
     }
   }, [data]);
 
@@ -125,20 +135,41 @@ export const QuestionConstructor: FC<propTypes> = (
       value: [...value, "Variant"],
       quizId: quiz.id,
       index: data.index,
-      isFileUploaded: data.isFileUploaded
+      attachmentName,
+      isFileUploaded: !!attachmentName,
     }));
     setValue([...value, "Variant"]);
   }
 
   const updateQuestionAction = () => {
     if (!quiz) return;
-    dispatch(updateQuestion({questionId: data.id, type, name, isRequired, value, quizId: quiz.id, index: data.index, isFileUploaded: !!fileName}));
+    dispatch(updateQuestion({
+      questionId: data.id,
+      type,
+      name,
+      isRequired,
+      value,
+      quizId: quiz.id,
+      index: data.index,
+      attachmentName,
+      isFileUploaded: !!attachmentName,
+    }));
   }
 
   const changeQuestionType = (event: ChangeEvent<HTMLSelectElement>) => {
     if (!quiz) return;
     const type = event.target.value as QUESTION_TYPES;
-    dispatch(updateQuestion({questionId: data.id, type, name, isRequired, value, quizId: quiz.id, index: data.index, isFileUploaded: !!fileName}));
+    dispatch(updateQuestion({
+      questionId: data.id,
+      type,
+      name,
+      isRequired,
+      value,
+      quizId: quiz.id,
+      index: data.index,
+      attachmentName,
+      isFileUploaded: !!attachmentName,
+    }));
     setType(type);
   }
 
@@ -184,7 +215,7 @@ export const QuestionConstructor: FC<propTypes> = (
                   values={value}
                   setValue={setValue}
                   isFocused={isFocused}
-                  isFileUploaded={!!fileName}
+                  isFileUploaded={!!attachmentName}
                 />
               </div>
             ))}
@@ -217,20 +248,41 @@ export const QuestionConstructor: FC<propTypes> = (
     }
   }, [isQuestionMoves]);
 
-  const [isFileUploading, setIsFileUploading] = useState(false);
-
   const onFileChanges = async () => {
     if (!inputFile.current || !inputFile.current.files || !currentQuiz) return;
     const file = inputFile?.current.files[0];
     if (file.name.length > 15) {
-      setFileName(`${file.name.slice(0, 15)}...`);
+      setAttachmentName(`${file.name.slice(0, 15)}...`);
     }
+    const encodedFileName = encodeURIComponent(file.name);
     let formData = new FormData();
-    formData.append('file', file);
-    console.log(formData.get('file'));
+    formData.append('file', file, encodedFileName);
     setIsFileUploading(true);
-    const upload = await api.post(`question/upload/${currentQuiz.id}/${data.id}`, formData);
+    dispatch(uploadQuestionAttachment({quizId: currentQuiz.id, questionId: data.id, formData}));
     setIsFileUploading(false);
+  }
+
+  const downloadAttachment = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    if (!currentQuiz || !data.attachmentName) return;
+    const file = await api.get(
+      `/question/attachment/${currentQuiz.id}/${data.id}`,
+      {responseType: 'arraybuffer'}
+    );
+    const blob = new Blob([file.data], {
+      type: file.headers['content-type'] || 'application/octet-stream',
+      endings: 'native',
+    });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = data.attachmentName;
+    a.click();
+  }
+
+  const removeAttachment = () => {
+    if (!currentQuiz) return;
+    dispatch(deleteQuestionAttachment({quizId: currentQuiz.id, questionId: data.id}))
   }
 
   return (
@@ -238,9 +290,7 @@ export const QuestionConstructor: FC<propTypes> = (
       <article
         className={`${styles.block} ${isFocused ? styles.blockFocused : ""} 
         ${(changeQuestionOrder === data.index) ? styles.changeOrderBlock : ""}
-        ${(isQuestionMoves && changeQuestionOrder !== data.index) ? styles.changeOrderBlockHidden : ""}
-        
-        `}
+        ${(isQuestionMoves && changeQuestionOrder !== data.index) ? styles.changeOrderBlockHidden : ""}`}
         onClick={(event) => {
           event.stopPropagation();
           dispatch(setActiveQuestion(data.id));
@@ -317,22 +367,42 @@ export const QuestionConstructor: FC<propTypes> = (
         <div className={styles.parameters}>
           {isFocused ? <div className={styles.parameterContainer}>
             <input ref={inputFile} onChange={onFileChanges} style={{display: "none"}} type="file"/>
-            <button
-              className={`${styles.iconButton} ${styles.iconButtonGray}`}
-              onClick={() => inputFile.current ? inputFile.current.click() : null}
-            >
-              <img src={uploadFileIcon} alt="upload file"/>
-            </button>
+            {(attachmentName && !isFileUploading) ? (
+              <button
+                className={`${styles.iconButton} ${styles.iconButtonRed}`}
+                onClick={removeAttachment}
+              >
+                <img src={trashCanIcon} alt="delete"/>
+              </button>
+            ) : (
+              <button
+                className={`${styles.iconButton} ${styles.iconButtonGray}`}
+                onClick={() => inputFile.current ? inputFile.current.click() : null}
+              >
+                <img src={uploadFileIcon} alt="upload file"/>
+              </button>
+            )}
             <span
               className={styles.description}
               onClick={onFileChanges}
             >
-            {(fileName && !isFileUploading) ? fileName : null}
-            {(!fileName && !isFileUploading) ? "Upload your file here" : null}
-            {(fileName && !isFileUploading) ? <button>delete</button> : null}
+            {(attachmentName && !isFileUploading) ? attachmentName : null}
+            {(!attachmentName && !isFileUploading) ? "Upload your file here" : null}
             {isFileUploading ? "uploading..." : null}
           </span>
-          </div> : null}
+          </div> : data.isFileUploaded ? (
+            <div style={{display: 'flex'}}>
+              <button
+                className={`${styles.iconButton} ${styles.iconButtonGray}`}
+                onClick={downloadAttachment}
+              >
+                <img src={downloadFileIcon} alt="download file"/>
+              </button>
+              <span className={styles.description}>
+                {attachmentName}
+              </span>
+            </div>
+          ) : null}
           <div className={`${!isFocused ? styles.hidden : null}`}>
             <div className={styles.parameterContainer}>
               <div className={styles.parameterContainer}>
@@ -350,7 +420,8 @@ export const QuestionConstructor: FC<propTypes> = (
                         value,
                         quizId: quiz.id,
                         index: data.index,
-                        isFileUploaded: !!fileName
+                        attachmentName,
+                        isFileUploaded: !!attachmentName,
                       }));
                     }}
                     type="checkbox"
