@@ -286,7 +286,6 @@ export const QuestionConstructor: FC<propTypes> = (
   }
 
   return (
-    <>
       <article
         className={`${styles.block} ${isFocused ? styles.blockFocused : ""} 
         ${(changeQuestionOrder === data.index) ? styles.changeOrderBlock : ""}
@@ -320,13 +319,19 @@ export const QuestionConstructor: FC<propTypes> = (
           <div className={styles.wrapper}>
             <div className={styles.headerContainer}>
               <div className={styles.name}>
-                <input
-                  className={styles.nameInput}
-                  value={name}
-                  onChange={event => setName(event.target.value)}
-                  type="text"
-                  onBlur={updateQuestionAction}
-                  placeholder="question name"/>
+                <div>
+                  <span>
+                    {`${data.index + 1}. `}
+                  </span>
+                  <input
+                    className={styles.nameInput}
+                    value={name}
+                    onChange={event => setName(event.target.value)}
+                    type="text"
+                    onBlur={updateQuestionAction}
+                    placeholder="question name"
+                  />
+                </div>
                 {
                   (!isFocused && isRequired) ? (
                     <div className={styles.isRequiredLabel}>
@@ -441,6 +446,5 @@ export const QuestionConstructor: FC<propTypes> = (
           </div>
         </div>
       </article>
-    </>
   );
 }
