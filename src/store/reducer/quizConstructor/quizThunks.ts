@@ -4,7 +4,7 @@ import axios from 'axios';
 import {TDeleteResponse, TError, TParameters, TQuestion, TQuiz} from './quizSlice';
 
 export const fetchQuizById = createAsyncThunk<TQuiz, string, { rejectValue: TError }>(
-  "quiz/fetchQuizById",
+  "quizConstructor/fetchQuizById",
   async function (quizId: string, thunkAPI) {
     const response = await api.get<TQuiz>(`/quiz/constructor/${quizId}`);
     if (!axios.isAxiosError(response)) return response.data;
@@ -20,7 +20,7 @@ export const fetchQuizById = createAsyncThunk<TQuiz, string, { rejectValue: TErr
 );
 
 export const updateQuizParametersById = createAsyncThunk<TQuiz, { parameters: TParameters, quizId: string }, { rejectValue: TError }>(
-  "quiz/updateQuizParametersById",
+  "quizConstructor/updateQuizParametersById",
   async function (data, thunkAPI) {
     const {quizId, parameters} = data;
     const response = await api.put<TQuiz>('/quiz/update-quiz-parameters', {quizId, ...parameters});
@@ -37,7 +37,7 @@ export const updateQuizParametersById = createAsyncThunk<TQuiz, { parameters: TP
 );
 
 export const refreshQuizCode = createAsyncThunk<TQuiz, string, { rejectValue: TError }>(
-  'quiz/refreshQuizCode',
+  'quizConstructor/refreshQuizCode',
   async function (code, thunkAPI) {
     const params = new URLSearchParams([['code', code]]);
     const response = await api.get<TQuiz>('/quiz/refresh-quiz-code', { params });
@@ -54,7 +54,7 @@ export const refreshQuizCode = createAsyncThunk<TQuiz, string, { rejectValue: TE
 );
 
 export const deleteQuizByCode = createAsyncThunk<TDeleteResponse, string, { rejectValue: TError }>(
-  "quiz/deleteQuizByCode",
+  "quizConstructor/deleteQuizByCode",
   async function (code, thunkAPI) {
     const params = new URLSearchParams([['code', code]]);
     const response = await api.delete<TDeleteResponse>('/quiz', { params });
@@ -71,7 +71,7 @@ export const deleteQuizByCode = createAsyncThunk<TDeleteResponse, string, { reje
 );
 
 export const createQuestion = createAsyncThunk<TQuestion, Omit<TQuestion, 'id' | "index"> & {quizId: string}, { rejectValue: TError }>(
-  'quiz/createQuestion',
+  'quizConstructor/createQuestion',
   async function (question, thunkAPI) {
     const response = await api.post<TQuestion>('/question', question);
     if (!axios.isAxiosError(response)) return response.data;
@@ -87,7 +87,7 @@ export const createQuestion = createAsyncThunk<TQuestion, Omit<TQuestion, 'id' |
 );
 
 export const updateQuestion = createAsyncThunk<TQuestion, Omit<TQuestion, "id"> & {questionId: string, quizId: string}, { rejectValue: TError }>(
-  'quiz/updateQuestion',
+  'quizConstructor/updateQuestion',
   async function (question, thunkAPI) {
     if (question.type !== "TEXT" && !question.value.length) {
       question.value = ["Variant"];
@@ -108,7 +108,7 @@ export const updateQuestion = createAsyncThunk<TQuestion, Omit<TQuestion, "id"> 
 );
 
 export const deleteQuestion = createAsyncThunk<TDeleteResponse, {questionId: string, quizId: string}, { rejectValue: TError }>(
-  'quiz/deleteQuestion',
+  'quizConstructor/deleteQuestion',
   async function (data, thunkAPI) {
     const response = await api.delete<TDeleteResponse>('/question', {data});
     if (!axios.isAxiosError(response)) return response.data;
@@ -124,7 +124,7 @@ export const deleteQuestion = createAsyncThunk<TDeleteResponse, {questionId: str
 );
 
 export const uploadQuestionAttachment = createAsyncThunk<TQuestion, {quizId: string, questionId: string, formData: FormData,}, { rejectValue: TError }>(
-  'quiz/uploadQuestionAttachment',
+  'quizConstructor/uploadQuestionAttachment',
   async function ({quizId, questionId, formData}, thunkAPI) {
     const response = await api.post(`question/upload/${quizId}/${questionId}`, formData);
     if (!axios.isAxiosError(response)) return response.data;
@@ -140,7 +140,7 @@ export const uploadQuestionAttachment = createAsyncThunk<TQuestion, {quizId: str
 );
 
 export const deleteQuestionAttachment = createAsyncThunk<TQuestion, {quizId: string, questionId: string,}, { rejectValue: TError }>(
-  'quiz/deleteQuestionAttachment',
+  'quizConstructor/deleteQuestionAttachment',
   async function ({quizId, questionId}, thunkAPI) {
     const response = await api.delete(`question/attachment/${quizId}/${questionId}`);
     if (!axios.isAxiosError(response)) return response.data;

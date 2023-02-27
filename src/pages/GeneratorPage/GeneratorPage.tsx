@@ -3,7 +3,7 @@ import {GeneratorPageContext} from "../../context/generatorPageContext";
 import {useEffect, useState} from "react";
 import {Header} from "../../components/headers/GeneratorPageHeader/Header";
 import {useNavigate, useParams} from "react-router-dom";
-import {fetchQuizById} from "../../store/reducer/quiz/quizThunks";
+import {fetchQuizById} from "../../store/reducer/quizConstructor/quizThunks";
 import {NavBar} from "../../components/navbar/ConstructorPageNavbar/ConstructorPageNavbar";
 import {QuestionList} from "../../components/constructor/QuestionList";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";

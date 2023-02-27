@@ -13,10 +13,10 @@ import {
   clearParametersLoading,
   clearQuizDeleteLoading,
   clearQuizDeleteError,
-} from "../../../store/reducer/quiz/quizSlice";
+} from "../../../store/reducer/quizConstructor/quizSlice";
 import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
 import {isArray} from "lodash";
-import {deleteQuizByCode, refreshQuizCode, updateQuizParametersById} from '../../../store/reducer/quiz/quizThunks';
+import {deleteQuizByCode, refreshQuizCode, updateQuizParametersById} from '../../../store/reducer/quizConstructor/quizThunks';
 
 
 export const Header = () => {
@@ -77,7 +77,7 @@ export const Header = () => {
     } else if (codeLoading === 'succeeded') {
       Swal.fire(
         'Success!',
-        'Your quiz code has been updated.',
+        'Your quizConstructor code has been updated.',
         'success'
       ).then(() => {
         dispatch(clearCodeLoading());
@@ -108,7 +108,7 @@ export const Header = () => {
     } else if (parametersLoading === 'succeeded') {
       Swal.fire(
         'Success!',
-        'Your quiz parameters has been updated.',
+        'Your quizConstructor parameters has been updated.',
         'success'
       ).then(() => {
         dispatch(clearParametersLoading());
@@ -143,7 +143,7 @@ export const Header = () => {
       dispatch(clearQuizDeleteLoading());
       Swal.fire(
         'Success!',
-        'Your quiz has been deleted.',
+        'Your quizConstructor has been deleted.',
         'success',
       ).then(() => {});
     }
@@ -152,7 +152,7 @@ export const Header = () => {
   const deleteQuiz = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
     Swal.fire({
-      title: 'Do you really want to permanently delete quiz?',
+      title: 'Do you really want to permanently delete quizConstructor?',
       text: "All question answers will be deleted!",
       icon: 'warning',
       showCancelButton: true,

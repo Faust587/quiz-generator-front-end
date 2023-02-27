@@ -1,6 +1,6 @@
 import api from "../api";
 import {AxiosResponse} from "axios";
-import { TQuiz } from "../store/reducer/quiz/quizSlice";
+import { TQuiz } from "../store/reducer/quizConstructor/quizSlice";
 
 export async function getQuizList(): Promise<AxiosResponse<TQuiz[]>> {
   return await api.get<TQuiz[]>('/quiz/list');

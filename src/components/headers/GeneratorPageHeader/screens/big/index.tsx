@@ -4,7 +4,8 @@ import React, {Dispatch, FC, SetStateAction} from "react";
 import Swal from "sweetalert2";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../../../hooks/redux";
-import {updateQuizParametersById, refreshQuizCode, deleteQuizByCode} from "../../../../../store/reducer/quiz/quizThunks";
+import {updateQuizParametersById, refreshQuizCode, deleteQuizByCode} from "../../../../../store/reducer/quizConstructor/quizThunks";
+import {setCurrentQuiz} from '../../../../../store/reducer/quizConstructor/quizSlice';
 
 type propTypes = {
   id: string,
@@ -59,7 +60,7 @@ export const BigScreenHeader: FC<propTypes> = (
   const deleteQuiz = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
     Swal.fire({
-      title: 'Do you really want to permanently delete quiz?',
+      title: 'Do you really want to permanently delete quizConstructor?',
       text: "All question answers will be deleted!",
       icon: 'warning',
       showCancelButton: true,
@@ -190,7 +191,10 @@ export const BigScreenHeader: FC<propTypes> = (
       </div>
       <button
         className={styles.homeButton}
-        onClick={() => navigate("../")}
+        onClick={() => {
+          dispatch(setCurrentQuiz(null));
+          navigate("../");
+        }}
       >
         <img
           className={styles.homeIcon}

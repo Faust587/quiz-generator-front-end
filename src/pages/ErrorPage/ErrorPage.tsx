@@ -1,7 +1,7 @@
 import styles from "./ErrorPage.module.scss";
 import errorLogo from "../../assets/images/error.jpg";
 import {useLocation, useNavigate} from "react-router-dom";
-import {clearQuizError, clearQuizStatus} from "../../store/reducer/quiz/quizSlice";
+import {clearQuizError, clearQuizStatus} from "../../store/reducer/quizConstructor/quizSlice";
 import {useAppDispatch} from "../../hooks/redux";
 import {useEffect} from "react";
 

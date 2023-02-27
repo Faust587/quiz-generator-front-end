@@ -1,9 +1,9 @@
 import {Dispatch, FC, SetStateAction, ChangeEvent, useState} from "react";
 import styles from "../QuestionType.module.scss";
-import {updateQuestion} from "../../../../../store/reducer/quiz/quizThunks";
+import {updateQuestion} from "../../../../../store/reducer/quizConstructor/quizThunks";
 import {useAppDispatch} from "../../../../../hooks/redux";
 import {QUESTION_TYPES} from "../../../../../types/questionTypes";
-import {TQuestion} from '../../../../../store/reducer/quiz/quizSlice';
+import {TQuestion} from '../../../../../store/reducer/quizConstructor/quizSlice';
 
 type propTypes = {
   quizId: string,

@@ -3,7 +3,7 @@ import {FormEvent, useState} from "react";
 import api from "../../../api";
 import Swal from "sweetalert2";
 import axios, {AxiosError} from "axios";
-import {TQuiz} from "../../../store/reducer/quiz/quizSlice";
+import {TQuiz} from "../../../store/reducer/quizConstructor/quizSlice";
 
 export const SearchForm = () => {
 

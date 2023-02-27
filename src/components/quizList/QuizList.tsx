@@ -5,7 +5,6 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {QuizPageContext} from "../../context/quizPageContext";
 import {QuizItem} from "./quizItem/QuizItem";
-import quizIcon1 from "../../assets/icons/quiz-icon-1.svg";
 
 export const QuizList = () => {
 

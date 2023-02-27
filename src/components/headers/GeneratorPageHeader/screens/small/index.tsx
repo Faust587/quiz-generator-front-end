@@ -4,7 +4,8 @@ import settingsButtonIcon from "../../../../../assets/icons/settings.svg";
 import Swal from "sweetalert2";
 import {Dispatch, FC, SetStateAction} from "react";
 import {useNavigate} from "react-router-dom";
-import {useAppSelector} from "../../../../../hooks/redux";
+import {useAppDispatch, useAppSelector} from "../../../../../hooks/redux";
+import {setCurrentQuiz} from '../../../../../store/reducer/quizConstructor/quizSlice';
 
 type propTypes = {
   setIsSettingsOpen: Dispatch<SetStateAction<boolean>>
@@ -16,6 +17,7 @@ export const SmallScreenHeader: FC<propTypes> = (
   }
 ) => {
   const quiz = useAppSelector(state => state.quizzes.currentQuiz);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const copyCodeToClipboard = () => {
@@ -58,7 +60,10 @@ export const SmallScreenHeader: FC<propTypes> = (
       <section className={styles.infoContainer}>
         <button
           className={styles.homeButton}
-          onClick={() => navigate("../")}
+          onClick={() => {
+            dispatch(setCurrentQuiz(null));
+            navigate("../");
+          }}
         >
           <img src={homeButtonIcon} alt="home page"/>
         </button>

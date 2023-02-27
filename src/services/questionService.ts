@@ -1,4 +1,4 @@
-import {TQuestion} from "../store/reducer/quiz/quizSlice";
+import {TQuestion} from "../store/reducer/quizConstructor/quizSlice";
 import api from "../api";
 
 export async function createQuestion(question: Omit<TQuestion, "id">, quizId: string) {

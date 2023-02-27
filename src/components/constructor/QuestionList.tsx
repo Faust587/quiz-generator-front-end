@@ -7,12 +7,12 @@ import {
   clearQuestionCreatingError,
   clearQuestionCreatingLoading, setActiveQuestion,
   TQuestion
-} from "../../store/reducer/quiz/quizSlice";
+} from "../../store/reducer/quizConstructor/quizSlice";
 import {useEffect, useRef} from "react";
 import {isArray} from "lodash";
 import Swal from "sweetalert2";
 import {OrderZone} from "./OrderZone/OrderZone";
-import {createQuestion} from '../../store/reducer/quiz/quizThunks';
+import {createQuestion} from '../../store/reducer/quizConstructor/quizThunks';
 
 export const QuestionList = () => {
 
