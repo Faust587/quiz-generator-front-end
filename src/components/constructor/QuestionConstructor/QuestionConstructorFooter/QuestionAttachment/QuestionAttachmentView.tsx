@@ -1,19 +1,18 @@
-import {FC, MouseEvent} from 'react';
-import styles from '../../QuestionConstructor.module.scss';
-import downloadFileIcon from '../../../../../assets/icons/download_icon.svg';
-import api from '../../../../../api/index';
+import { type FC, type MouseEvent } from 'react'
+import styles from '../../QuestionConstructor.module.scss'
+import downloadFileIcon from '../../../../../assets/icons/download_icon.svg'
+import api from '../../../../../api/index'
 
-type PropsTypes = {
-  quizId: string;
-  questionId: string;
-  attachmentName: string | undefined;
-  isFileUploaded: boolean;
+interface PropsTypes {
+  quizId: string
+  questionId: string
+  attachmentName: string | undefined
+  isFileUploaded: boolean
 }
 
 export const QuestionAttachmentView: FC<PropsTypes> = (
-  {questionId, quizId, isFileUploaded, attachmentName}
+  { questionId, quizId, isFileUploaded, attachmentName }
 ) => {
-
   const downloadAttachment = async (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     if (!isFileUploaded) return
@@ -25,15 +24,15 @@ export const QuestionAttachmentView: FC<PropsTypes> = (
       type: file.headers['content-type'] || 'application/octet-stream',
       endings: 'native'
     })
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = attachmentName || 'file';
-    a.click();
-    a.remove();
+    const url = window.URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = attachmentName || 'file'
+    a.click()
+    a.remove()
   }
 
-  if (!isFileUploaded) return null;
+  if (!isFileUploaded) return null
   return (
     <div style={{ display: 'flex' }}>
       <button
@@ -46,5 +45,5 @@ export const QuestionAttachmentView: FC<PropsTypes> = (
         {attachmentName}
       </span>
     </div>
-  );
+  )
 }

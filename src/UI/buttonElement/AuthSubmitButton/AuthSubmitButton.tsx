@@ -1,7 +1,7 @@
-import React, { FC } from "react";
-import "./AuthSubmitButtonStyles.scss";
+import React, { type FC } from 'react'
+import './AuthSubmitButtonStyles.scss'
 
-type propsType = {
+interface propsType {
   text: string
 }
 
@@ -10,7 +10,6 @@ export const AuthSubmitButton: FC<propsType> = (
     text
   }
 ) => {
-
   return (
     <button
       className="authorization-submit-button"
@@ -18,5 +17,5 @@ export const AuthSubmitButton: FC<propsType> = (
     >
       { text }
     </button>
-  );
-};
+  )
+}

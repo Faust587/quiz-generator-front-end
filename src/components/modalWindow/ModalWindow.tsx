@@ -1,24 +1,23 @@
-import "./ModalWindowStyles.scss"
-import {Dispatch, FC, SetStateAction, useContext} from "react";
-import {QuizPageContext} from "../../context/quizPageContext";
+import './ModalWindowStyles.scss'
+import { type Dispatch, type FC, type SetStateAction } from 'react'
 
-type propTypes = {
-  children: JSX.Element,
+interface propTypes {
+  children: JSX.Element
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export const ModalWindow: FC<propTypes> = ({children, setIsOpen}) => {
+export const ModalWindow: FC<propTypes> = ({ children, setIsOpen }) => {
   return (
     <div
       className="background"
-      onClick={() => setIsOpen(false)}
+      onClick={() => { setIsOpen(false) }}
     >
       <div
         className="modal-window"
-        onClick={event => event.stopPropagation()}
+        onClick={event => { event.stopPropagation() }}
       >
         {children}
       </div>
     </div>
-  );
+  )
 }

@@ -1,10 +1,16 @@
-import {PayloadAction} from '@reduxjs/toolkit';
-import {compare, TInitialQuizState, TParameters, TQuestion, TQuiz} from './quizSlice';
+import { type PayloadAction } from '@reduxjs/toolkit';
+import {
+  compare,
+  type TInitialQuizState,
+  type TParameters,
+  type TQuestion,
+  type TQuiz
+} from './quizSlice';
 
 export const quizReducers = {
   setQuestions: (state: TInitialQuizState, action: PayloadAction<TQuestion[]>) => {
-    if (!state.currentQuiz) return;
-    action.payload.sort( compare );
+    if (state.currentQuiz == null) return;
+    action.payload.sort(compare);
     state.currentQuiz.questions = action.payload;
   },
   setQuestionMoving: (state: TInitialQuizState, action: PayloadAction<boolean>) => {
@@ -25,20 +31,20 @@ export const quizReducers = {
     state.focusedQuestion = action.payload;
   },
   removeQuestionFromState: (state: TInitialQuizState, action: PayloadAction<string>) => {
-    if (!state.currentQuiz) return;
+    if (state.currentQuiz == null) return;
     state.currentQuiz.questions = state.currentQuiz.questions.filter(question => {
       return question.id !== action.payload;
     });
   },
   updateParameters: (state: TInitialQuizState, action: PayloadAction<TParameters>) => {
-    if (!state.currentQuiz) return;
-    const {name, closed, onlyAuthUsers} = action.payload;
-    state.currentQuiz = {...state.currentQuiz, closed, name, onlyAuthUsers};
+    if (state.currentQuiz == null) return;
+    const { name, closed, onlyAuthUsers } = action.payload;
+    state.currentQuiz = { ...state.currentQuiz, closed, name, onlyAuthUsers };
   },
   updateCode: (state: TInitialQuizState, action: PayloadAction<string>) => {
-    if (!state.currentQuiz) return;
+    if (state.currentQuiz == null) return;
     const code = action.payload;
-    state.currentQuiz = {...state.currentQuiz, code};
+    state.currentQuiz = { ...state.currentQuiz, code };
   },
   clearQuizStatus: (state: TInitialQuizState) => {
     state.quizLoading = 'idle';
@@ -82,4 +88,4 @@ export const quizReducers = {
   clearQuestionDeletingError: (state: TInitialQuizState) => {
     state.questionDeletingError = null;
   }
-}
+};

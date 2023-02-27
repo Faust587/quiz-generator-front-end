@@ -1,1 +1,1 @@
-export type QUESTION_TYPES = "TEXT" | "SELECT" | "FLAG" | "OPTION";
+export type QUESTION_TYPES = 'TEXT' | 'SELECT' | 'FLAG' | 'OPTION'

@@ -1,8 +1,8 @@
-import "./AuthHeadeStyles.scss";
-import { FC } from "react";
+import './AuthHeadeStyles.scss'
+import { type FC } from 'react'
 
-type propsType = {
-  title: string,
+interface propsType {
+  title: string
   subtitle: string
 }
 
@@ -11,7 +11,6 @@ export const AuthHeader: FC<propsType> = (
     title,
     subtitle
   }) => {
-
   return (
     <header className="authorization-header">
       <h1 className="authorization-header__title">
@@ -21,5 +20,5 @@ export const AuthHeader: FC<propsType> = (
         { subtitle }
       </h2>
     </header>
-  );
-};
+  )
+}

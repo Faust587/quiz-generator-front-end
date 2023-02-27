@@ -1,11 +1,10 @@
-import "./RootPageStyles.scss"
-import useAuthorization from "../../hooks/useAuthorization";
-import {MainPage} from "../MainPage/MainPage";
-import {SignUpPage} from "../AuthPages/SignUpPage";
+import './RootPageStyles.scss'
+import useAuthorization from '../../hooks/useAuthorization'
+import { MainPage } from '../MainPage/MainPage'
+import { SignUpPage } from '../AuthPages/SignUpPage'
 
 export const RootPage = () => {
-
-  const {isAuth} = useAuthorization();
+  const { isAuth } = useAuthorization()
 
   return (
     <>

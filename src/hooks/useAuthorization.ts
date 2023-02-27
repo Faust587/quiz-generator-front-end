@@ -1,9 +1,9 @@
-function useAuthorization() {
-  const token = localStorage.getItem("accessToken");
+function useAuthorization () {
+  const token = localStorage.getItem('accessToken')
 
   return {
-    isAuth: !!token,
+    isAuth: !!token
   }
 }
 
-export default useAuthorization;
+export default useAuthorization

@@ -1,42 +1,41 @@
-import styles from "./QuizList.module.scss";
-import {getQuizList} from "../../services/quizService";
-import {useContext, useLayoutEffect, useState} from "react";
-import axios from "axios";
-import {useNavigate} from "react-router-dom";
-import {QuizPageContext} from "../../context/quizPageContext";
-import {QuizItem} from "./quizItem/QuizItem";
+import styles from './QuizList.module.scss'
+import { getQuizList } from '../../services/quizService'
+import { useContext, useLayoutEffect, useState } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { QuizPageContext } from '../../context/quizPageContext'
+import { QuizItem } from './quizItem/QuizItem'
 
 export const QuizList = () => {
-
-  const navigate = useNavigate();
-  const {setActiveModal, quizList, setQuizList} = useContext(QuizPageContext);
+  const navigate = useNavigate()
+  const { setActiveModal, quizList, setQuizList } = useContext(QuizPageContext)
 
   useLayoutEffect(() => {
     const fetchQuizList = async () => {
-      const quizList = await getQuizList();
+      const quizList = await getQuizList()
       if (axios.isAxiosError(quizList)) {
-        navigate("../sign-in");
-        return;
+        navigate('../sign-in')
+        return
       }
-      let closedCounters = 0;
-      let onlyAuthCounter = 0;
+      let closedCounters = 0
+      let onlyAuthCounter = 0
       quizList.data.forEach(quiz => {
-        if (quiz.closed) closedCounters++;
-        if (quiz.onlyAuthUsers) onlyAuthCounter++;
+        if (quiz.closed) closedCounters++
+        if (quiz.onlyAuthUsers) onlyAuthCounter++
       })
-      setClosedQuizzesCounter(closedCounters);
-      setOnlyAuthQuizzesCounter(onlyAuthCounter);
-      setQuizList(quizList.data);
+      setClosedQuizzesCounter(closedCounters)
+      setOnlyAuthQuizzesCounter(onlyAuthCounter)
+      setQuizList(quizList.data)
     }
-    fetchQuizList();
+    fetchQuizList()
   }, [])
 
-  const [onlyAuthFilter, setOnlyAuthFilter] = useState<boolean>(false);
-  const [isClosedFilter, setIsClosedFilter] = useState<boolean>(false);
-  const [nameFilter, setNameFilter] = useState<string>("");
+  const [onlyAuthFilter, setOnlyAuthFilter] = useState<boolean>(false)
+  const [isClosedFilter, setIsClosedFilter] = useState<boolean>(false)
+  const [nameFilter, setNameFilter] = useState<string>('')
 
-  const [closedQuizzesCounter, setClosedQuizzesCounter] = useState<number>();
-  const [onlyAuthQuizzesCounter, setOnlyAuthQuizzesCounter] = useState<number>();
+  const [closedQuizzesCounter, setClosedQuizzesCounter] = useState<number>()
+  const [onlyAuthQuizzesCounter, setOnlyAuthQuizzesCounter] = useState<number>()
 
   return (
     <section className={styles.container}>
@@ -44,7 +43,7 @@ export const QuizList = () => {
         <h1 className={styles.headerTitle}>Your quizzes:</h1>
         <button
           className={styles.createQuizBtn}
-          onClick={() => setActiveModal(true)}
+          onClick={() => { setActiveModal(true) }}
         >
           new quiz
         </button>
@@ -53,13 +52,13 @@ export const QuizList = () => {
         <div className={styles.filterButtonContainer}>
           <button
             className={`${styles.filterButton} ${onlyAuthFilter ? styles.active : null}`}
-            onClick={() => setOnlyAuthFilter(prev => !prev)}
+            onClick={() => { setOnlyAuthFilter(prev => !prev) }}
           >
             only auth&nbsp;<span className={styles.quizCountText}>({onlyAuthQuizzesCounter})</span>
           </button>
           <button
             className={`${styles.filterButton} ${isClosedFilter ? styles.active : null}`}
-            onClick={() => setIsClosedFilter(prev => !prev)}
+            onClick={() => { setIsClosedFilter(prev => !prev) }}
           >
             closed&nbsp;<span className={styles.quizCountText}>({closedQuizzesCounter})</span>
           </button>
@@ -71,25 +70,27 @@ export const QuizList = () => {
             type="text"
             value={nameFilter}
             placeholder="search"
-            onChange={e => setNameFilter(e.target.value)}
+            onChange={e => { setNameFilter(e.target.value) }}
           />
         </div>
       </div>
       <main className={styles.quizList}>
         {
-          (!quizList) ? null : quizList.map((
-            quiz
-          ) => {
-            if (nameFilter !== "") {
-              if (quiz.name.toUpperCase().search(nameFilter.toUpperCase()) === -1) return null;
-            }
-            if (onlyAuthFilter) {
-              if (!quiz.onlyAuthUsers) return null;
-            }
-            if (isClosedFilter) {
-              if (!quiz.closed) return null;
-            }
-            return (
+          (!quizList)
+            ? null
+            : quizList.map((
+              quiz
+            ) => {
+              if (nameFilter !== '') {
+                if (quiz.name.toUpperCase().search(nameFilter.toUpperCase()) === -1) return null
+              }
+              if (onlyAuthFilter) {
+                if (!quiz.onlyAuthUsers) return null
+              }
+              if (isClosedFilter) {
+                if (!quiz.closed) return null
+              }
+              return (
               <div key={quiz.id} className={styles.itemWrapper}>
                 <QuizItem
                   title={quiz.name}
@@ -99,10 +100,10 @@ export const QuizList = () => {
                   data={quiz}
                 />
               </div>
-            );
-          })
+              )
+            })
         }
       </main>
     </section>
-  );
-};
+  )
+}

@@ -1,9 +1,9 @@
-import { createContext, Dispatch, SetStateAction } from "react";
-import { TABS } from "../pages/GeneratorPage/GeneratorPage";
+import { createContext, type Dispatch, type SetStateAction } from 'react'
+import { type TABS } from '../pages/GeneratorPage/GeneratorPage'
 
-type ContextValue = {
-  tab: TABS,
-  setTab: Dispatch<SetStateAction<TABS>>,
+interface ContextValue {
+  tab: TABS
+  setTab: Dispatch<SetStateAction<TABS>>
 }
 
-export const GeneratorPageContext = createContext<ContextValue>({} as ContextValue);
+export const GeneratorPageContext = createContext<ContextValue>({} as ContextValue)

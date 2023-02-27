@@ -1,21 +1,21 @@
-import styles from "./QuestionList.module.scss";
-import {QuestionConstructor} from "./QuestionConstructor/QuestionConstructor";
-import {useSelector} from "react-redux";
-import {RootState} from "../../store";
-import {useAppDispatch, useAppSelector} from "../../hooks/redux";
+import styles from './QuestionList.module.scss';
+
+import { QuestionConstructor } from './QuestionConstructor/QuestionConstructor';
+import { useSelector } from 'react-redux';
+import { type RootState } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import {
   clearQuestionCreatingError,
   clearQuestionCreatingLoading, setActiveQuestion,
-  TQuestion
-} from "../../store/reducer/quizConstructor/quizSlice";
-import {useEffect, useRef} from "react";
-import {isArray} from "lodash";
-import Swal from "sweetalert2";
-import {OrderZone} from "./OrderZone/OrderZone";
-import {createQuestion} from '../../store/reducer/quizConstructor/quizThunks';
+  type TQuestion
+} from '../../store/reducer/quizConstructor/quizSlice';
+import React, { useEffect, useRef } from 'react';
+import { isArray } from 'lodash';
+import SweetAlert from 'sweetalert2';
+import { OrderZone } from './OrderZone/OrderZone';
+import { createQuestion } from '../../store/reducer/quizConstructor/quizThunks';
 
-export const QuestionList = () => {
-
+export const QuestionList = (): JSX.Element => {
   const {
     currentQuiz,
     quizLoading,
@@ -27,25 +27,27 @@ export const QuestionList = () => {
   const isQuestionMoves = useAppSelector(state => state.quizzes.isQuestionMoves);
   const dispatch = useAppDispatch();
   const createQuestionButton = useRef<HTMLButtonElement>(null);
-  const addQuestion = async () => {
-    if (!currentQuiz) return;
-    const sampleQuestion: Omit<TQuestion, "id" | "index"> & { quizId: string } = {
+  const addQuestion = async (): Promise<void> => {
+    if (currentQuiz == null) return;
+    const sampleQuestion: Omit<TQuestion, 'id' | 'index'> & { quizId: string } = {
       quizId: currentQuiz.id,
-      name: "Question",
+      name: 'Question',
       value: [],
-      type: "TEXT",
+      type: 'TEXT',
       isRequired: false,
       isFileUploaded: false,
-      attachmentName: undefined,
-    }
-    dispatch(createQuestion(sampleQuestion));
-  }
+      attachmentName: undefined
+    };
+    dispatch(createQuestion(sampleQuestion)).catch((data) => {
+      console.log(data);
+    });
+  };
 
   useEffect(() => {
     if (questionCreatingLoading === 'failed') {
       let errorText: string;
-      if (!questionCreatingError) {
-        errorText = "Sorry, unknown error, try again!"
+      if (questionCreatingError == null) {
+        errorText = 'Sorry, unknown error, try again!';
       } else {
         if (isArray(questionCreatingError.message)) {
           errorText = questionCreatingError.message.join();
@@ -53,22 +55,24 @@ export const QuestionList = () => {
           errorText = questionCreatingError.message;
         }
       }
-      Swal.fire(
+      SweetAlert.fire(
         'Error!',
         errorText,
         'error'
       ).then(() => {
         dispatch(clearQuestionCreatingLoading());
         dispatch(clearQuestionCreatingError());
+      }).catch((reason) => {
+        console.log(reason);
       });
     } else if (questionCreatingLoading === 'succeeded') {
       dispatch(clearQuestionCreatingLoading());
-      if (!createQuestionButton.current) return;
-      createQuestionButton.current.scrollIntoView({behavior: "smooth"});
+      if (createQuestionButton.current == null) return;
+      createQuestionButton.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [questionCreatingLoading]);
 
-  if (quizLoading === "pending" || !currentQuiz) return null;
+  if (quizLoading === 'pending' || (currentQuiz == null)) return <p>Loading</p>;
 
   return (
     <div
@@ -92,7 +96,7 @@ export const QuestionList = () => {
         <div className={styles.addQuestionButtonContainer}>
           <button
             className={styles.addQuestionButton}
-            onClick={addQuestion}
+            onClick={() => addQuestion}
             ref={createQuestionButton}
           >
             ADD QUESTION
@@ -101,4 +105,4 @@ export const QuestionList = () => {
       </div>
     </div>
   );
-}
+};

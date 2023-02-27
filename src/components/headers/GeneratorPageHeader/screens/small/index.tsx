@@ -1,13 +1,13 @@
-import styles from "./styles.module.scss";
-import homeButtonIcon from "../../../../../assets/icons/user-icon.svg";
-import settingsButtonIcon from "../../../../../assets/icons/settings.svg";
-import Swal from "sweetalert2";
-import {Dispatch, FC, SetStateAction} from "react";
-import {useNavigate} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../../../../hooks/redux";
-import {setCurrentQuiz} from '../../../../../store/reducer/quizConstructor/quizSlice';
+import styles from './styles.module.scss'
+import homeButtonIcon from '../../../../../assets/icons/user-icon.svg'
+import settingsButtonIcon from '../../../../../assets/icons/settings.svg'
+import Swal from 'sweetalert2'
+import { type Dispatch, type FC, type SetStateAction } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/redux'
+import { setCurrentQuiz } from '../../../../../store/reducer/quizConstructor/constructorSlice'
 
-type propTypes = {
+interface propTypes {
   setIsSettingsOpen: Dispatch<SetStateAction<boolean>>
 }
 
@@ -16,18 +16,18 @@ export const SmallScreenHeader: FC<propTypes> = (
     setIsSettingsOpen
   }
 ) => {
-  const quiz = useAppSelector(state => state.quizzes.currentQuiz);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const quiz = useAppSelector(state => state.quizzes.currentQuiz)
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const copyCodeToClipboard = () => {
-    if (!quiz) return;
+    if (quiz == null) return
     navigator.clipboard.writeText(quiz.code).catch(() => {
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
+        icon: 'error',
+        title: 'Oops...',
         text: "Code didn't copied... try again"
-      });
+      })
     }).then(() => {
       Swal.fire({
         icon: 'success',
@@ -35,10 +35,10 @@ export const SmallScreenHeader: FC<propTypes> = (
         showConfirmButton: false,
         timer: 1500
       })
-    });
+    })
   }
 
-  if (!quiz) return null;
+  if (quiz == null) return null
 
   return (
     <div className={styles.container}>
@@ -61,8 +61,8 @@ export const SmallScreenHeader: FC<propTypes> = (
         <button
           className={styles.homeButton}
           onClick={() => {
-            dispatch(setCurrentQuiz(null));
-            navigate("../");
+            dispatch(setCurrentQuiz(null))
+            navigate('../')
           }}
         >
           <img src={homeButtonIcon} alt="home page"/>
@@ -70,10 +70,10 @@ export const SmallScreenHeader: FC<propTypes> = (
       </section>
       <button
         className={styles.settingsButton}
-        onClick={() => setIsSettingsOpen(true)}
+        onClick={() => { setIsSettingsOpen(true) }}
       >
         <img src={settingsButtonIcon} alt="settings"/>
       </button>
     </div>
-  );
+  )
 }

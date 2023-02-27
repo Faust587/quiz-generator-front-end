@@ -1,16 +1,16 @@
-import {Dispatch, FC, RefObject, SetStateAction, useRef, useState} from 'react';
-import styles from '../../QuestionConstructor.module.scss';
-import trashCanIcon from '../../../../../assets/icons/trash-can.svg';
-import uploadFileIcon from '../../../../../assets/icons/upload.svg';
-import {deleteQuestionAttachment, uploadQuestionAttachment} from '../../../../../store/reducer/quizConstructor/quizThunks';
-import {useAppDispatch} from '../../../../../hooks/redux';
+import { type Dispatch, type FC, type SetStateAction, useRef, useState } from 'react'
+import styles from '../../QuestionConstructor.module.scss'
+import trashCanIcon from '../../../../../assets/icons/trash-can.svg'
+import uploadFileIcon from '../../../../../assets/icons/upload.svg'
+import { deleteQuestionAttachment, uploadQuestionAttachment } from '../../../../../store/reducer/quizConstructor/quizThunks'
+import { useAppDispatch } from '../../../../../hooks/redux'
 
-type PropsTypes = {
-  attachmentName: string | undefined;
-  setAttachmentName: Dispatch<SetStateAction<string | undefined>>;
-  quizId: string;
-  questionId: string;
-  isFileUploaded: boolean;
+interface PropsTypes {
+  attachmentName: string | undefined
+  setAttachmentName: Dispatch<SetStateAction<string | undefined>>
+  quizId: string
+  questionId: string
+  isFileUploaded: boolean
 }
 
 export const QuestionAttachmentEditor: FC<PropsTypes> = (
@@ -19,11 +19,11 @@ export const QuestionAttachmentEditor: FC<PropsTypes> = (
     setAttachmentName,
     quizId,
     questionId,
-    isFileUploaded,
+    isFileUploaded
   }
 ) => {
-  const dispatch = useAppDispatch();
-  const inputFile = useRef<HTMLInputElement>(null);
+  const dispatch = useAppDispatch()
+  const inputFile = useRef<HTMLInputElement>(null)
   const [isFileUploading, setIsFileUploading] = useState(false)
   const onFileChanges = async () => {
     if ((inputFile.current == null) || (inputFile.current.files == null)) return
@@ -40,7 +40,7 @@ export const QuestionAttachmentEditor: FC<PropsTypes> = (
   }
 
   const removeAttachment = () => {
-    dispatch(deleteQuestionAttachment({ quizId, questionId}))
+    dispatch(deleteQuestionAttachment({ quizId, questionId }))
   }
 
   return (
@@ -54,18 +54,18 @@ export const QuestionAttachmentEditor: FC<PropsTypes> = (
           >
             <img src={trashCanIcon} alt="delete"/>
           </button>
-        )
+          )
         : (
           <button
             className={`${styles.iconButton} ${styles.iconButtonGray}`}
             onClick={() => {
-              if (!!inputFile.current) inputFile.current.click()
+              if (inputFile.current != null) inputFile.current.click()
             }
             }
           >
             <img src={uploadFileIcon} alt="upload file"/>
           </button>
-        )}
+          )}
       <span
         className={styles.description}
         onClick={onFileChanges}
@@ -75,5 +75,5 @@ export const QuestionAttachmentEditor: FC<PropsTypes> = (
         {isFileUploading ? 'uploading...' : null}
           </span>
     </div>
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import {TEnteredQuizInitialState} from './enteredQuizSlice';
+import { type TEnteredQuizInitialState } from './enteredQuizSlice';
 
 export const enteredQuizReducers = {
   clearEnteredQuiz: (state: TEnteredQuizInitialState) => {
@@ -7,4 +7,4 @@ export const enteredQuizReducers = {
   clearAnswer: (state: TEnteredQuizInitialState) => {
     state.answer = null;
   }
-}
+};

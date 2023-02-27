@@ -1,23 +1,23 @@
-import styles from "./styles.module.scss";
-import { mainIcon, reloadIcon } from "../../../../../assets"
-import React, {Dispatch, FC, SetStateAction} from "react";
-import Swal from "sweetalert2";
-import {useNavigate} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../../../../hooks/redux";
-import {updateQuizParametersById, refreshQuizCode, deleteQuizByCode} from "../../../../../store/reducer/quizConstructor/quizThunks";
-import {setCurrentQuiz} from '../../../../../store/reducer/quizConstructor/quizSlice';
+import styles from './styles.module.scss'
+import { mainIcon, reloadIcon } from '../../../../../assets'
+import React, { type Dispatch, type FC, type SetStateAction } from 'react'
+import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/redux'
+import { updateQuizParametersById, refreshQuizCode, deleteQuizByCode } from '../../../../../store/reducer/quizConstructor/quizThunks'
+import { setCurrentQuiz } from '../../../../../store/reducer/quizConstructor/constructorSlice'
 
-type propTypes = {
-  id: string,
-  name: string,
-  code: string,
-  closed: boolean,
-  onlyAuthUsers: boolean,
-  questionsAmount: number,
-  isChanged: boolean,
-  setIsChanged: Dispatch<SetStateAction<boolean>>,
-  setName: Dispatch<SetStateAction<string>>,
-  setClosed: Dispatch<SetStateAction<boolean>>,
+interface propTypes {
+  id: string
+  name: string
+  code: string
+  closed: boolean
+  onlyAuthUsers: boolean
+  questionsAmount: number
+  isChanged: boolean
+  setIsChanged: Dispatch<SetStateAction<boolean>>
+  setName: Dispatch<SetStateAction<string>>
+  setClosed: Dispatch<SetStateAction<boolean>>
   setOnlyAuthUsers: Dispatch<SetStateAction<boolean>>
 }
 
@@ -36,49 +36,49 @@ export const BigScreenHeader: FC<propTypes> = (
     setIsChanged
   }
 ) => {
-  const navigate = useNavigate();
-  const quiz = useAppSelector(state => state.quizzes.currentQuiz);
-  const dispatch = useAppDispatch();
+  const navigate = useNavigate()
+  const quiz = useAppSelector(state => state.quizzes.currentQuiz)
+  const dispatch = useAppDispatch()
 
   const refreshCodeAction = (e: React.FormEvent<EventTarget>) => {
-    e.preventDefault();
+    e.preventDefault()
     dispatch(refreshQuizCode(code))
   }
 
   const formatDate = () => {
-    if (!quiz) return;
-    const date = new Date(quiz.lastUpdated);
+    if (quiz == null) return
+    const date = new Date(quiz.lastUpdated)
     return (
-      ("00" + date.getDate()).slice(-2) + "." +
-      ("00" + (date.getMonth() + 1)).slice(-2) + "." +
-      date.getFullYear() + " " +
-      ("00" + date.getHours()).slice(-2) + ":" +
-      ("00" + date.getMinutes()).slice(-2)
-    );
+      ('00' + date.getDate()).slice(-2) + '.' +
+      ('00' + (date.getMonth() + 1)).slice(-2) + '.' +
+      date.getFullYear() + ' ' +
+      ('00' + date.getHours()).slice(-2) + ':' +
+      ('00' + date.getMinutes()).slice(-2)
+    )
   }
 
   const deleteQuiz = (e: React.FormEvent<EventTarget>) => {
-    e.preventDefault();
+    e.preventDefault()
     Swal.fire({
       title: 'Do you really want to permanently delete quizConstructor?',
-      text: "All question answers will be deleted!",
+      text: 'All question answers will be deleted!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#E44061',
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
-      if (!result.isConfirmed) return;
-      dispatch(deleteQuizByCode(code));
-    });
+      if (!result.isConfirmed) return
+      dispatch(deleteQuizByCode(code))
+    })
   }
 
   const updateParameters = async (e: React.FormEvent<EventTarget>) => {
-    e.preventDefault();
-    dispatch(updateQuizParametersById({parameters: {name, closed, onlyAuthUsers}, quizId: id}));
+    e.preventDefault()
+    dispatch(updateQuizParametersById({ parameters: { name, closed, onlyAuthUsers }, quizId: id }))
   }
 
-  if (!quiz) return <h1>Loading...</h1>;
+  if (quiz == null) return <h1>Loading...</h1>
 
   return (
     <div className={styles.container}>
@@ -97,14 +97,16 @@ export const BigScreenHeader: FC<propTypes> = (
               value={name}
               onChange={e => {
                 setName(e.target.value);
-                (e.target.value === quiz.name
-                  && closed === quiz.closed
-                  && onlyAuthUsers === quiz.onlyAuthUsers) ? setIsChanged(false) : setIsChanged(true);
+                (e.target.value === quiz.name &&
+                  closed === quiz.closed &&
+                  onlyAuthUsers === quiz.onlyAuthUsers)
+                  ? setIsChanged(false)
+                  : setIsChanged(true)
               }}
             />
             <div className={`${styles.buttonContainer}`}>
               <button
-                className={`${styles.formButton} ${isChanged ? "" : styles.hidden}`}
+                className={`${styles.formButton} ${isChanged ? '' : styles.hidden}`}
                 onClick={updateParameters}
                 disabled={!isChanged}
               >
@@ -140,10 +142,10 @@ export const BigScreenHeader: FC<propTypes> = (
                     if (!prevState === quiz.onlyAuthUsers && closed === quiz.closed && name === quiz.name) {
                       setIsChanged(false)
                     } else {
-                      setIsChanged(true);
+                      setIsChanged(true)
                     }
-                    return !prevState;
-                  });
+                    return !prevState
+                  })
                 }}
               />
               Only for auth users
@@ -158,10 +160,10 @@ export const BigScreenHeader: FC<propTypes> = (
                     if (!prevState === quiz.closed && onlyAuthUsers === quiz.onlyAuthUsers && name === quiz.name) {
                       setIsChanged(false)
                     } else {
-                      setIsChanged(true);
+                      setIsChanged(true)
                     }
-                    return !prevState;
-                  });
+                    return !prevState
+                  })
                 }}
               />
               Closed
@@ -192,8 +194,8 @@ export const BigScreenHeader: FC<propTypes> = (
       <button
         className={styles.homeButton}
         onClick={() => {
-          dispatch(setCurrentQuiz(null));
-          navigate("../");
+          dispatch(setCurrentQuiz(null))
+          navigate('../')
         }}
       >
         <img
@@ -203,5 +205,5 @@ export const BigScreenHeader: FC<propTypes> = (
         />
       </button>
     </div>
-  );
+  )
 }

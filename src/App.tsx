@@ -1,18 +1,17 @@
-import React, {useEffect} from "react";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {SignUpPage} from "./pages/AuthPages/SignUpPage";
-import {MainPage} from "./pages/MainPage/MainPage";
-import {SignInPage} from "./pages/AuthPages/SignInPage";
-import {GeneratorPage} from "./pages/GeneratorPage/GeneratorPage";
-import {RootPage} from "./pages/RootPage/RootPage";
-import {ErrorPage} from "./pages/ErrorPage/ErrorPage";
-import {QuizPage} from "./pages/QuizPage/QuizPage";
+import React, { useEffect } from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { SignUpPage } from './pages/AuthPages/SignUpPage'
+import { MainPage } from './pages/MainPage/MainPage'
+import { SignInPage } from './pages/AuthPages/SignInPage'
+import { GeneratorPage } from './pages/GeneratorPage/GeneratorPage'
+import { RootPage } from './pages/RootPage/RootPage'
+import { ErrorPage } from './pages/ErrorPage/ErrorPage'
+import { QuizPage } from './pages/QuizPage/QuizPage'
 
-function App() {
-
+function App () {
   useEffect(() => {
 
-  }, []);
+  }, [])
 
   return (
     <BrowserRouter>
@@ -47,7 +46,7 @@ function App() {
         />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App

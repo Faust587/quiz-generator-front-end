@@ -1,24 +1,23 @@
-import styles from "./SearchForm.module.scss";
-import {FormEvent, useState} from "react";
-import api from "../../../api";
-import Swal from "sweetalert2";
-import axios, {AxiosError} from "axios";
-import {TQuiz} from "../../../store/reducer/quizConstructor/quizSlice";
+import styles from './SearchForm.module.scss'
+import { type FormEvent, useState } from 'react'
+import api from '../../../api'
+import Swal from 'sweetalert2'
+import axios, { type AxiosError } from 'axios'
+import { type TQuiz } from '../../../store/reducer/quizConstructor/constructorSlice'
 
 export const SearchForm = () => {
-
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState('')
 
   const onSubmit = async (e: FormEvent<EventTarget>) => {
-    e.preventDefault();
-    const params = new URLSearchParams([["code", code]])
-    const fetchQuiz = await api.get<TQuiz>("/quiz", {params});
+    e.preventDefault()
+    const params = new URLSearchParams([['code', code]])
+    const fetchQuiz = await api.get<TQuiz>('/quiz', { params })
 
     if (axios.isAxiosError(fetchQuiz)) {
-      const error = fetchQuiz as AxiosError<{statusCode: number, message: string}>;
+      const error = fetchQuiz as AxiosError<{ statusCode: number, message: string }>
       Swal.fire(
         'Error!',
-        error.response?.data.message || "unknown error",
+        error.response?.data.message || 'unknown error',
         'error'
       )
     } else {
@@ -38,7 +37,7 @@ export const SearchForm = () => {
           className={styles.input}
           type="text"
           value={code}
-          onChange={e => setCode(e.target.value)}
+          onChange={e => { setCode(e.target.value) }}
           placeholder="Ex: cS09S"
         />
         <button
@@ -49,5 +48,5 @@ export const SearchForm = () => {
         </button>
       </form>
     </div>
-  );
-};
+  )
+}

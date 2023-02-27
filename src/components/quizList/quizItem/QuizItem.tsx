@@ -1,15 +1,15 @@
-import { FC, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styles from "./QuizItem.module.scss";
-import { closedIcon, successIcon, copyIcon, authOnlyIcon } from "../../../assets"
-import { TQuiz } from "../../../store/reducer/quizConstructor/quizSlice";
+import { type FC, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import styles from './QuizItem.module.scss'
+import { closedIcon, successIcon, copyIcon, authOnlyIcon } from '../../../assets'
+import { type TQuiz } from '../../../store/reducer/quizConstructor/constructorSlice'
 
-type propsType = {
-  iconURL: string,
-  title: string,
-  closed: boolean,
+interface propsType {
+  iconURL: string
+  title: string
+  closed: boolean
   authOnly: boolean
-  data: TQuiz,
+  data: TQuiz
 }
 
 export const QuizItem: FC<propsType> = (
@@ -21,12 +21,11 @@ export const QuizItem: FC<propsType> = (
     data
   }
 ) => {
-
-  const [isCopied, setIsCopied] = useState<boolean>(false);
-  const navigate = useNavigate();
+  const [isCopied, setIsCopied] = useState<boolean>(false)
+  const navigate = useNavigate()
 
   const getQuizDetails = async () => {
-    navigate(`../quiz-generator/${data.id}`);
+    navigate(`../quiz-generator/${data.id}`)
   }
 
   return (
@@ -42,23 +41,22 @@ export const QuizItem: FC<propsType> = (
         </div>
       </div>
       <div className={styles.code} onClick={(e) => {
-        e.stopPropagation();
-        navigator.clipboard.writeText(data.code).catch(() => false);
+        e.stopPropagation()
+        navigator.clipboard.writeText(data.code).catch(() => false)
         setIsCopied(() => {
-          setTimeout(() => setIsCopied(false), 1000);
-          return true;
-        });
+          setTimeout(() => { setIsCopied(false) }, 1000)
+          return true
+        })
       }}>
         {data.code}
         &nbsp;
         {
-          isCopied ?
-            <img className={`${styles.isCopied} ${isCopied ? styles.show : null}`} src={successIcon} alt="" width={15}
+          isCopied
+            ? <img className={`${styles.isCopied} ${isCopied ? styles.show : null}`} src={successIcon} alt="" width={15}
               height={15} />
-            :
-            <img src={copyIcon} className={styles.copyIcon} alt="" width={15} height={15} />
+            : <img src={copyIcon} className={styles.copyIcon} alt="" width={15} height={15} />
         }
       </div>
     </div>
-  );
-};
+  )
+}

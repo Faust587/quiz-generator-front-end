@@ -1,21 +1,21 @@
-import styles from '../QuestionConstructor.module.scss';
-import {QUESTION_TYPES} from '../../../../types/questionTypes';
-import {ChangeEvent, Dispatch, FC, SetStateAction} from 'react';
-import {updateQuestion} from '../../../../store/reducer/quizConstructor/quizThunks';
-import {useAppDispatch} from '../../../../hooks/redux';
-import {TQuestion} from '../../../../store/reducer/quizConstructor/quizSlice';
+import styles from '../QuestionConstructor.module.scss'
+import { type QUESTION_TYPES } from '../../../../types/questionTypes'
+import { type ChangeEvent, type Dispatch, type FC, type SetStateAction } from 'react'
+import { updateQuestion } from '../../../../store/reducer/quizConstructor/quizThunks'
+import { useAppDispatch } from '../../../../hooks/redux'
+import { type TQuestion } from '../../../../store/reducer/quizConstructor/quizSlice'
 
-type PropsType = {
-  name: string;
-  setName: Dispatch<SetStateAction<string>>;
-  isFocused: boolean;
-  isRequired: boolean;
-  question: TQuestion;
-  quizId: string;
-  setType: Dispatch<SetStateAction<QUESTION_TYPES>>;
+interface PropsType {
+  name: string
+  setName: Dispatch<SetStateAction<string>>
+  isFocused: boolean
+  isRequired: boolean
+  question: TQuestion
+  quizId: string
+  setType: Dispatch<SetStateAction<QUESTION_TYPES>>
 }
 
-const QUESTION_TYPES_ARR: QUESTION_TYPES[] = ['TEXT', 'FLAG', 'SELECT', 'OPTION'];
+const QUESTION_TYPES_ARR: QUESTION_TYPES[] = ['TEXT', 'FLAG', 'SELECT', 'OPTION']
 
 export const QuestionConstructorHeader: FC<PropsType> = (
   {
@@ -28,7 +28,6 @@ export const QuestionConstructorHeader: FC<PropsType> = (
     setType
   }
 ) => {
-
   const dispatch = useAppDispatch()
   const changeName = (event: ChangeEvent<HTMLInputElement>): void => {
     setName(event.target.value)
@@ -37,7 +36,7 @@ export const QuestionConstructorHeader: FC<PropsType> = (
   const updateQuestionAction = (): void => {
     const {
       id, type, name, isRequired, attachmentName, isFileUploaded, value, index
-    } = question;
+    } = question
     dispatch(updateQuestion({
       questionId: id,
       type,
@@ -47,15 +46,15 @@ export const QuestionConstructorHeader: FC<PropsType> = (
       quizId,
       index,
       attachmentName,
-      isFileUploaded,
-    }));
-  };
+      isFileUploaded
+    }))
+  }
 
   const changeQuestionType = (event: ChangeEvent<HTMLSelectElement>) => {
-    const type = event.target.value as QUESTION_TYPES;
+    const type = event.target.value as QUESTION_TYPES
     const {
       id, name, isRequired, attachmentName, isFileUploaded, value, index
-    } = question;
+    } = question
     dispatch(updateQuestion({
       questionId: id,
       type,
@@ -65,10 +64,10 @@ export const QuestionConstructorHeader: FC<PropsType> = (
       quizId,
       index,
       attachmentName,
-      isFileUploaded,
-    }));
-    setType(type);
-  };
+      isFileUploaded
+    }))
+    setType(type)
+  }
 
   return (
     <header>
@@ -94,7 +93,7 @@ export const QuestionConstructorHeader: FC<PropsType> = (
                   <div className={styles.isRequiredLabel}>
                     required*
                   </div>
-                )
+                  )
                 : null
             }
           </div>
@@ -122,5 +121,5 @@ export const QuestionConstructorHeader: FC<PropsType> = (
         </div>
       </div>
     </header>
-  );
+  )
 }

@@ -1,6 +1,6 @@
-import styles from "./MainHeader.module.scss";
-import { mainIcon } from "../../../assets";
-import {SearchForm} from "../../forms/SearchForm/SearchForm";
+import styles from './MainHeader.module.scss'
+import { mainIcon } from '../../../assets'
+import { SearchForm } from '../../forms/SearchForm/SearchForm'
 
 export const MainHeader = () => {
   return (
@@ -22,5 +22,5 @@ export const MainHeader = () => {
         </div>
       </div>
     </header>
-  );
-};
+  )
+}

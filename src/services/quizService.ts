@@ -1,28 +1,14 @@
-import api from "../api";
-import {AxiosResponse} from "axios";
-import { TQuiz } from "../store/reducer/quizConstructor/quizSlice";
+import { type AxiosResponse } from 'axios';
 
-export async function getQuizList(): Promise<AxiosResponse<TQuiz[]>> {
+import api from '../api';
+import { type TQuiz } from '../store/reducer/quizConstructor/quizSlice';
+
+export async function getQuizList (): Promise<AxiosResponse<TQuiz[]>> {
   return await api.get<TQuiz[]>('/quiz/list');
 }
 
-export async function getQuizByCode(code: string): Promise<AxiosResponse<TQuiz>> {
-  return await api.get<TQuiz>('/quiz', { params: { code } });
-}
-
-export async function createNewQuiz(name: string, isOnlyAuth: boolean, icon: string) {
+export async function createNewQuiz (
+  name: string, isOnlyAuth: boolean, icon: string
+): Promise<AxiosResponse<TQuiz>> {
   return await api.post<TQuiz>('/quiz/create', { name, onlyAuthUsers: isOnlyAuth, iconURL: icon });
-}
-
-export async function refreshQuizCode(code: string) {
-  const params = new URLSearchParams([['code', code]]);
-  return await api.get<TQuiz>('/quiz/refresh-quiz-code', { params });
-}
-
-export async function updateQuizParameters(code: string, closed: boolean, onlyAuthUsers: boolean, name: string) {
-  const params = new URLSearchParams([['code', code]]);
-  return await api.put<TQuiz>('/quiz/update-quiz-parameters', { closed, onlyAuthUsers, name }, { params });
-}
-
-export async function deleteQuizById(id: string) {
 }

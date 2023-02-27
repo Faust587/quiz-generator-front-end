@@ -1,22 +1,26 @@
-import api from "../api";
-import {AxiosResponse} from "axios";
+import { type AxiosResponse } from 'axios';
 
-type LoginResponse = {
+import api from '../api';
+
+interface LoginResponse {
   user: {
-    _id: string,
-    username: string,
-    email: string,
-    activated: boolean,
-  },
-  accessToken: string,
+    _id: string
+    username: string
+    email: string
+    activated: boolean
+  }
+  accessToken: string
 }
 
-export type FailResponse = {
-  statusCode: number,
-  message: string,
-  error: string,
+export interface FailResponse {
+  statusCode: number
+  message: string
+  error: string
 }
 
-export async function login(username: string, password: string): Promise<AxiosResponse<LoginResponse>> {
-  return await api.post<LoginResponse>('/auth/login', {username, password});
+export async function login (
+  username: string,
+  password: string
+): Promise<AxiosResponse<LoginResponse>> {
+  return await api.post<LoginResponse>('/auth/login', { username, password });
 }

@@ -1,8 +1,9 @@
-export const cutQuestionAttachmentName = (attachmentName: string | undefined) => {
-  if (!attachmentName) return attachmentName;
+export const cutQuestionAttachmentName = (attachmentName: string | undefined): string => {
+  if (!attachmentName) return 'file';
   if (attachmentName.length > 10) {
     const fileExtension = attachmentName.split('.').pop();
-    return `${attachmentName.slice(0, 4)}...${attachmentName.slice(8, 12)}.${fileExtension}`
+    const shortAttachmentName = `${attachmentName.slice(0, 4)}...${attachmentName.slice(8, 12)}`;
+    return `${shortAttachmentName}.${fileExtension !== undefined ? fileExtension : ''}`;
   }
   return attachmentName;
-}
+};

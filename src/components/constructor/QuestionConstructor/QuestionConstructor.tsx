@@ -1,8 +1,8 @@
-import { type FC, useCallback, useEffect, useState } from 'react'
-import { type QUESTION_TYPES } from '../../../types/questionTypes'
-import styles from './QuestionConstructor.module.scss'
-import { QuestionText } from './QuestionTypes/QuestionText/QuestionText'
-import { QuestionOption } from './QuestionTypes/QuestionOption/QuestionOption'
+import React, { type FC, useCallback, useEffect, useState } from 'react';
+import { type QUESTION_TYPES } from '../../../types/questionTypes';
+import styles from './QuestionConstructor.module.scss';
+import { QuestionText } from './QuestionTypes/QuestionText/QuestionText';
+import { QuestionOption } from './QuestionTypes/QuestionOption/QuestionOption';
 import {
   setActiveQuestion,
   type TQuestion,
@@ -12,15 +12,15 @@ import {
   clearQuestionDeletingError,
   setQuizForChangingOrder,
   setQuestionMoving
-} from '../../../store/reducer/quizConstructor/quizSlice'
-import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
-import { isArray } from 'lodash'
-import Swal from 'sweetalert2'
-import {updateQuestion} from '../../../store/reducer/quizConstructor/quizThunks'
-import {cutQuestionAttachmentName} from '../../../utils/questionUtils';
-import {MoveQuestion} from './MoveQuestion/MoveQuestion';
-import {QuestionConstructorHeader} from './QuestionConstructorHeader/QuestionConstructorHeader';
-import {QuestionConstructorFooter} from './QuestionConstructorFooter/QuestionConstructorFooter';
+} from '../../../store/reducer/quizConstructor/quizSlice';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { isArray } from 'lodash';
+import SweetAlert from 'sweetalert2';
+import { updateQuestion } from '../../../store/reducer/quizConstructor/quizThunks';
+import { cutQuestionAttachmentName } from '../../../utils/questionUtils';
+import { MoveQuestion } from './MoveQuestion/MoveQuestion';
+import { QuestionConstructorHeader } from './QuestionConstructorHeader/QuestionConstructorHeader';
+import { QuestionConstructorFooter } from './QuestionConstructorFooter/QuestionConstructorFooter';
 
 interface propTypes {
   data: TQuestion
@@ -33,85 +33,85 @@ export const QuestionConstructor: FC<propTypes> = (
     data, isFocused
   }
 ) => {
-  const [type, setType] = useState<QUESTION_TYPES>(data.type)
-  const [name, setName] = useState<string>(data.name)
-  const [isRequired, setIsRequired] = useState<boolean>(data.isRequired)
-  const [value, setValue] = useState<string[]>(data.value)
+  const [type, setType] = useState<QUESTION_TYPES>(data.type);
+  const [name, setName] = useState<string>(data.name);
+  const [isRequired, setIsRequired] = useState<boolean>(data.isRequired);
+  const [value, setValue] = useState<string[]>(data.value);
   const [attachmentName, setAttachmentName] = useState<string | undefined>(
     cutQuestionAttachmentName(data.attachmentName)
   );
-  const quiz = useAppSelector(state => state.quizzes.currentQuiz)
+  const quiz = useAppSelector(state => state.quizzes.currentQuiz);
 
   const {
     questionEditingLoading,
     questionEditingError,
     questionDeletingLoading,
-    changeQuestionOrder,
-  } = useAppSelector(state => state.quizzes)
-  const dispatch = useAppDispatch()
+    changeQuestionOrder
+  } = useAppSelector(state => state.quizzes);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (isFocused) {
-      setType(data.type)
-      setName(data.name)
-      setIsRequired(data.isRequired)
-      setValue(data.value)
-      setAttachmentName(cutQuestionAttachmentName(data.attachmentName))
+      setType(data.type);
+      setName(data.name);
+      setIsRequired(data.isRequired);
+      setValue(data.value);
+      setAttachmentName(cutQuestionAttachmentName(data.attachmentName));
     }
-  }, [data, isFocused])
+  }, [data, isFocused]);
 
   useEffect(() => {
     if (questionEditingLoading === 'failed') {
-      let errorText: string
+      let errorText: string;
       if (questionEditingError == null) {
-        errorText = 'Sorry, unknown error, try again!'
+        errorText = 'Sorry, unknown error, try again!';
       } else {
         if (isArray(questionEditingError.message)) {
-          errorText = questionEditingError.message.join()
+          errorText = questionEditingError.message.join();
         } else {
-          errorText = questionEditingError.message
+          errorText = questionEditingError.message;
         }
       }
-      Swal.fire(
+      SweetAlert.fire(
         'Error!',
         errorText,
         'error'
       ).then(() => {
-        dispatch(clearQuestionEditingLoading())
-        dispatch(clearQuestionEditingError())
-      })
+        dispatch(clearQuestionEditingLoading());
+        dispatch(clearQuestionEditingError());
+      }).catch(reason => { console.log(reason); });
     } else if (questionEditingLoading === 'succeeded') {
-      dispatch(clearQuestionEditingLoading())
+      dispatch(clearQuestionEditingLoading());
     }
-  }, [dispatch, questionEditingError, questionEditingLoading])
+  }, [dispatch, questionEditingError, questionEditingLoading]);
 
   useEffect(() => {
     if (questionDeletingLoading === 'failed') {
-      let errorText: string
+      let errorText: string;
       if (questionEditingError == null) {
-        errorText = 'Sorry, unknown error, try again!'
+        errorText = 'Sorry, unknown error, try again!';
       } else {
         if (isArray(questionEditingError.message)) {
-          errorText = questionEditingError.message.join()
+          errorText = questionEditingError.message.join();
         } else {
-          errorText = questionEditingError.message
+          errorText = questionEditingError.message;
         }
       }
-      Swal.fire(
+      SweetAlert.fire(
         'Error!',
         errorText,
         'error'
       ).then(() => {
-        dispatch(clearQuestionDeletingLoading())
-        dispatch(clearQuestionDeletingError())
-      })
+        dispatch(clearQuestionDeletingLoading());
+        dispatch(clearQuestionDeletingError());
+      }).catch(reason => { console.log(reason); });
     } else if (questionDeletingLoading === 'succeeded') {
-      dispatch(clearQuestionDeletingLoading())
+      dispatch(clearQuestionDeletingLoading());
     }
-  }, [dispatch, questionDeletingLoading, questionEditingError])
+  }, [dispatch, questionDeletingLoading, questionEditingError]);
 
   const addValue = (): void => {
-    if (quiz == null) return
+    if (quiz == null) return;
     dispatch(updateQuestion({
       questionId: data.id,
       type,
@@ -122,17 +122,17 @@ export const QuestionConstructor: FC<propTypes> = (
       index: data.index,
       attachmentName,
       isFileUploaded: !!attachmentName
-    }))
-    setValue([...value, 'Variant'])
-  }
+    })).catch(reason => { console.log(reason); });
+    setValue([...value, 'Variant']);
+  };
 
-  const getTypeStructure = () => {
-    if (quiz == null) return
+  const getTypeStructure = (): JSX.Element | null => {
+    if (quiz == null) return null;
     switch (type) {
       case 'TEXT':
         return (
           <QuestionText isFocused={isFocused}/>
-        )
+        );
       case 'OPTION':
       case 'FLAG':
       case 'SELECT':
@@ -144,7 +144,7 @@ export const QuestionConstructor: FC<propTypes> = (
                 key={`${item}${index}`}
               >
                 <QuestionOption
-                  key={`${value}${index}`}
+                  key={`${item}${index}`}
                   quizId={quiz.id}
                   type={type}
                   data={data}
@@ -168,39 +168,40 @@ export const QuestionConstructor: FC<propTypes> = (
             </div>
               : null}
           </div>
-        )
+        );
       default:
-        return null
+        return null;
     }
-  }
-  const isQuestionMoves = useAppSelector(state => state.quizzes.isQuestionMoves)
+  };
+  const isQuestionMoves = useAppSelector(state => state.quizzes.isQuestionMoves);
 
   const onDocumentClick = useCallback(function (_: any) {
-    dispatch(setQuestionMoving(false))
-    dispatch(setQuizForChangingOrder(null))
-  }, [dispatch])
+    dispatch(setQuestionMoving(false));
+    dispatch(setQuizForChangingOrder(null));
+  }, [dispatch]);
 
   useEffect(() => {
     if (isQuestionMoves) {
-      document.addEventListener('click', onDocumentClick, false)
+      document.addEventListener('click', onDocumentClick, false);
     } else {
-      document.removeEventListener('click', onDocumentClick, false)
+      document.removeEventListener('click', onDocumentClick, false);
     }
-  }, [isQuestionMoves, onDocumentClick])
+  }, [isQuestionMoves, onDocumentClick]);
 
-  if (!quiz) return null;
+  if (quiz == null) return null;
   return (
       <article
         className={
-          `${styles.block} ${isFocused && styles.blockFocused} 
-          ${changeQuestionOrder === data.index && styles.changeOrderBlock}
-          ${isQuestionMoves && changeQuestionOrder !== data.index && styles.changeOrderBlockHidden}`
+          `${styles.block} ${isFocused ? styles.blockFocused : ''} 
+          ${changeQuestionOrder === data.index ? styles.changeOrderBlock : ''}
+          ${
+            (isQuestionMoves && changeQuestionOrder !== data.index) ? styles.changeOrderBlockHidden : ''}`
         }
         onClick={(event) => {
-          event.stopPropagation()
-          dispatch(setActiveQuestion(data.id))
-          dispatch(setQuestionMoving(false))
-          dispatch(setQuizForChangingOrder(null))
+          event.stopPropagation();
+          dispatch(setActiveQuestion(data.id));
+          dispatch(setQuestionMoving(false));
+          dispatch(setQuizForChangingOrder(null));
         }}
       >
         <MoveQuestion
@@ -230,5 +231,5 @@ export const QuestionConstructor: FC<propTypes> = (
           setAttachmentName={setAttachmentName}
         />
       </article>
-  )
-}
+  );
+};
