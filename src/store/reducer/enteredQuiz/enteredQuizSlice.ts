@@ -1,43 +1,60 @@
-import { type TQuiz } from '../quizConstructor/quizSlice';
+import {TLoading, type TQuiz} from '../quizConstructor/quizSlice';
 import { createSlice } from '@reduxjs/toolkit';
 import { enteredQuizReducers } from './enteredQuizReducers';
+import {quizExtraReducers} from "./enteredQuizExtraReducers";
 
-interface TQuizAnswer {
+export interface TQuizAnswer {
   id: string
-  quizId: string
   authorId: string
-  answeredAt: number
+  answeredAt: number | undefined
   answers: TQuestionAnswer[]
 }
 
-interface TQuestionAnswer {
-  id: string
-  name: string
-  type: string
-  value: string[]
-  isRequired: string
-  isFileUploaded: string
-  attachmentName: string
-  index: number
-  answerText?: string
-  answerInt?: number
-  answerArrInt?: number[]
+export interface TQuestionAnswer {
+  id: string;
+  answerText?: string;
+  answerInt?: number;
+  answerArrInt?: number[];
+}
+
+export type TError = {
+  statusCode: number;
+  message: string;
+  error: string;
 }
 
 export interface TEnteredQuizInitialState {
-  quiz: TQuiz | null
-  answer: TQuizAnswer | null
+  quiz: TQuiz | null;
+  answer: TQuizAnswer | null;
+  loading: TLoading;
+  error: TError | null;
+  missingAnswer: string | null;
 }
 
 const initialState: TEnteredQuizInitialState = {
   quiz: null,
-  answer: null
+  answer: null,
+  loading: "idle",
+  error: null,
+  missingAnswer: null,
 };
 
 const enteredQuizSlice = createSlice({
   name: 'enteredQuiz',
   initialState,
-  reducers: enteredQuizReducers
+  reducers: enteredQuizReducers,
+  extraReducers: quizExtraReducers
 });
 
 export default enteredQuizSlice.reducer;
+export const {
+  clearAnswer,
+  clearEnteredQuiz,
+  clearEnteredQuizLoading,
+  clearEnteredQuizError,
+  clearFailedResponse,
+  setIntAnswer,
+  removeArrIntAnswer,
+  addArrIntAnswer,
+  setTextAnswer
+} = enteredQuizSlice.actions;

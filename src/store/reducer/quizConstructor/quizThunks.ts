@@ -8,6 +8,20 @@ import {
   type TQuestion,
   type TQuiz
 } from './quizSlice';
+import {AppDispatch, RootState} from "../../index";
+import {QUESTION_TYPES} from "../../../types/questionTypes";
+
+type TQuestionUpdateFields = {
+  id: string
+  quizId: string
+  type?: QUESTION_TYPES
+  value?: string[]
+  index?: number
+  isRequired?: boolean
+  isFileUploaded?: boolean
+  attachmentName?: string | undefined
+  name?: string
+}
 
 export const fetchQuizById = createAsyncThunk<TQuiz, string, { rejectValue: TError }>(
   'quizConstructor/fetchQuizById',
@@ -100,16 +114,35 @@ TQuestion, Omit<TQuestion, 'id' | 'index'> & { quizId: string }, { rejectValue: 
 );
 
 export const updateQuestion = createAsyncThunk<
-TQuestion, Omit<TQuestion, 'id'> & { questionId: string, quizId: string }, { rejectValue: TError }
+  TQuestion,
+  TQuestionUpdateFields,
+  { state: RootState, dispatch: AppDispatch, rejectValue: TError }
 >(
   'quizConstructor/updateQuestion',
   async function (question, thunkAPI) {
-    if (question.type !== 'TEXT' && (question.value.length === 0)) {
-      question.value = ['Variant'];
-    } else if (question.type === 'TEXT') {
-      question.value = [];
+    const {currentQuiz} = thunkAPI.getState().quizzes;
+    if (!currentQuiz) return thunkAPI.rejectWithValue({
+      statusCode: 0,
+      message: ['Unknown error, please write to out support']
+    });
+
+    const questions = [...currentQuiz.questions];
+    const currentQuestion = questions.find((data) => data.id === question.id);
+    if (!currentQuestion) return thunkAPI.rejectWithValue({
+      statusCode: 0,
+      message: ['Unknown error, please write to out support']
+    });
+    if (question.type !== 'TEXT') {
+      if (!question.value || question.value.length === 0) {
+        question.value = ['Variant'];
+      }
     }
-    const response = await api.patch<TQuestion>('/question', question);
+    const updatedQuestion = {...currentQuestion, ...question};
+    const reqBody = {
+      questionId: question.id,
+      ...updatedQuestion
+    }
+    const response = await api.patch<TQuestion>('/question', reqBody);
     if (!axios.isAxiosError(response)) return response.data;
     if (!response.response?.data) {
       return thunkAPI.rejectWithValue({

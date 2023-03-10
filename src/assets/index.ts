@@ -10,6 +10,9 @@ import authOnlyIcon from './icons/auth-only.svg';
 import closedIcon from './icons/closed.svg';
 import reloadIcon from './icons/reload-icon.svg';
 import defaultQuizIcon from './icons/quiz-icon-1.svg';
+import downloadIcon from './icons/download_icon.svg';
+import bottomArrow from './icons/bottom-arrow.svg';
+import topArrow from './icons/top-arrow.svg';
 
 export {
   mainIcon,
@@ -23,5 +26,8 @@ export {
   authOnlyIcon,
   closedIcon,
   reloadIcon,
-  defaultQuizIcon
+  defaultQuizIcon,
+  downloadIcon,
+  bottomArrow,
+  topArrow,
 };

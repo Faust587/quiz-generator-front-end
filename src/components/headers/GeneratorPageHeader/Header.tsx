@@ -13,7 +13,7 @@ import {
   clearParametersLoading,
   clearQuizDeleteLoading,
   clearQuizDeleteError
-} from '../../../store/reducer/quizConstructor/constructorSlice'
+} from '../../../store/reducer/quizConstructor/quizSlice'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
 import { isArray } from 'lodash'
 import { deleteQuizByCode, refreshQuizCode, updateQuizParametersById } from '../../../store/reducer/quizConstructor/quizThunks'

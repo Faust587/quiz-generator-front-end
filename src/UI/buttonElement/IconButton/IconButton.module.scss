@@ -1,0 +1,20 @@
+.button {
+  padding: 5px;
+  border-radius: 5px;
+  &--hover-red {
+    background-color: rgba(255, 40, 57, 0.33);
+    transition: 0.5s;
+    &:hover {
+      transition: 0.5s;
+      background-color: #e44061;
+    }
+  }
+  &--hover-yellow {
+    background-color: #ffffff;
+    transition: 0.5s;
+    &:hover {
+      transition: 0.5s;
+      background-color: #f9f871;
+    }
+  }
+}

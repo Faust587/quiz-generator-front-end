@@ -3,12 +3,11 @@ import styles from '../QuestionType.module.scss'
 import { updateQuestion } from '../../../../../store/reducer/quizConstructor/quizThunks'
 import { useAppDispatch } from '../../../../../hooks/redux'
 import { type QUESTION_TYPES } from '../../../../../types/questionTypes'
-import { type TQuestion } from '../../../../../store/reducer/quizConstructor/quizSlice'
 
 interface propTypes {
   quizId: string
+  questionId: string
   type: QUESTION_TYPES
-  data: TQuestion
   isFocused: boolean
   value: string
   values: string[]
@@ -19,15 +18,13 @@ interface propTypes {
 
 export const QuestionOption: FC<propTypes> = (
   {
+    questionId,
     isFocused,
     quizId,
-    data,
     value,
     type,
-    setValue,
     index,
     values,
-    isFileUploaded
   }
 ) => {
   const [localValue, setLocalValue] = useState<string>(value)
@@ -35,36 +32,22 @@ export const QuestionOption: FC<propTypes> = (
 
   const onValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValues = [...values]
-    newValues.splice(index, 1, e.target.value)
+    newValues.splice(index, 1, e.target.value);
     dispatch(updateQuestion({
-      questionId: data.id,
-      type: data.type,
-      name: data.name,
-      isRequired: data.isRequired,
+      id: questionId,
       value: newValues,
       quizId,
-      index: data.index,
-      isFileUploaded,
-      attachmentName: data.attachmentName
     }))
-    setValue(newValues)
   }
 
   const deleteVariant = () => {
     const newValues = [...values]
     newValues.splice(index, 1)
     dispatch(updateQuestion({
-      questionId: data.id,
-      type: data.type,
-      name: data.name,
-      isRequired: data.isRequired,
+      id: questionId,
       value: newValues,
       quizId,
-      index: data.index,
-      isFileUploaded,
-      attachmentName: data.attachmentName
     }))
-    setValue(newValues)
   }
 
   return (

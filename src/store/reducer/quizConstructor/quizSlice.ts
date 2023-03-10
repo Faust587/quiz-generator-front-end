@@ -43,7 +43,7 @@ export interface TError {
   message: string[] | string
 }
 
-type TLoading = 'idle' | 'pending' | 'succeeded' | 'failed';
+export type TLoading = 'idle' | 'pending' | 'succeeded' | 'failed';
 
 export interface TInitialQuizState {
   changeQuestionOrder: number | null

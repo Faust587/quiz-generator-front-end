@@ -5,7 +5,7 @@ import Swal from 'sweetalert2'
 import { type Dispatch, type FC, type SetStateAction } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/redux'
-import { setCurrentQuiz } from '../../../../../store/reducer/quizConstructor/constructorSlice'
+import { setCurrentQuiz } from '../../../../../store/reducer/quizConstructor/quizSlice'
 
 interface propTypes {
   setIsSettingsOpen: Dispatch<SetStateAction<boolean>>

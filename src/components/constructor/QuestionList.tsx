@@ -1,19 +1,23 @@
-import styles from './QuestionList.module.scss';
-
-import { QuestionConstructor } from './QuestionConstructor/QuestionConstructor';
-import { useSelector } from 'react-redux';
-import { type RootState } from '../../store';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import {
-  clearQuestionCreatingError,
-  clearQuestionCreatingLoading, setActiveQuestion,
-  type TQuestion
-} from '../../store/reducer/quizConstructor/quizSlice';
 import React, { useEffect, useRef } from 'react';
+import styles from './QuestionList.module.scss';
 import { isArray } from 'lodash';
 import SweetAlert from 'sweetalert2';
+import { useSelector } from 'react-redux';
+
+import {
+  useAppDispatch,
+  useAppSelector
+} from '../../hooks/redux';
+import {
+  clearQuestionCreatingError,
+  clearQuestionCreatingLoading,
+  setActiveQuestion,
+  type TQuestion
+} from '../../store/reducer/quizConstructor/quizSlice';
 import { OrderZone } from './OrderZone/OrderZone';
 import { createQuestion } from '../../store/reducer/quizConstructor/quizThunks';
+import { QuestionConstructor } from './QuestionConstructor/QuestionConstructor';
+import { type RootState } from '../../store';
 
 export const QuestionList = (): JSX.Element => {
   const {
@@ -96,7 +100,7 @@ export const QuestionList = (): JSX.Element => {
         <div className={styles.addQuestionButtonContainer}>
           <button
             className={styles.addQuestionButton}
-            onClick={() => addQuestion}
+            onClick={() => addQuestion()}
             ref={createQuestionButton}
           >
             ADD QUESTION

@@ -5,7 +5,8 @@ import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/redux'
 import { updateQuizParametersById, refreshQuizCode, deleteQuizByCode } from '../../../../../store/reducer/quizConstructor/quizThunks'
-import { setCurrentQuiz } from '../../../../../store/reducer/quizConstructor/constructorSlice'
+import { setCurrentQuiz } from '../../../../../store/reducer/quizConstructor/quizSlice'
+import {formatDate} from "../../../../../utils/formatDate";
 
 interface propTypes {
   id: string
@@ -43,18 +44,6 @@ export const BigScreenHeader: FC<propTypes> = (
   const refreshCodeAction = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault()
     dispatch(refreshQuizCode(code))
-  }
-
-  const formatDate = () => {
-    if (quiz == null) return
-    const date = new Date(quiz.lastUpdated)
-    return (
-      ('00' + date.getDate()).slice(-2) + '.' +
-      ('00' + (date.getMonth() + 1)).slice(-2) + '.' +
-      date.getFullYear() + ' ' +
-      ('00' + date.getHours()).slice(-2) + ':' +
-      ('00' + date.getMinutes()).slice(-2)
-    )
   }
 
   const deleteQuiz = (e: React.FormEvent<EventTarget>) => {
@@ -188,7 +177,7 @@ export const BigScreenHeader: FC<propTypes> = (
           Total answers: 32
         </div>
         <div className={styles.infoBlock}>
-          Last updated: { formatDate() }
+          Last updated: { formatDate(quiz.lastUpdated) }
         </div>
       </div>
       <button

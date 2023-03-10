@@ -2,7 +2,7 @@ import { type FC } from 'react'
 import { SignUpForm } from '../../components/forms/AuthForms/SignUpForm'
 import { AuthSlider } from '../../components/sliders/AuthSlider'
 import { AuthHeader } from '../../components/headers/AuthHeader/AuthHeader'
-import { AuthFooter } from '../../components/footers/AuthFooter'
+import { AuthFooter } from '../../components/footers/AuthFooter/AuthFooter'
 import './AuthPagesStyles.scss'
 
 const PUBLIC_URL = process.env.PUBLIC_URL

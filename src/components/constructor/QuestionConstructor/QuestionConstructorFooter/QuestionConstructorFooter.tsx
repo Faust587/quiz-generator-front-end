@@ -1,4 +1,4 @@
-import { type Dispatch, type FC, type SetStateAction } from 'react'
+import {type Dispatch, type FC, type SetStateAction, useState} from 'react'
 import styles from '../QuestionConstructor.module.scss'
 import { deleteQuestion, updateQuestion } from '../../../../store/reducer/quizConstructor/quizThunks'
 import trashCanIcon from '../../../../assets/icons/trash-can.svg'
@@ -6,13 +6,13 @@ import { removeQuestionFromState, type TDeleteResponse, type TError, type TQuest
 import { useAppDispatch } from '../../../../hooks/redux'
 import { QuestionAttachmentEditor } from './QuestionAttachment/QuestionAttachmentEditor'
 import { QuestionAttachmentView } from './QuestionAttachment/QuestionAttachmentView'
+import {cutQuestionAttachmentName} from "../../../../utils/questionUtils";
 
 interface PropsTypes {
   isFocused: boolean
   question: TQuestion
   quizId: string
-  attachmentName: string | undefined
-  setAttachmentName: Dispatch<SetStateAction<string | undefined>>
+  questionAttachmentName: string | undefined
 }
 
 export const QuestionConstructorFooter: FC<PropsTypes> = (
@@ -20,18 +20,19 @@ export const QuestionConstructorFooter: FC<PropsTypes> = (
     isFocused,
     question,
     quizId,
-    attachmentName,
-    setAttachmentName
+    questionAttachmentName,
   }
 ) => {
   const dispatch = useAppDispatch()
   const {
     id, index, name, isRequired, type, value
-  } = question
+  } = question;
+
+  const [attachmentName, setAttachmentName] = useState<string | undefined>(questionAttachmentName);
   const isTError = (payload: TError | TDeleteResponse): payload is TError => {
     return (payload as TError).statusCode !== undefined
   }
-  const deleteCurrentQuestion = () => {
+  const deleteCurrentQuestion = (): void => {
     dispatch(deleteQuestion({ questionId: question.id, quizId })).then((result) => {
       const payload = result.payload
       if (payload == null) return
@@ -57,7 +58,7 @@ export const QuestionConstructorFooter: FC<PropsTypes> = (
           <QuestionAttachmentView
             quizId={quizId}
             questionId={question.id}
-            attachmentName={question.attachmentName}
+            attachmentName={attachmentName}
             isFileUploaded={question.isFileUploaded}
           />
             )
@@ -70,7 +71,7 @@ export const QuestionConstructorFooter: FC<PropsTypes> = (
               checked={isRequired}
               onChange={() => {
                 dispatch(updateQuestion({
-                  questionId: id,
+                  id,
                   type,
                   name,
                   isRequired: !isRequired,

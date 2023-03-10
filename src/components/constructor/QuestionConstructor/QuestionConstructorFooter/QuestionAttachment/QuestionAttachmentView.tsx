@@ -1,7 +1,9 @@
 import { type FC, type MouseEvent } from 'react'
 import styles from '../../QuestionConstructor.module.scss'
-import downloadFileIcon from '../../../../../assets/icons/download_icon.svg'
+import {downloadIcon} from '../../../../../assets/'
 import api from '../../../../../api/index'
+import {IconButton} from "../../../../../UI/buttonElement";
+import {cutQuestionAttachmentName} from "../../../../../utils/questionUtils";
 
 interface PropsTypes {
   quizId: string
@@ -13,9 +15,9 @@ interface PropsTypes {
 export const QuestionAttachmentView: FC<PropsTypes> = (
   { questionId, quizId, isFileUploaded, attachmentName }
 ) => {
-  const downloadAttachment = async (e: MouseEvent<HTMLButtonElement>) => {
+  const downloadAttachment = async (e: MouseEvent<HTMLButtonElement>): Promise<void> => {
     e.stopPropagation()
-    if (!isFileUploaded) return
+    if (!isFileUploaded) return;
     const file = await api.get(
       `/question/attachment/${quizId}/${questionId}`,
       { responseType: 'arraybuffer' }
@@ -32,17 +34,19 @@ export const QuestionAttachmentView: FC<PropsTypes> = (
     a.remove()
   }
 
-  if (!isFileUploaded) return null
+  if (!isFileUploaded) return null;
   return (
     <div style={{ display: 'flex' }}>
-      <button
-        className={`${styles.iconButton} ${styles.iconButtonGray}`}
+      <IconButton
         onClick={downloadAttachment}
-      >
-        <img src={downloadFileIcon} alt="download file"/>
-      </button>
+        icon={downloadIcon}
+        alt="download attachment"
+        hoverColor='yellow'
+        width={40}
+        height={40}
+      />
       <span className={styles.description}>
-        {attachmentName}
+        {cutQuestionAttachmentName(attachmentName)}
       </span>
     </div>
   )

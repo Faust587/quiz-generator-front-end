@@ -33,6 +33,7 @@ export const GeneratorPage = () => {
 
   useEffect(() => {
     if (quizLoading === 'failed') {
+      console.log(quizError);
       if (quizError?.statusCode === 401) {
         navigate('../')
       } else {

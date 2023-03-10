@@ -5,12 +5,11 @@ import { ModalWindow } from '../../components/modalWindow/ModalWindow'
 import { QuizPageContext } from '../../context/quizPageContext'
 import { useState } from 'react'
 import { CreateQuizForm } from '../../components/forms/CreateQuizForm/CreateQuizForm'
-import { type TQuiz } from '../../store/reducer/quizConstructor/constructorSlice'
+import { type TQuiz } from '../../store/reducer/quizConstructor/quizSlice'
 
 export const MainPage = () => {
   const [activeModal, setActiveModal] = useState(false)
   const [quizList, setQuizList] = useState<TQuiz[]>([])
-
   return (
     <div className="main-page-container">
       <QuizPageContext.Provider value={{ activeModal, setActiveModal, quizList, setQuizList }}>

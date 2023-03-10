@@ -37,9 +37,7 @@ export const QuestionConstructor: FC<propTypes> = (
   const [name, setName] = useState<string>(data.name);
   const [isRequired, setIsRequired] = useState<boolean>(data.isRequired);
   const [value, setValue] = useState<string[]>(data.value);
-  const [attachmentName, setAttachmentName] = useState<string | undefined>(
-    cutQuestionAttachmentName(data.attachmentName)
-  );
+  const [attachmentName, setAttachmentName] = useState<string | undefined>(data.attachmentName);
   const quiz = useAppSelector(state => state.quizzes.currentQuiz);
 
   const {
@@ -56,7 +54,7 @@ export const QuestionConstructor: FC<propTypes> = (
       setName(data.name);
       setIsRequired(data.isRequired);
       setValue(data.value);
-      setAttachmentName(cutQuestionAttachmentName(data.attachmentName));
+      setAttachmentName(data.attachmentName);
     }
   }, [data, isFocused]);
 
@@ -113,7 +111,7 @@ export const QuestionConstructor: FC<propTypes> = (
   const addValue = (): void => {
     if (quiz == null) return;
     dispatch(updateQuestion({
-      questionId: data.id,
+      id: data.id,
       type,
       name,
       isRequired,
@@ -145,9 +143,9 @@ export const QuestionConstructor: FC<propTypes> = (
               >
                 <QuestionOption
                   key={`${item}${index}`}
+                  questionId={data.id}
                   quizId={quiz.id}
                   type={type}
-                  data={data}
                   value={item}
                   index={index}
                   values={value}
@@ -188,7 +186,7 @@ export const QuestionConstructor: FC<propTypes> = (
     }
   }, [isQuestionMoves, onDocumentClick]);
 
-  if (quiz == null) return null;
+  if (quiz == null) return <p>Loading...</p>;
   return (
       <article
         className={
@@ -197,7 +195,7 @@ export const QuestionConstructor: FC<propTypes> = (
           ${
             (isQuestionMoves && changeQuestionOrder !== data.index) ? styles.changeOrderBlockHidden : ''}`
         }
-        onClick={(event) => {
+        onClick={(event): void => {
           event.stopPropagation();
           dispatch(setActiveQuestion(data.id));
           dispatch(setQuestionMoving(false));
@@ -213,10 +211,9 @@ export const QuestionConstructor: FC<propTypes> = (
           isFocused={isFocused}
           question={data}
           quizId={quiz.id}
-          setType={setType}
-          name={name}
+          questionName={name}
+          questionType={type}
           isRequired={isRequired}
-          setName={setName}
         />
         <main className={styles.questionValue}>
           {
@@ -227,8 +224,7 @@ export const QuestionConstructor: FC<propTypes> = (
           isFocused={isFocused}
           question={data}
           quizId={quiz.id}
-          attachmentName={attachmentName}
-          setAttachmentName={setAttachmentName}
+          questionAttachmentName={attachmentName}
         />
       </article>
   );

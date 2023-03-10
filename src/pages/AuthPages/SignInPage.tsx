@@ -3,7 +3,7 @@ import { type FC } from 'react'
 import { AuthSlider } from '../../components/sliders/AuthSlider'
 import { AuthHeader } from '../../components/headers/AuthHeader/AuthHeader'
 import { SignInForm } from '../../components/forms/AuthForms/SignInForm'
-import { AuthFooter } from '../../components/footers/AuthFooter'
+import { AuthFooter } from '../../components/footers/AuthFooter/AuthFooter'
 
 const PUBLIC_URL = process.env.PUBLIC_URL
 

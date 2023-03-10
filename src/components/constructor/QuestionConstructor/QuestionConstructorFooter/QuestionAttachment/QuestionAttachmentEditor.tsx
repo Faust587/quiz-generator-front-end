@@ -1,9 +1,10 @@
 import { type Dispatch, type FC, type SetStateAction, useRef, useState } from 'react'
 import styles from '../../QuestionConstructor.module.scss'
-import trashCanIcon from '../../../../../assets/icons/trash-can.svg'
-import uploadFileIcon from '../../../../../assets/icons/upload.svg'
+import {uploadIcon, trashCanIcon} from '../../../../../assets/'
 import { deleteQuestionAttachment, uploadQuestionAttachment } from '../../../../../store/reducer/quizConstructor/quizThunks'
 import { useAppDispatch } from '../../../../../hooks/redux'
+import {IconButton} from "../../../../../UI/buttonElement";
+import {cutQuestionAttachmentName} from "../../../../../utils/questionUtils";
 
 interface PropsTypes {
   attachmentName: string | undefined
@@ -25,15 +26,14 @@ export const QuestionAttachmentEditor: FC<PropsTypes> = (
   const dispatch = useAppDispatch()
   const inputFile = useRef<HTMLInputElement>(null)
   const [isFileUploading, setIsFileUploading] = useState(false)
+
   const onFileChanges = async () => {
-    if ((inputFile.current == null) || (inputFile.current.files == null)) return
+    if ((inputFile.current === null) || (inputFile.current.files === null)) return
     const file = inputFile?.current.files[0]
-    if (file.name.length > 15) {
-      setAttachmentName(`${file.name.slice(0, 15)}...`)
-    }
+    setAttachmentName(cutQuestionAttachmentName(file.name));
     const encodedFileName = encodeURIComponent(file.name)
-    const formData = new FormData()
-    formData.append('file', file, encodedFileName)
+    const formData = new FormData();
+    formData.append('file', file, encodedFileName);
     setIsFileUploading(true)
     dispatch(uploadQuestionAttachment({ quizId, questionId, formData }))
     setIsFileUploading(false)
@@ -43,37 +43,42 @@ export const QuestionAttachmentEditor: FC<PropsTypes> = (
     dispatch(deleteQuestionAttachment({ quizId, questionId }))
   }
 
+  const openFileInput = () => {
+    if (inputFile.current !== null) inputFile.current.click();
+  }
+
   return (
     <div className={styles.parameterContainer}>
-      <input ref={inputFile} onChange={onFileChanges} style={{ display: 'none' }} type="file"/>
+      <input hidden ref={inputFile} onChange={onFileChanges} type="file"/>
       {(isFileUploaded && !isFileUploading)
         ? (
-          <button
-            className={`${styles.iconButton} ${styles.iconButtonRed}`}
+          <IconButton
             onClick={removeAttachment}
-          >
-            <img src={trashCanIcon} alt="delete"/>
-          </button>
+            icon={trashCanIcon}
+            alt='remove file'
+            hoverColor='red'
+            width={40}
+            height={40}
+          />
           )
         : (
-          <button
-            className={`${styles.iconButton} ${styles.iconButtonGray}`}
-            onClick={() => {
-              if (inputFile.current != null) inputFile.current.click()
-            }
-            }
-          >
-            <img src={uploadFileIcon} alt="upload file"/>
-          </button>
+          <IconButton
+            onClick={openFileInput}
+            icon={uploadIcon}
+            alt='Upload file'
+            hoverColor='yellow'
+            width={40}
+            height={40}
+          />
           )}
       <span
         className={styles.description}
         onClick={onFileChanges}
       >
-            {(attachmentName && !isFileUploading) ? attachmentName : null}
+        {(attachmentName && !isFileUploading) ? cutQuestionAttachmentName(attachmentName) : null}
         {(!attachmentName && !isFileUploading) ? 'Upload your file here' : null}
         {isFileUploading ? 'uploading...' : null}
-          </span>
+      </span>
     </div>
-  )
+  );
 }

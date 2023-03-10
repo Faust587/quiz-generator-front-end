@@ -1,7 +1,13 @@
-export const QuizPage = () => {
-  return (
-    <div>
+import React from "react";
+import {QuizPageHeader} from "../../components/headers/QuizPageHeader/QuizPageHeader";
+import {Quiz} from "../../components/quiz/Quiz";
 
-    </div>
+export const QuizPage = () => {
+
+  return (
+    <>
+      <QuizPageHeader />
+      <Quiz />
+    </>
   )
 }

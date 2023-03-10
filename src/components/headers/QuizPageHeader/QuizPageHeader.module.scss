@@ -1,0 +1,100 @@
+.wrapper {
+  margin: 50px auto 0;
+  width: 600px;
+}
+
+.container {
+  background-color: #897EB5;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 5px 5px 0 #ADA9BB;
+}
+
+.quizNameText {
+  font-size: 30px;
+  text-align: center;
+}
+
+.quizNameContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.quizInfoWrapper {
+  margin-top: 20px;
+}
+
+.quizNameText {
+  font-size: 30px;
+}
+
+.quizInfoTextContainer {
+  margin: 10px 0;
+}
+
+.quizInfoText {
+  font-size: 25px;
+  color: #ffffff;
+}
+
+.quizInfoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.quizInfoTextPreloader {
+  height: 30px;
+  width: 100%;
+  border-radius: 10px;
+  animation-duration: 1.7s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: placeholderAnimate;
+  background: #bcb2e5;
+  background: linear-gradient(to right, #bcb2e5 2%, #d6cfef 18%, #bcb2e5 33%);
+  background-size: 1300px;
+}
+
+.quizNameContainerPreloader {
+  height: 50px;
+  width: 100%;
+  border-radius: 10px;
+  animation-duration: 1.7s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: placeholderAnimate;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eee 2%, #ddd 18%, #eee 33%);
+  background-size: 1300px;
+}
+
+@keyframes placeholderAnimate {
+  0%{ background-position: -650px 0; }
+  100%{ background-position: 650px 0; }
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .container {
+    border-radius: 0 0 10px 10px;
+  }
+  .quizInfoText {
+    font-size: 20px;
+    color: #ffffff;
+  }
+  .wrapper {
+    margin: 0 auto;
+  }
+
+  .quizNameContainer {
+    padding: 24px;
+  }
+}

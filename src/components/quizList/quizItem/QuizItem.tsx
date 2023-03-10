@@ -2,7 +2,7 @@ import { type FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './QuizItem.module.scss'
 import { closedIcon, successIcon, copyIcon, authOnlyIcon } from '../../../assets'
-import { type TQuiz } from '../../../store/reducer/quizConstructor/constructorSlice'
+import { type TQuiz } from '../../../store/reducer/quizConstructor/quizSlice'
 
 interface propsType {
   iconURL: string

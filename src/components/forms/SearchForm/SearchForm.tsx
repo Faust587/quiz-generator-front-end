@@ -1,29 +1,43 @@
 import styles from './SearchForm.module.scss'
-import { type FormEvent, useState } from 'react'
-import api from '../../../api'
-import Swal from 'sweetalert2'
-import axios, { type AxiosError } from 'axios'
-import { type TQuiz } from '../../../store/reducer/quizConstructor/constructorSlice'
+import {type FormEvent, useEffect, useState} from 'react'
+import {useNavigate} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../../hooks/redux";
+import {fetchQuizByCode} from "../../../store/reducer/enteredQuiz/enteredQuizThunks";
+import SweetAlert from "sweetalert2";
 
 export const SearchForm = () => {
   const [code, setCode] = useState('')
 
-  const onSubmit = async (e: FormEvent<EventTarget>) => {
-    e.preventDefault()
-    const params = new URLSearchParams([['code', code]])
-    const fetchQuiz = await api.get<TQuiz>('/quiz', { params })
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const {loading, error} = useAppSelector(state => state.enteredQuiz);
 
-    if (axios.isAxiosError(fetchQuiz)) {
-      const error = fetchQuiz as AxiosError<{ statusCode: number, message: string }>
-      Swal.fire(
-        'Error!',
-        error.response?.data.message || 'unknown error',
-        'error'
-      )
-    } else {
-
-    }
+  const onSubmit = (e: FormEvent<EventTarget>): void => {
+    e.preventDefault();
+    if (!code) return;
+    dispatch(fetchQuizByCode({code}));
   }
+
+  useEffect((): void => {
+    if (loading === "succeeded") {
+      navigate("./quiz");
+      return;
+    }
+    if (loading !== "failed") return;
+    if (!error) {
+      SweetAlert.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Unknown error, please try again"
+      }).then();
+    } else {
+      SweetAlert.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.message,
+      }).then();
+    }
+  }, [loading, error]);
 
   return (
     <div className={styles.container}>
@@ -48,5 +62,5 @@ export const SearchForm = () => {
         </button>
       </form>
     </div>
-  )
+  );
 }

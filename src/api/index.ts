@@ -27,7 +27,7 @@ api.interceptors.response.use((config) => config,
       const tokensPair = await axios.get<refreshTokenResponse>(
         'http://localhost:4000/auth/refresh',
         { withCredentials: true }
-      ).catch((e) => e);
+      );
       if (axios.isAxiosError(tokensPair)) return tokensPair;
       const { accessToken } = tokensPair.data;
       localStorage.setItem('accessToken', accessToken);
