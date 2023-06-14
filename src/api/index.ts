@@ -1,39 +1,51 @@
-import axios from 'axios';
+import axios from "axios";
+import { store } from "../store";
+import { setUnauthorised } from "../store/reducer/auth/authSlice";
 
 const api = axios.create({
   withCredentials: true,
-  baseURL: 'http://localhost:4000/'
+  baseURL: "https://quiz-app-api-nu.vercel.app/",
 });
 
 api.interceptors.request.use((config) => {
-  if (!localStorage.getItem('accessToken')) return config;
-  const accessToken = `Bearer ${localStorage.getItem('accessToken') ?? ''}`;
+  if (!localStorage.getItem("accessToken")) return config;
+  const accessToken = `Bearer ${localStorage.getItem("accessToken") ?? ""}`;
   config.headers = {
     ...config.headers,
-    Authorization: accessToken
+    Authorization: accessToken,
   };
   return config;
 });
 
 interface refreshTokenResponse {
-  accessToken: string
+  accessToken: string;
 }
 
-api.interceptors.response.use((config) => config,
+api.interceptors.response.use(
+  (config) => config,
   async (error) => {
     const originalRequest = error.config;
-    if (error.response?.status === 401 && error.config && !error.config._isRetry) {
+    if (
+      error.response?.status === 401 &&
+      error.config &&
+      error.config.isRetry
+    ) {
       originalRequest.isRetry = true;
       const tokensPair = await axios.get<refreshTokenResponse>(
-        'http://localhost:4000/auth/refresh',
+        "https://quiz-app-api-nu.vercel.app/auth/refresh",
         { withCredentials: true }
       );
-      if (axios.isAxiosError(tokensPair)) return tokensPair;
+      if (axios.isAxiosError(tokensPair)) {
+        console.log("HEY");
+        store.dispatch(setUnauthorised());
+        return tokensPair;
+      }
       const { accessToken } = tokensPair.data;
-      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem("accessToken", accessToken);
       return await api.request(originalRequest);
     }
     return error;
-  });
+  }
+);
 
 export default api;

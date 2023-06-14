@@ -1,11 +1,11 @@
-import './AuthPagesStyles.scss'
-import { type FC } from 'react'
-import { AuthSlider } from '../../components/sliders/AuthSlider'
-import { AuthHeader } from '../../components/headers/AuthHeader/AuthHeader'
-import { SignInForm } from '../../components/forms/AuthForms/SignInForm'
-import { AuthFooter } from '../../components/footers/AuthFooter/AuthFooter'
+import "./AuthPagesStyles.scss";
+import { type FC } from "react";
+import { AuthSlider } from "../../components/sliders/AuthSlider";
+import { AuthHeader } from "../../components/headers/AuthHeader/AuthHeader";
+import { SignInForm } from "../../components/forms/AuthForms/SignInForm";
+import { AuthFooter } from "../../components/footers/AuthFooter/AuthFooter";
 
-const PUBLIC_URL = process.env.PUBLIC_URL
+const PUBLIC_URL = process.env.PUBLIC_URL;
 
 export const SignInPage: FC = (): JSX.Element => {
   return (
@@ -21,10 +21,10 @@ export const SignInPage: FC = (): JSX.Element => {
           <AuthFooter
             text="Don't have an account?"
             urlText="Sign Up"
-            url={ `${PUBLIC_URL}/sign-up` }
+            url={`${PUBLIC_URL}/sign-up`}
           />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

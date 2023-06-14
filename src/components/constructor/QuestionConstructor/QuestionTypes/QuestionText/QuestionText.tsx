@@ -1,5 +1,5 @@
-import React, { type FC } from 'react';
-import styles from '../QuestionType.module.scss';
+import React, { type FC } from "react";
+import styles from "../QuestionType.module.scss";
 
 export const QuestionText: FC<{ isFocused: boolean }> = () => {
   return (
@@ -7,6 +7,7 @@ export const QuestionText: FC<{ isFocused: boolean }> = () => {
       disabled={true}
       className={styles.textInput}
       placeholder="Answer to your question"
-      type="text"/>
+      type="text"
+    />
   );
 };

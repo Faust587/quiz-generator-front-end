@@ -4,10 +4,10 @@
 }
 
 .container {
-  background-color: #897EB5;
+  background-color: #897eb5;
   border-radius: 10px;
   padding: 20px;
-  box-shadow: 5px 5px 0 #ADA9BB;
+  box-shadow: 5px 5px 0 #ada9bb;
 }
 
 .quizNameText {
@@ -77,8 +77,12 @@
 }
 
 @keyframes placeholderAnimate {
-  0%{ background-position: -650px 0; }
-  100%{ background-position: 650px 0; }
+  0% {
+    background-position: -650px 0;
+  }
+  100% {
+    background-position: 650px 0;
+  }
 }
 
 /* Extra small devices (phones, 600px and down) */

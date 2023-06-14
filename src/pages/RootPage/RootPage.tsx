@@ -1,20 +1,11 @@
-import './RootPageStyles.scss'
-import useAuthorization from '../../hooks/useAuthorization'
-import { MainPage } from '../MainPage/MainPage'
-import { SignUpPage } from '../AuthPages/SignUpPage'
-import {useEffect} from "react";
-import api from "../../api";
+import "./RootPageStyles.scss";
+import useAuthorization from "../../hooks/useAuthorization";
+import { MainPage } from "../MainPage/MainPage";
 
 export const RootPage = () => {
-  const { isAuth } = useAuthorization()
+  const { isLoading } = useAuthorization();
 
-  useEffect(() => {
-    
-  }, []);
+  if (isLoading) return <h1>Loading...</h1>;
 
-  return (
-    <>
-      {isAuth ? <MainPage/> : <SignUpPage/>}
-    </>
-  )
-}
+  return <MainPage />;
+};

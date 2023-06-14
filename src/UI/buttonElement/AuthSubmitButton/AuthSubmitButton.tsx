@@ -1,21 +1,14 @@
-import React, { type FC } from 'react'
-import './AuthSubmitButtonStyles.scss'
+import React, { type FC } from "react";
+import "./AuthSubmitButtonStyles.scss";
 
 interface propsType {
-  text: string
+  text: string;
 }
 
-export const AuthSubmitButton: FC<propsType> = (
-  {
-    text
-  }
-) => {
+export const AuthSubmitButton: FC<propsType> = ({ text }) => {
   return (
-    <button
-      className="authorization-submit-button"
-      type="submit"
-    >
-      { text }
+    <button className="authorization-submit-button" type="submit">
+      {text}
     </button>
-  )
-}
+  );
+};

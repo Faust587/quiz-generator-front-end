@@ -1,10 +1,13 @@
-import { validationErrors } from '../types/validationError';
+import { validationErrors } from "../types/validationError";
 
 export interface IValidationMethods {
-  usernameValidation: (username: string) => string[]
-  passwordValidation: (password: string) => string[]
-  repeatedPasswordValidation: (repeatedPassword: string, password: string) => validationErrors[]
-  emailValidation: (email: string) => validationErrors[]
+  usernameValidation: (username: string) => string[];
+  passwordValidation: (password: string) => string[];
+  repeatedPasswordValidation: (
+    repeatedPassword: string,
+    password: string
+  ) => validationErrors[];
+  emailValidation: (email: string) => validationErrors[];
 }
 
 class ValidationService implements IValidationMethods {
@@ -31,7 +34,10 @@ class ValidationService implements IValidationMethods {
     return errors;
   };
 
-  repeatedPasswordValidation = (repeatedPassword: string, password: string): validationErrors[] => {
+  repeatedPasswordValidation = (
+    repeatedPassword: string,
+    password: string
+  ): validationErrors[] => {
     const errors: validationErrors[] = [];
     if (repeatedPassword !== password) {
       errors.push(validationErrors.PASSWORDS_ARE_NOT_THE_SAME);
@@ -41,7 +47,8 @@ class ValidationService implements IValidationMethods {
 
   emailValidation = (email: string): validationErrors[] => {
     const errors: validationErrors[] = [];
-    const emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailRegExp =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!emailRegExp.test(email)) {
       errors.push(validationErrors.EMAIL_IS_NOT_VALID);
     }

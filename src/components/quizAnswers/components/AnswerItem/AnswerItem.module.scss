@@ -1,0 +1,56 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #e3ddff;
+  transition: 0.3s;
+  width: 50%;
+
+  &:hover {
+    background-color: #8b80b6;
+    color: #ffffff;
+    transition: 0.3s;
+  }
+
+  &:first-child {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  &:not(:last-child) {
+    border-bottom: 2px solid #8b80b6;
+  }
+}
+
+.info-block {
+  margin: 0 5px;
+}
+
+.iconButton {
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  border-radius: 5px;
+  &Red {
+    background-color: rgba(255, 40, 57, 0.33);
+    transition: 0.5s;
+    &:hover {
+      transition: 0.5s;
+      background-color: #e44061;
+    }
+  }
+  &Gray {
+    background-color: #ffffff;
+    transition: 0.5s;
+    &:hover {
+      transition: 0.5s;
+      background-color: #f9f871;
+    }
+  }
+}

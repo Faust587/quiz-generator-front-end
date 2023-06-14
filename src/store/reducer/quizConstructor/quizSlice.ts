@@ -1,85 +1,85 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-import { type QUESTION_TYPES } from '../../../types/questionTypes';
-import { quizExtraReducers } from './quizExtraReducers';
-import { quizReducers } from './quizReducers';
+import { type QUESTION_TYPES } from "../../../types/questionTypes";
+import { quizExtraReducers } from "./quizExtraReducers";
+import { quizReducers } from "./quizReducers";
 
 export interface TQuiz {
-  id: string
-  name: string
-  closed: boolean
-  onlyAuthUsers: boolean
-  code: string
-  author: string
-  iconURL: string
-  lastUpdated: number
-  questions: TQuestion[]
+  id: string;
+  name: string;
+  closed: boolean;
+  onlyAuthUsers: boolean;
+  code: string;
+  author: string;
+  iconURL: string;
+  lastUpdated: number;
+  questions: TQuestion[];
 }
 
 export interface TQuestion {
-  id: string
-  type: QUESTION_TYPES
-  value: string[]
-  index: number
-  isRequired: boolean
-  isFileUploaded: boolean
-  attachmentName: string | undefined
-  name: string
+  id: string;
+  type: QUESTION_TYPES;
+  value: string[];
+  index: number;
+  isRequired: boolean;
+  isFileUploaded: boolean;
+  attachmentName: string | undefined;
+  name: string;
 }
 
 export interface TParameters {
-  name: string
-  closed: boolean
-  onlyAuthUsers: boolean
+  name: string;
+  closed: boolean;
+  onlyAuthUsers: boolean;
 }
 
 export interface TDeleteResponse {
-  acknowledged: boolean
-  deletedCount: number
+  acknowledged: boolean;
+  deletedCount: number;
 }
 
 export interface TError {
-  statusCode: number
-  message: string[] | string
+  statusCode: number;
+  message: string[] | string;
 }
 
-export type TLoading = 'idle' | 'pending' | 'succeeded' | 'failed';
+export type TLoading = "idle" | "pending" | "succeeded" | "failed";
 
 export interface TInitialQuizState {
-  changeQuestionOrder: number | null
-  isQuestionMoves: boolean
-  quizLoading: TLoading
-  parametersLoading: TLoading
-  codeLoading: TLoading
-  quizDeletingLoading: TLoading
-  questionCreatingLoading: TLoading
-  questionEditingLoading: TLoading
-  questionDeletingLoading: TLoading
-  questionAttachmentLoading: TLoading
-  questionDeletingError: TError | null
-  questionEditingError: TError | null
-  questionCreatingError: TError | null
-  quizDeletingError: TError | null
-  quizError: TError | null
-  parametersError: TError | null
-  questionError: TError | null
-  codeError: TError | null
-  currentQuiz: TQuiz | null
-  focusedQuestion: string | null
-  unfocusedQuestion: string | null
+  changeQuestionOrder: number | null;
+  isQuestionMoves: boolean;
+  quizLoading: TLoading;
+  parametersLoading: TLoading;
+  codeLoading: TLoading;
+  quizDeletingLoading: TLoading;
+  questionCreatingLoading: TLoading;
+  questionEditingLoading: TLoading;
+  questionDeletingLoading: TLoading;
+  questionAttachmentLoading: TLoading;
+  questionDeletingError: TError | null;
+  questionEditingError: TError | null;
+  questionCreatingError: TError | null;
+  quizDeletingError: TError | null;
+  quizError: TError | null;
+  parametersError: TError | null;
+  questionError: TError | null;
+  codeError: TError | null;
+  currentQuiz: TQuiz | null;
+  focusedQuestion: string | null;
+  unfocusedQuestion: string | null;
 }
 
 const initialState: TInitialQuizState = {
   changeQuestionOrder: null,
   isQuestionMoves: false,
-  quizLoading: 'idle',
-  parametersLoading: 'idle',
-  codeLoading: 'idle',
-  quizDeletingLoading: 'idle',
-  questionCreatingLoading: 'idle',
-  questionEditingLoading: 'idle',
-  questionDeletingLoading: 'idle',
-  questionAttachmentLoading: 'idle',
+  quizLoading: "idle",
+  parametersLoading: "idle",
+  codeLoading: "idle",
+  quizDeletingLoading: "idle",
+  questionCreatingLoading: "idle",
+  questionEditingLoading: "idle",
+  questionDeletingLoading: "idle",
+  questionAttachmentLoading: "idle",
   questionDeletingError: null,
   questionEditingError: null,
   questionCreatingError: null,
@@ -90,10 +90,10 @@ const initialState: TInitialQuizState = {
   parametersError: null,
   currentQuiz: null,
   focusedQuestion: null,
-  unfocusedQuestion: null
+  unfocusedQuestion: null,
 };
 
-export function compare (a: TQuestion, b: TQuestion): (1 | -1 | 0) {
+export function compare(a: TQuestion, b: TQuestion): 1 | -1 | 0 {
   if (a.index < b.index) {
     return -1;
   }
@@ -104,10 +104,10 @@ export function compare (a: TQuestion, b: TQuestion): (1 | -1 | 0) {
 }
 
 const quizSlice = createSlice({
-  name: 'quiz',
+  name: "quiz",
   initialState,
   reducers: quizReducers,
-  extraReducers: quizExtraReducers
+  extraReducers: quizExtraReducers,
 });
 
 export const {
@@ -132,6 +132,6 @@ export const {
   clearQuestionDeletingLoading,
   clearQuestionDeletingError,
   removeQuestionFromState,
-  setQuestionMoving
+  setQuestionMoving,
 } = quizSlice.actions;
 export default quizSlice.reducer;

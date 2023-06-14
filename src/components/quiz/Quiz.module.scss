@@ -12,8 +12,6 @@
   align-items: center;
 }
 
-
-
 .answer {
   &__text-input {
     width: 100%;
@@ -48,7 +46,8 @@
     margin: 10px 0;
   }
 
-  &__container {}
+  &__container {
+  }
 }
 
 .select {
@@ -105,7 +104,7 @@
   }
 
   &:not(:checked):hover:before {
-    content: '';
+    content: "";
     position: relative;
     border-radius: 100%;
     top: calc(50% - 4px);
@@ -117,7 +116,7 @@
   }
 
   &:checked:before {
-    content: '';
+    content: "";
     position: relative;
     border-radius: 100%;
     top: calc(50% - 4px);
@@ -140,7 +139,7 @@
   }
 
   &:not(:checked):hover:before {
-    content: '';
+    content: "";
     position: relative;
     top: calc(50% - 4px);
     left: calc(50% - 4px);
@@ -151,7 +150,7 @@
   }
 
   &:checked:before {
-    content: '';
+    content: "";
     position: relative;
     top: calc(50% - 4px);
     left: calc(50% - 4px);
@@ -175,7 +174,7 @@
     width: 600px;
     padding: 10px;
     border-radius: 10px;
-    box-shadow: 5px 5px 0 #ADA9BB;
+    box-shadow: 5px 5px 0 #ada9bb;
     background-color: #e3ddff;
   }
   &__header {

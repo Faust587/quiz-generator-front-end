@@ -1,73 +1,80 @@
-import styles from './styles.module.scss'
-import { mainIcon, reloadIcon } from '../../../../../assets'
-import React, { type Dispatch, type FC, type SetStateAction } from 'react'
-import Swal from 'sweetalert2'
-import { useNavigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../../../../hooks/redux'
-import { updateQuizParametersById, refreshQuizCode, deleteQuizByCode } from '../../../../../store/reducer/quizConstructor/quizThunks'
-import { setCurrentQuiz } from '../../../../../store/reducer/quizConstructor/quizSlice'
-import {formatDate} from "../../../../../utils/formatDate";
+import styles from "./styles.module.scss";
+import { mainIcon, reloadIcon } from "../../../../../assets";
+import React, { type Dispatch, type FC, type SetStateAction } from "react";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../../../hooks/redux";
+import {
+  updateQuizParametersById,
+  refreshQuizCode,
+  deleteQuizByCode,
+} from "../../../../../store/reducer/quizConstructor/quizThunks";
+import { setCurrentQuiz } from "../../../../../store/reducer/quizConstructor/quizSlice";
+import { formatDate } from "../../../../../utils/formatDate";
 
 interface propTypes {
-  id: string
-  name: string
-  code: string
-  closed: boolean
-  onlyAuthUsers: boolean
-  questionsAmount: number
-  isChanged: boolean
-  setIsChanged: Dispatch<SetStateAction<boolean>>
-  setName: Dispatch<SetStateAction<string>>
-  setClosed: Dispatch<SetStateAction<boolean>>
-  setOnlyAuthUsers: Dispatch<SetStateAction<boolean>>
+  id: string;
+  name: string;
+  code: string;
+  closed: boolean;
+  onlyAuthUsers: boolean;
+  questionsAmount: number;
+  isChanged: boolean;
+  setIsChanged: Dispatch<SetStateAction<boolean>>;
+  setName: Dispatch<SetStateAction<string>>;
+  setClosed: Dispatch<SetStateAction<boolean>>;
+  setOnlyAuthUsers: Dispatch<SetStateAction<boolean>>;
 }
 
-export const BigScreenHeader: FC<propTypes> = (
-  {
-    id,
-    name,
-    setName,
-    code,
-    closed,
-    setClosed,
-    onlyAuthUsers,
-    setOnlyAuthUsers,
-    questionsAmount,
-    isChanged,
-    setIsChanged
-  }
-) => {
-  const navigate = useNavigate()
-  const quiz = useAppSelector(state => state.quizzes.currentQuiz)
-  const dispatch = useAppDispatch()
+export const BigScreenHeader: FC<propTypes> = ({
+  id,
+  name,
+  setName,
+  code,
+  closed,
+  setClosed,
+  onlyAuthUsers,
+  setOnlyAuthUsers,
+  questionsAmount,
+  isChanged,
+  setIsChanged,
+}) => {
+  const navigate = useNavigate();
+  const quiz = useAppSelector((state) => state.quizzes.currentQuiz);
+  const dispatch = useAppDispatch();
 
   const refreshCodeAction = (e: React.FormEvent<EventTarget>) => {
-    e.preventDefault()
-    dispatch(refreshQuizCode(code))
-  }
+    e.preventDefault();
+    dispatch(refreshQuizCode(code));
+  };
 
   const deleteQuiz = (e: React.FormEvent<EventTarget>) => {
-    e.preventDefault()
+    e.preventDefault();
     Swal.fire({
-      title: 'Do you really want to permanently delete quizConstructor?',
-      text: 'All question answers will be deleted!',
-      icon: 'warning',
+      title: "Do you really want to permanently delete quizConstructor?",
+      text: "All question answers will be deleted!",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#E44061',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#E44061",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
-      if (!result.isConfirmed) return
-      dispatch(deleteQuizByCode(code))
-    })
-  }
+      if (!result.isConfirmed) return;
+      dispatch(deleteQuizByCode(code));
+    });
+  };
 
   const updateParameters = async (e: React.FormEvent<EventTarget>) => {
-    e.preventDefault()
-    dispatch(updateQuizParametersById({ parameters: { name, closed, onlyAuthUsers }, quizId: id }))
-  }
+    e.preventDefault();
+    dispatch(
+      updateQuizParametersById({
+        parameters: { name, closed, onlyAuthUsers },
+        quizId: id,
+      })
+    );
+  };
 
-  if (quiz == null) return <h1>Loading...</h1>
+  if (quiz == null) return <h1>Loading...</h1>;
 
   return (
     <div className={styles.container}>
@@ -84,18 +91,20 @@ export const BigScreenHeader: FC<propTypes> = (
               className={styles.textInput}
               type="text"
               value={name}
-              onChange={e => {
+              onChange={(e) => {
                 setName(e.target.value);
-                (e.target.value === quiz.name &&
-                  closed === quiz.closed &&
-                  onlyAuthUsers === quiz.onlyAuthUsers)
+                e.target.value === quiz.name &&
+                closed === quiz.closed &&
+                onlyAuthUsers === quiz.onlyAuthUsers
                   ? setIsChanged(false)
-                  : setIsChanged(true)
+                  : setIsChanged(true);
               }}
             />
             <div className={`${styles.buttonContainer}`}>
               <button
-                className={`${styles.formButton} ${isChanged ? '' : styles.hidden}`}
+                className={`${styles.formButton} ${
+                  isChanged ? "" : styles.hidden
+                }`}
                 onClick={updateParameters}
                 disabled={!isChanged}
               >
@@ -105,9 +114,7 @@ export const BigScreenHeader: FC<propTypes> = (
           </section>
           <section className={styles.formSection}>
             <div className={styles.codeContainer}>
-              <h2 className={styles.codeTitle}>
-                code:&nbsp;
-              </h2>
+              <h2 className={styles.codeTitle}>code:&nbsp;</h2>
               <div className={styles.code}>{code}</div>
               &nbsp;
               <button
@@ -127,14 +134,18 @@ export const BigScreenHeader: FC<propTypes> = (
                 type="checkbox"
                 checked={onlyAuthUsers}
                 onChange={() => {
-                  setOnlyAuthUsers(prevState => {
-                    if (!prevState === quiz.onlyAuthUsers && closed === quiz.closed && name === quiz.name) {
-                      setIsChanged(false)
+                  setOnlyAuthUsers((prevState) => {
+                    if (
+                      !prevState === quiz.onlyAuthUsers &&
+                      closed === quiz.closed &&
+                      name === quiz.name
+                    ) {
+                      setIsChanged(false);
                     } else {
-                      setIsChanged(true)
+                      setIsChanged(true);
                     }
-                    return !prevState
-                  })
+                    return !prevState;
+                  });
                 }}
               />
               Only for auth users
@@ -145,14 +156,18 @@ export const BigScreenHeader: FC<propTypes> = (
                 type="checkbox"
                 checked={closed}
                 onChange={() => {
-                  setClosed(prevState => {
-                    if (!prevState === quiz.closed && onlyAuthUsers === quiz.onlyAuthUsers && name === quiz.name) {
-                      setIsChanged(false)
+                  setClosed((prevState) => {
+                    if (
+                      !prevState === quiz.closed &&
+                      onlyAuthUsers === quiz.onlyAuthUsers &&
+                      name === quiz.name
+                    ) {
+                      setIsChanged(false);
                     } else {
-                      setIsChanged(true)
+                      setIsChanged(true);
                     }
-                    return !prevState
-                  })
+                    return !prevState;
+                  });
                 }}
               />
               Closed
@@ -173,26 +188,20 @@ export const BigScreenHeader: FC<propTypes> = (
         <div className={styles.infoBlock}>
           Total questions: {questionsAmount}
         </div>
+        <div className={styles.infoBlock}>Total answers: 32</div>
         <div className={styles.infoBlock}>
-          Total answers: 32
-        </div>
-        <div className={styles.infoBlock}>
-          Last updated: { formatDate(quiz.lastUpdated) }
+          Last updated: {formatDate(quiz.lastUpdated)}
         </div>
       </div>
       <button
         className={styles.homeButton}
         onClick={() => {
-          dispatch(setCurrentQuiz(null))
-          navigate('../')
+          dispatch(setCurrentQuiz(null));
+          navigate("../main-page");
         }}
       >
-        <img
-          className={styles.homeIcon}
-          src={mainIcon}
-          alt="home icon"
-        />
+        <img className={styles.homeIcon} src={mainIcon} alt="home icon" />
       </button>
     </div>
-  )
-}
+  );
+};
