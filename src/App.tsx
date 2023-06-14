@@ -14,7 +14,7 @@ import { SuccessPage } from "./pages/SuccessPage/SuccessPage";
 
 function App() {
   return (
-    <BrowserRouter basename="https://faust587.github.io/quiz-generator-front-end/">
+    <BrowserRouter basename="quiz-generator-front-end/">
       <Routes>
         <Route
           path="/"
