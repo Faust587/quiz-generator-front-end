@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/quiz-generator-front-end/static/css/main.a5ebceea.css",
+    "main.js": "/quiz-generator-front-end/static/js/main.5a02a90d.js",
+    "static/media/auth-background.jpg": "/quiz-generator-front-end/static/media/auth-background.6639820c5c09f9cddaef.jpg",
+    "static/media/JetBrainsMono.ttf": "/quiz-generator-front-end/static/media/JetBrainsMono.a490f58c0f460cdc1a8d.ttf",
+    "static/media/error.jpg": "/quiz-generator-front-end/static/media/error.99f0bac7b716e9f982c7.jpg",
+    "static/media/user-icon.svg": "/quiz-generator-front-end/static/media/user-icon.8e8864ea3494448f3b346dba1fe0a66f.svg",
+    "static/media/trash-can.svg": "/quiz-generator-front-end/static/media/trash-can.857edc607b88ace2fb38dccc934fe4a3.svg",
+    "static/media/quiz-icon-1.svg": "/quiz-generator-front-end/static/media/quiz-icon-1.41131a2f673ce3fbf042468c6d48060c.svg",
+    "static/media/success_icon.svg": "/quiz-generator-front-end/static/media/success_icon.4e08f49e92f6329b379e8b6827203a42.svg",
+    "static/media/settings.svg": "/quiz-generator-front-end/static/media/settings.550700cc9a1a704619a4735b85249f0b.svg",
+    "index.html": "/quiz-generator-front-end/index.html",
+    "static/media/download_icon.svg": "/quiz-generator-front-end/static/media/download_icon.742aa4fae75f772a9d7d545a72413060.svg",
+    "static/media/closed.svg": "/quiz-generator-front-end/static/media/closed.5ac5102b9dfcfee9fb163eb7f28fceef.svg",
+    "static/media/upload.svg": "/quiz-generator-front-end/static/media/upload.56ef011a58dd899ba477e62655efab5a.svg",
+    "static/media/bottom-arrow.svg": "/quiz-generator-front-end/static/media/bottom-arrow.57ce8100d110c31c3d6f72add6b3f637.svg",
+    "static/media/top-arrow.svg": "/quiz-generator-front-end/static/media/top-arrow.357aac20cd4f502cb50575b2c04fcf7e.svg",
+    "static/media/red-cross.svg": "/quiz-generator-front-end/static/media/red-cross.51f9fb6f973daea7af41d6d60bfcf06c.svg",
+    "static/media/auth-only.svg": "/quiz-generator-front-end/static/media/auth-only.97fb85ccf55091c9e978e930777ccea9.svg",
+    "static/media/search-icon.svg": "/quiz-generator-front-end/static/media/search-icon.5dcccccf38d5693c186d288da08d7b57.svg",
+    "static/media/copy-icon.svg": "/quiz-generator-front-end/static/media/copy-icon.2426f8180a96ee1c333c098e1ed024c6.svg",
+    "static/media/reload-icon.svg": "/quiz-generator-front-end/static/media/reload-icon.47895e843948cba6ce39f4b67b8bf111.svg",
+    "main.a5ebceea.css.map": "/quiz-generator-front-end/static/css/main.a5ebceea.css.map",
+    "main.5a02a90d.js.map": "/quiz-generator-front-end/static/js/main.5a02a90d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a5ebceea.css",
+    "static/js/main.5a02a90d.js"
+  ]
+}
