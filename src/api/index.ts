@@ -4,7 +4,7 @@ import { setUnauthorised } from "../store/reducer/auth/authSlice";
 
 const api = axios.create({
   withCredentials: true,
-  baseURL: "https://quiz-app-api-nu.vercel.app/",
+  baseURL: "https://quiz-app-api-phi.vercel.app",
 });
 
 api.interceptors.request.use((config) => {
@@ -32,7 +32,7 @@ api.interceptors.response.use(
     ) {
       originalRequest.isRetry = true;
       const tokensPair = await axios.get<refreshTokenResponse>(
-        "https://quiz-app-api-nu.vercel.app/auth/refresh",
+        "https://quiz-app-api-phi.vercel.app",
         { withCredentials: true }
       );
       if (axios.isAxiosError(tokensPair)) {
