@@ -14,13 +14,12 @@ export const AuthFooter: FC<propTypes> = ({ text, urlText, url }) => {
     <footer
       className="authorization-footer"
       onClick={() => {
-        alert("Navigated");
         navigate(url);
       }}
     >
       {text}
       &nbsp;
-      <span>{urlText}</span>
+      <span style={{ color: "blue" }}>{urlText}</span>
     </footer>
   );
 };
