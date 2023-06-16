@@ -1,9 +1,16 @@
-function useAuthorization () {
-  const token = localStorage.getItem('accessToken')
+import { useAppDispatch, useAppSelector } from "./redux";
+import { useEffect } from "react";
+import { refreshToken } from "../store/reducer/auth/authThunk";
 
-  return {
-    isAuth: !!token
-  }
+function useAuthorization() {
+  const dispatch = useAppDispatch();
+  const { isAuth, isLoading } = useAppSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(refreshToken());
+  }, []);
+
+  return { isAuth, isLoading };
 }
 
-export default useAuthorization
+export default useAuthorization;

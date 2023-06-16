@@ -1,28 +1,43 @@
-import { type PayloadAction } from '@reduxjs/toolkit';
+import { type PayloadAction } from "@reduxjs/toolkit";
 import {
   compare,
   type TInitialQuizState,
   type TParameters,
   type TQuestion,
-  type TQuiz
-} from './quizSlice';
+  type TQuiz,
+} from "./quizSlice";
 
 export const quizReducers = {
-  setQuestions: (state: TInitialQuizState, action: PayloadAction<TQuestion[]>) => {
+  setQuestions: (
+    state: TInitialQuizState,
+    action: PayloadAction<TQuestion[]>
+  ) => {
     if (state.currentQuiz == null) return;
     action.payload.sort(compare);
     state.currentQuiz.questions = action.payload;
   },
-  setQuestionMoving: (state: TInitialQuizState, action: PayloadAction<boolean>) => {
+  setQuestionMoving: (
+    state: TInitialQuizState,
+    action: PayloadAction<boolean>
+  ) => {
     state.isQuestionMoves = action.payload;
   },
-  setQuizForChangingOrder: (state: TInitialQuizState, action: PayloadAction<number | null>) => {
+  setQuizForChangingOrder: (
+    state: TInitialQuizState,
+    action: PayloadAction<number | null>
+  ) => {
     state.changeQuestionOrder = action.payload;
   },
-  setCurrentQuiz: (state: TInitialQuizState, action: PayloadAction<TQuiz | null>) => {
+  setCurrentQuiz: (
+    state: TInitialQuizState,
+    action: PayloadAction<TQuiz | null>
+  ) => {
     state.currentQuiz = action.payload;
   },
-  setActiveQuestion: (state: TInitialQuizState, action: PayloadAction<string | null>) => {
+  setActiveQuestion: (
+    state: TInitialQuizState,
+    action: PayloadAction<string | null>
+  ) => {
     if (state.focusedQuestion === action.payload) {
       state.unfocusedQuestion = null;
       return;
@@ -30,13 +45,21 @@ export const quizReducers = {
     state.unfocusedQuestion = state.focusedQuestion;
     state.focusedQuestion = action.payload;
   },
-  removeQuestionFromState: (state: TInitialQuizState, action: PayloadAction<string>) => {
+  removeQuestionFromState: (
+    state: TInitialQuizState,
+    action: PayloadAction<string>
+  ) => {
     if (state.currentQuiz == null) return;
-    state.currentQuiz.questions = state.currentQuiz.questions.filter(question => {
-      return question.id !== action.payload;
-    });
+    state.currentQuiz.questions = state.currentQuiz.questions.filter(
+      (question) => {
+        return question.id !== action.payload;
+      }
+    );
   },
-  updateParameters: (state: TInitialQuizState, action: PayloadAction<TParameters>) => {
+  updateParameters: (
+    state: TInitialQuizState,
+    action: PayloadAction<TParameters>
+  ) => {
     if (state.currentQuiz == null) return;
     const { name, closed, onlyAuthUsers } = action.payload;
     state.currentQuiz = { ...state.currentQuiz, closed, name, onlyAuthUsers };
@@ -47,7 +70,7 @@ export const quizReducers = {
     state.currentQuiz = { ...state.currentQuiz, code };
   },
   clearQuizStatus: (state: TInitialQuizState) => {
-    state.quizLoading = 'idle';
+    state.quizLoading = "idle";
   },
   clearQuizError: (state: TInitialQuizState) => {
     state.quizError = null;
@@ -56,36 +79,36 @@ export const quizReducers = {
     state.parametersError = null;
   },
   clearParametersLoading: (state: TInitialQuizState) => {
-    state.parametersLoading = 'idle';
+    state.parametersLoading = "idle";
   },
   clearCodeLoading: (state: TInitialQuizState) => {
-    state.codeLoading = 'idle';
+    state.codeLoading = "idle";
   },
   clearCodeError: (state: TInitialQuizState) => {
     state.codeError = null;
   },
   clearQuizDeleteLoading: (state: TInitialQuizState) => {
-    state.quizDeletingLoading = 'idle';
+    state.quizDeletingLoading = "idle";
   },
   clearQuizDeleteError: (state: TInitialQuizState) => {
     state.quizDeletingError = null;
   },
   clearQuestionCreatingLoading: (state: TInitialQuizState) => {
-    state.questionCreatingLoading = 'idle';
+    state.questionCreatingLoading = "idle";
   },
   clearQuestionCreatingError: (state: TInitialQuizState) => {
     state.questionCreatingError = null;
   },
   clearQuestionEditingLoading: (state: TInitialQuizState) => {
-    state.questionEditingLoading = 'idle';
+    state.questionEditingLoading = "idle";
   },
   clearQuestionEditingError: (state: TInitialQuizState) => {
     state.questionEditingError = null;
   },
   clearQuestionDeletingLoading: (state: TInitialQuizState) => {
-    state.questionDeletingLoading = 'idle';
+    state.questionDeletingLoading = "idle";
   },
   clearQuestionDeletingError: (state: TInitialQuizState) => {
     state.questionDeletingError = null;
-  }
+  },
 };

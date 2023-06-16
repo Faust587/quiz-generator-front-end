@@ -1,13 +1,13 @@
-import {TLoading, type TQuiz} from '../quizConstructor/quizSlice';
-import { createSlice } from '@reduxjs/toolkit';
-import { enteredQuizReducers } from './enteredQuizReducers';
-import {quizExtraReducers} from "./enteredQuizExtraReducers";
+import { TLoading, type TQuiz } from "../quizConstructor/quizSlice";
+import { createSlice } from "@reduxjs/toolkit";
+import { enteredQuizReducers } from "./enteredQuizReducers";
+import { quizExtraReducers } from "./enteredQuizExtraReducers";
 
 export interface TQuizAnswer {
-  id: string
-  authorId: string
-  answeredAt: number | undefined
-  answers: TQuestionAnswer[]
+  id: string;
+  authorId: string;
+  answeredAt: number | undefined;
+  answers: TQuestionAnswer[];
 }
 
 export interface TQuestionAnswer {
@@ -21,7 +21,7 @@ export type TError = {
   statusCode: number;
   message: string;
   error: string;
-}
+};
 
 export interface TEnteredQuizInitialState {
   quiz: TQuiz | null;
@@ -40,10 +40,10 @@ const initialState: TEnteredQuizInitialState = {
 };
 
 const enteredQuizSlice = createSlice({
-  name: 'enteredQuiz',
+  name: "enteredQuiz",
   initialState,
   reducers: enteredQuizReducers,
-  extraReducers: quizExtraReducers
+  extraReducers: quizExtraReducers,
 });
 
 export default enteredQuizSlice.reducer;
@@ -56,5 +56,6 @@ export const {
   setIntAnswer,
   removeArrIntAnswer,
   addArrIntAnswer,
-  setTextAnswer
+  setTextAnswer,
+  checkMissingAnswer,
 } = enteredQuizSlice.actions;

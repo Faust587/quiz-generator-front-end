@@ -38,7 +38,7 @@
   border-radius: 10px;
   background-color: white;
   height: 50px;
-  color: #393C54;
+  color: #393c54;
   padding: 0 20px;
   font-size: 20px;
   border: none;
@@ -60,7 +60,7 @@
 }
 
 .formButton {
-  background-color: #9ECA8F;
+  background-color: #9eca8f;
   padding: 5px 15px;
   color: #ffffff;
   font-size: 18px;
@@ -74,18 +74,18 @@
   }
 
   &.red {
-    background-color: #E44061;
+    background-color: #e44061;
 
     &:hover {
       transition: 0.3s;
-      color: #E44061;
+      color: #e44061;
       background-color: #ffffff;
     }
   }
 
   &:hover {
     transition: 0.3s;
-    color: #9ECA8F;
+    color: #9eca8f;
     background-color: #ffffff;
   }
 }
@@ -108,14 +108,14 @@
   justify-content: center;
   align-items: center;
   padding: 0 20px;
-  color: #897EB5;
+  color: #897eb5;
   font-size: 24px;
 }
 
 .refreshCodeButton {
   height: 44px;
   width: 44px;
-  background-color: #9ECA8F;
+  background-color: #9eca8f;
   border-radius: 3px;
   display: flex;
   justify-content: center;
@@ -146,7 +146,7 @@
   width: 18px;
   height: 18px;
   appearance: auto;
-  accent-color: #3C3030;
+  accent-color: #3c3030;
 }
 
 .infoContainer {

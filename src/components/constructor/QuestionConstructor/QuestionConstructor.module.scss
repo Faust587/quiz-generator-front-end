@@ -3,12 +3,12 @@
   background-color: #e3ddff;
   border-radius: 10px;
   padding: 10px;
-  box-shadow: 5px 5px 0 #ADA9BB;
+  box-shadow: 5px 5px 0 #ada9bb;
   transition: 0.2s;
 
   &Focused {
     transition: 0.2s;
-    box-shadow: 7px 7px 5px #ADA9BB;
+    box-shadow: 7px 7px 5px #ada9bb;
   }
 }
 
@@ -32,12 +32,12 @@
   &:hover {
     transition: 0.2s;
     background-color: #bdb3dc;
-    color: #393C54;
+    color: #393c54;
   }
 }
 
 .changeOrderBlock {
-  background-color: #9ECA8F;
+  background-color: #9eca8f;
 }
 
 .changeOrderBlockHidden {
@@ -47,7 +47,7 @@
 .addVariantButton {
   padding: 5px;
   border-radius: 5px;
-  background-color: #9ECA8F;
+  background-color: #9eca8f;
   color: #ffffff;
   &Container {
     margin-top: 10px;
@@ -165,7 +165,7 @@
   display: flex;
   align-items: center;
   font-size: 14px;
-  color: #393C54;
+  color: #393c54;
   padding-left: 10px;
 }
 
@@ -204,4 +204,3 @@
     background-color: #ffffff;
   }
 }
-
