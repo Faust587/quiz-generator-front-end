@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/quiz-generator-front-end/static/css/main.b1fc5734.css",
-    "main.js": "/quiz-generator-front-end/static/js/main.37363c5f.js",
+    "main.css": "/quiz-generator-front-end/static/css/main.3e6032e5.css",
+    "main.js": "/quiz-generator-front-end/static/js/main.46b98596.js",
     "static/media/auth-background.jpg": "/quiz-generator-front-end/static/media/auth-background.6639820c5c09f9cddaef.jpg",
     "static/media/JetBrainsMono.ttf": "/quiz-generator-front-end/static/media/JetBrainsMono.a490f58c0f460cdc1a8d.ttf",
     "static/media/error.jpg": "/quiz-generator-front-end/static/media/error.99f0bac7b716e9f982c7.jpg",
@@ -21,11 +21,11 @@
     "static/media/search-icon.svg": "/quiz-generator-front-end/static/media/search-icon.5dcccccf38d5693c186d288da08d7b57.svg",
     "static/media/copy-icon.svg": "/quiz-generator-front-end/static/media/copy-icon.2426f8180a96ee1c333c098e1ed024c6.svg",
     "static/media/reload-icon.svg": "/quiz-generator-front-end/static/media/reload-icon.47895e843948cba6ce39f4b67b8bf111.svg",
-    "main.b1fc5734.css.map": "/quiz-generator-front-end/static/css/main.b1fc5734.css.map",
-    "main.37363c5f.js.map": "/quiz-generator-front-end/static/js/main.37363c5f.js.map"
+    "main.3e6032e5.css.map": "/quiz-generator-front-end/static/css/main.3e6032e5.css.map",
+    "main.46b98596.js.map": "/quiz-generator-front-end/static/js/main.46b98596.js.map"
   },
   "entrypoints": [
-    "static/css/main.b1fc5734.css",
-    "static/js/main.37363c5f.js"
+    "static/css/main.3e6032e5.css",
+    "static/js/main.46b98596.js"
   ]
 }
