@@ -16,7 +16,7 @@ export const QuizInput: FC<PropsType> = ({
   onBlurAction,
   placeholder,
 }) => {
-  console.log('worked!!!')
+  console.log("worked!!!");
   if (isDisabled) {
     return <div className={styles.nameInput}>{value}</div>;
   }

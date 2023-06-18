@@ -73,7 +73,7 @@
     justify-content: center;
     align-items: center;
     height: 40px;
-    overflow: scroll;
+    overflow: hidden;
     &:hover {
       background-color: rgba(139, 128, 182, 0.3);
     }
