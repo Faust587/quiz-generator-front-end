@@ -1,12 +1,6 @@
 import styles from "../QuestionConstructor.module.scss";
 import { type QUESTION_TYPES } from "../../../../types/questionTypes";
-import {
-  type ChangeEvent,
-  type Dispatch,
-  type FC,
-  type SetStateAction,
-  useState,
-} from "react";
+import { type ChangeEvent, type FC, useState } from "react";
 import { updateQuestion } from "../../../../store/reducer/quizConstructor/quizThunks";
 import { useAppDispatch } from "../../../../hooks/redux";
 import { type TQuestion } from "../../../../store/reducer/quizConstructor/quizSlice";
@@ -43,7 +37,7 @@ export const QuestionConstructorHeader: FC<PropsType> = ({
   };
 
   const updateQuestionAction = (): void => {
-    const { id, type, name } = question;
+    const { id, type } = question;
     dispatch(
       updateQuestion({
         id,

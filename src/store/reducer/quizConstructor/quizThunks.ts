@@ -184,7 +184,13 @@ export const uploadQuestionAttachment = createAsyncThunk<
   async function ({ quizId, questionId, formData }, thunkAPI) {
     const response = await api.post(
       `question/upload/${quizId}/${questionId}`,
-      formData, {withCredentials: false}
+      formData,
+      {
+        withCredentials: false,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken") ?? ""}`,
+        },
+      }
     );
     if (!axios.isAxiosError(response)) return response.data;
     if (!response.response?.data) {

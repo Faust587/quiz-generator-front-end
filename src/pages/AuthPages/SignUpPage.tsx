@@ -21,7 +21,7 @@ export const SignUpPage: FC = (): JSX.Element => {
           <AuthFooter
             text="Already have an account?"
             urlText="Log in"
-            url={`/sign-in`}
+            url={`${PUBLIC_URL}/sign-in`}
           />
         </div>
       </div>

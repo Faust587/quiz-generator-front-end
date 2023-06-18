@@ -14,7 +14,7 @@ export const QuizList = () => {
     const fetchQuizList = async () => {
       const quizList = await getQuizList();
       if (axios.isAxiosError(quizList)) {
-        navigate("../sign-up");
+        navigate("../sign-in");
         return;
       }
       let closedCounters = 0;

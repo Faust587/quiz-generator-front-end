@@ -4,7 +4,8 @@ import { setUnauthorised } from "../store/reducer/auth/authSlice";
 
 const api = axios.create({
   withCredentials: true,
-  baseURL: "https://quiz-app-api-phi.vercel.app",
+  baseURL: "https://quiz-app-api-phi.vercel.app/",
+  //baseURL: "http://localhost:4000",
 });
 
 api.interceptors.request.use((config) => {
@@ -21,6 +22,14 @@ interface refreshTokenResponse {
   accessToken: string;
 }
 
+/**
+ * Host github.com-synkulych
+ *   Hostname github.com
+ *   AddKeysToAgent yes
+ *   UseKeychain yes
+ *   IdentityFile ~/.ssh/id_ed25519
+ */
+
 api.interceptors.response.use(
   (config) => config,
   async (error) => {
@@ -32,7 +41,7 @@ api.interceptors.response.use(
     ) {
       originalRequest.isRetry = true;
       const tokensPair = await axios.get<refreshTokenResponse>(
-        "https://quiz-app-api-phi.vercel.app",
+        "https://quiz-app-api-phi.vercel.app/auth/refresh",
         { withCredentials: true }
       );
       if (axios.isAxiosError(tokensPair)) {
